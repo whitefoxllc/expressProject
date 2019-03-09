@@ -1,0 +1,23 @@
+extends index
+
+block ui
+    script(src="/login.js")
+    .main.container
+        .row
+            .col-md-6.col-md-offset-3
+                h1.display-4.m-b-2 LOGIN FAILED!
+                h1.display-4.m-b-2 Please enter your login credentials to continue.
+
+                // registration form
+                form(method='POST' action='/login')
+                    div.form-group
+                        label(for='username') Username:
+                        input#username.form-control(type='text', placeholder='' name='username')
+                    div.form-group
+                        label(for='password') Password:
+                        input#password.form-control(type='password' name='password')
+                button.btn.btn-primary(id="loginButton" type='submit') Log in
+
+                h3 Not a member? 
+                    a(href="./register/") Sign up!
+    script $("#loginButton").click(processLogin($("#username").val(), $("#password").val()));

@@ -1,3 +1,6 @@
 helloWorld.js
 lastResort.js
 peralta.js
+*.html
+.idea/*
+node_modules/
