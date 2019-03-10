@@ -16,19 +16,21 @@ connection.connect(function(err) {
     console.log('You are now connected...');
 });
 
+var login = require("../login-helper.js");
 
-
-/* POST login attempt. */
-/*router.get('/login/:username/:hash', function(req, res, next) {
-    console.log(`attempted login with username=${req.params.username} and hash=${req.params.hash}`);
-    if (ifValidPassword(req.params.username, req.params.hash)) {
-        console.log("Login Successful").
-        res.render('userlandingpage', { user: 'username goes here' });
-    }
-    else {
-        console.log("Login Unsuccessful").
-        res.render("loginfailed");
-    }
-});*/
+/* GET login attempt. */
+router.get('/', function(req, res, next) {
+    console.log(`attempted login with username=${req.query.username} and hash=${req.query.passwordHash}`);
+    login.passwordIsValid(req.query.username, req.query.passwordHash,function (valid) {
+        if (valid) {
+            console.log("Login Successful");
+            res.render('login', { title: 'success' });
+        }
+        else {
+            console.log("Login Unsuccessful");
+            res.render('login', { title: 'fail' });
+        }
+    });
+});
 
 module.exports = router;
