@@ -1,21 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-var mysql = require('mysql');
-
-var connection = mysql.createConnection({
-    host: 'localhost',
-    //host: "ec2-3-83-84-122.compute-1.amazonaws.com",
-    user: 'whiteFoxReadOnly',
-    password: 'wfro5463!',
-    database: 'whitefoxdb'
-});
-
-connection.connect(function(err) {
-    if (err) throw err;
-    console.log('You are now connected...');
-});
-
 var login = require("../login-helper.js");
 
 /* GET login attempt. */
