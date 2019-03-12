@@ -11,14 +11,14 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET registration attempt. */
-router.post('/createUser', function(req, res, next) {
+router.post('/', function(req, res, next) {
     console.log(`Form submitted with ${req.body.username}, ${req.body.email}, ${req.body.password}, `)
     resHelper.userExistsCheck(req.body.username, function (exists) {
         if (!exists) {
             console.log("user doesn't exist yet");
             resHelper.createUser(req.body, function () {
-                req.session.username = req.body.username;
-                res.render('userlandingpage', { user: req.session.username});
+                req.session.user = req.body.username;
+                res.render('userlandingpage', { user: req.session.user});
             });
         }
         else {
