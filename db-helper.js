@@ -14,4 +14,11 @@ var writeUsersConnection = mysql.createConnection({
     database: 'whitefoxdb'
 });
 
-exports = module.exports = {readOnlyConnection, writeUsersConnection};
+var sessionStoreConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'sessionStore',
+    password: 'wfss5463!',
+    database: 'whitefoxdb'
+});
+
+exports = module.exports = {readOnlyConnection, writeUsersConnection, sessionStoreConnection};

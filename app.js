@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var session = require("express-session");
+var mysqlSessionStore = require("express-mysql-session");
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -14,6 +15,9 @@ var registerRouter = require('./routes/register');
 
 var app = express();
 
+var db = require('./db-helper.js');
+var sessionStore = new mysqlSessionStore({}, db.sessionStoreConnection);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -23,10 +27,14 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret: "wfsecret5463!"})); //todo replace with strong value
+app.use(session({
+    key: 'whiteFox',
+    secret: 'wfsecret5463!', //todo replace with strong value
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.static('public'));
-//app.use("/public", express.static(__dirname + "/public"));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
