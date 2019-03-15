@@ -5,9 +5,9 @@ block ui
         .row
             .col-md-6.col-md-offset-3
                 h1.display-4.m-b-2 Sign Up
-                h2.display-4.m-b-2 #{message}
+                h1.m-b-2 Please enter your registration details
 
-                form(method='POST' action='/register/')
+                form(method='POST' action='/register/' class='form-registration')
                     div.form-group
                         label(for='name') Username:
                         input#name.form-control(type='text', name='username')
