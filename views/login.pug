@@ -3,21 +3,43 @@ extends index
 block scripts
     script(src="javascripts/login.js")
 
+block topbar
+    .row
+        p Top menu goes here
+    .row.text-md-center
+        h3.text-md-center #{message}
+
 block ui
-    .main.container
-        .row
-            .col-md-6.align-content-center
-                h1 Please enter your login credentials to continue.
+    .main.container.align-content-md-centercenter
+        .login-form.border.rounded.p-4
+            .row
+                .col-6
+                    p logo goes here
+                .col-6
+                    h2.p2 Please enter your login credentials to continue.
 
-                form(method='POST' action='/login' class='form-login')
-                    div.form-group
-                        label(for='username') Username:
-                        input#username.form-control(type='text' class='form-control form-control-lg' placeholder='' name='username')
-                    div.form-group
-                        label(for='password') Password:
-                        input#password.form-control(type='password' class='form-control form-control-lg' name='password')
-                    div.form-group
-                        button.btn.btn-primary(id="loginButton" type='submit') Log in
+                    form(method='POST' action='/login' class='form-login p-2')
+                        .form-group
+                            label(for='username') Username:
+                            input#username.form-control(type='text' class='form-control form-control-lg' placeholder='' name='username')
+                        .form-group
+                            label(for='password') Password:
+                            input#password.form-control(type='password' class='form-control form-control-lg' name='password')
+                        .form-group
+                            button.btn.btn-primary(id="loginButton" type='submit') Log in
 
-                h3 Not a member?
-                    a(href="./register/")  Sign up!
+                    h3.small Not a member?
+                        a(href="./register/")  Sign up!
+    .row
+        .footer.contact-info
+            .col-md-12.offset-1
+                h4 Creators
+                p Ricardo Benavides
+                p AJ Cericos
+                p Alex Dunn
+                p Gustavo Peralta
+                p Anthony Rodriguez
+
+                h4 Contact Us
+                a(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
+                p

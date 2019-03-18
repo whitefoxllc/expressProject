@@ -4,3 +4,4 @@ peralta.js
 *.html
 .idea/*
 node_modules/
+public/video/

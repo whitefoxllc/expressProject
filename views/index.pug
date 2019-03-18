@@ -1,9 +1,12 @@
 extends layout
 
+block topbar
+    .row
+        p Top menu goes here
+    .row
+        h1 #{message}
 block content
     .row
-        .col-md-10.offset-md-1
-            h1.display-3 WhiteFox Streaming Video
+        block ui
     .row
-        .col-md-12
-            block ui
+        block footer
