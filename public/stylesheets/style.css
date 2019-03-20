@@ -1,5 +1,8 @@
 body {
   background-color: #4e6a88;
+  background-image: url(../images/movies.png);      /* gustavo: added the background*/
+  background-position: center center;
+  background-size: 75%;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: absolute;
@@ -48,7 +51,10 @@ p {
 }
 
 .footer {
-  position: absolute;
+  position: absolute;           /*gustavo: attempted to make the bottom bar stretch accross the entire page will work on later*/
   min-height: 10em;
   bottom: 0;
+  background-color: #4e6a88;
+  width: 100%;
+  
 }
