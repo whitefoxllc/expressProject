@@ -4,7 +4,8 @@ var readOnlyConnection = mysql.createConnection({
     host: 'localhost',
     user: 'whiteFoxReadOnly',
     password: 'wfro5463!',
-    database: 'whitefoxdb'
+    database: 'whitefoxdb',
+    multipleStatements: true
 });
 
 var writeUsersConnection = mysql.createConnection({
