@@ -4,11 +4,10 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     if (req.session.user) {
-        //render user landing page
-        res.render('userlandingpage', { title: 'Whitefox Streaming Video', message: `Welcome, ${req.session.user}!`, user: req.session.user });
+        res.redirect("/home");
     }
     else {
-        res.render('login', { title: 'Whitefox Streaming Video', message: "Welcome to Whitefox Streaming Video" });
+        res.redirect("/login");
     }
 });
 
