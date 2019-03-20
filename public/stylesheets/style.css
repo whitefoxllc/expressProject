@@ -51,10 +51,13 @@ p {
 }
 
 .footer {
-  position: absolute;           /*gustavo: attempted to make the bottom bar stretch accross the entire page will work on later*/
+             /*gustavo: attempted to make the bottom bar stretch accross the entire page will work on later*/
   min-height: 10em;
   bottom: 0;
-  background-color: #4e6a88;
-  width: 100%;
+  padding-top: 500px;
+  margin-top: 100%;
   
 }
+
+
+
