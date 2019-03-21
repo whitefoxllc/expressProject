@@ -13,7 +13,7 @@ block content
     p #{user} has logged in.  Enjoy your nightmare chungus.
     //later we will replace these generated links with generated objects from bootstrap
     each production in displayProductions
-        a(href= `./select_season/?production=${production.id}`)= production.title
+        a(href= `./production/?production=${production.id}`)= production.title
         p
 
     div.wrapper.col-10.offset-1.my-4
