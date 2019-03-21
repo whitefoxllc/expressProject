@@ -10,16 +10,11 @@ block topbar
     .row
         h1 #{message}
 block content
-    p #{user} has logged in.  Enjoy your nightmare chungus.
+    p #{user} has logged in.  Here are some recommended productions (not GoT, we have no episodes in the DB for that)
     //later we will replace these generated links with generated objects from bootstrap
     each production in displayProductions
         a(href= `./production/?production=${production.id}`)= production.title
         p
 
-    div.wrapper.col-10.offset-1.my-4
-        video(id='my-video' class='video-js' controls preload='auto' width='1280' height='720'
-        poster='MY_VIDEO_POSTER.jpg' data-setup='{"fluid":true}')
-            source(src="video/chungus.mp4")
-            p.vjs-no-js Please enable Javascript to see this video
 
     a(href="./logout") Log Out

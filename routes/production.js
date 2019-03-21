@@ -13,15 +13,16 @@ router.get('/', function(req, res, next) {
 
             if (req.query.seasonSelection) {
                 console.log(`Season ${req.query.seasonSelection} selected`);
-                db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM seasons where production = "${req.body.production}";`, function(err, rows, fields) {
-                    console.log(`SELECT episodeNumber, title, fileURL FROM seasons where production = "${req.body.production}";`);
+                db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${req.query.seasonSelection}";`, function(err, rows, fields) {
+                    console.log(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${req.query.seasonSelection}";`);
                     console.log(rows);
 
                     res.render('production', {
                         title: 'Whitefox Streaming Video',
                         user: req.session.user,
-                        productionData: productionData,
+                        productionData: productionData[0],
                         season: req.query.seasonSelection,
+                        episodeCount: rows.length,
                         episodeData: rows
                     });
                 });

@@ -10,18 +10,23 @@ block topbar
     .row
         h1 #{message}
 block content
-    //later we will replace these generated links with generated objects from bootstrap
+
     .row
         h1= productionData.title
+        if season
+            h1 &nbsp;- Season #{season}
     .row
         .col-3
-            p here be seasons
+            //later we will replace these generated links with generated objects from bootstrap
             - var i = 1;
             while i <= productionData.seasonCount
-                a(href= `./production/?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
+                a(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
                 p
         .col-8
-            p Here be deets
+                - var i = 1;
+                while i <= episodeCount
+                    a(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${i}`) Episode #{i++} - #{episodeData[i-2].title}
+                    p
 
     a(href="../home") Go Home<br><br>
     a(href="../logout") Log Out
