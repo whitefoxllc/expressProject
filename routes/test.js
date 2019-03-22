@@ -3,6 +3,7 @@ var router = express.Router();
 
 var db = require("../db-helper");
 var sub = require("../subscription-helper");
+var prods = require("../production-helper");
 
 //page for testing raw functionality
 
@@ -40,8 +41,22 @@ router.get('/', function(req, res, next) {
             console.log(`Requesting access to ${myProd2} again.`);
             console.log(`User is ${sub.requestAccessTo(req, myProd2) ? "granted" : "not granted"} access to ${myProd2}.`);
             console.log(`User ${sub.hasAccessTo(req, myProd) ? "has" : "has no"} access to ${myProd}.`);
-            console.log(`User ${sub.hasAccessTo(req, myProd2) ? "has" : "has no"} access to ${myProd2}.`);
+            console.log(`User ${sub.hasAccessTo(req, myProd2) ? "has" : "has no"} access to ${myProd2}.\n`);
 
+            prods.getFileUrlFor(req, myProd, 1, 1, function (url) {
+                console.log(`url for ${myProd} is ${url} because user has no access.\n`);
+            });
+
+            prods.getFileUrlFor(req, myProd2, 1, 1, function (url) {
+                console.log(`url for ${myProd2} is ${url} .\n`);
+            });
+
+            prods.getAllFileUrls(req, myProd2,function (urls) {
+                console.log(`Getting all file URLs for ${myProd2} and displaying the last ep of each season`);
+                console.log(`${urls[1][10]}`);
+                console.log(`${urls[2][12]}`);
+                console.log(`${urls[3][10]}\n`);
+            });
 
             res.render('test', { title: 'Whitefox Streaming Video', message: `Welcome, ${req.session.user}!`, user: req.session.user, displayProductions: rows});
         });
