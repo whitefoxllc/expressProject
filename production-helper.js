@@ -13,22 +13,29 @@ var getFileUrlFor = function (req, production, season, episode, callback) {
 };
 
 var getAllFileUrls = function (req, production, callback) {
-    db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
-        var fileUrls = [[]];
-        var season = 0;
-        fileUrls.push(['']); //push an empty placeholder, as index 0 will not be used
 
-        rows.forEach(function (row) {
-            if (season != row.seasonNumber) {
-                fileUrls.push(['']);
-                season += 1;
-            }
+    if (sub.requestAccessTo(req, production)) {
+        console.log(`user can access ${production}`);
+        db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
+            var fileUrls = [[]];
+            var season = 0;
+            fileUrls.push(['']); //push an empty placeholder, as index 0 will not be used
 
-            fileUrls[season].push(row.fileURL);
+            rows.forEach(function (row) {
+                if (season != row.seasonNumber) {
+                    fileUrls.push(['']);
+                    season += 1;
+                }
+
+                fileUrls[season].push(row.fileURL);
+            });
+
+            return callback(fileUrls);
         });
-
-        return callback(fileUrls);
-    });
+    }
+    else {
+        return callback(null);
+    }
 };
 
 
