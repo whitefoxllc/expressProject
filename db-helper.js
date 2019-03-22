@@ -8,6 +8,13 @@ var readOnlyConnection = mysql.createConnection({
     multipleStatements: true
 });
 
+var writeProdsConnection = mysql.createConnection({
+    host: 'localhost',
+    user: 'readWriteProds',
+    password: 'wfp5463!',
+    database: 'whitefoxdb'
+});
+
 var writeUsersConnection = mysql.createConnection({
     host: 'localhost',
     user: 'readWriteUsers',
@@ -21,5 +28,7 @@ var sessionStoreConnection = mysql.createConnection({
     password: 'wfss5463!',
     database: 'whitefoxdb'
 });
+
+
 
 exports = module.exports = {readOnlyConnection, writeUsersConnection, sessionStoreConnection};
