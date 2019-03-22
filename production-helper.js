@@ -15,15 +15,14 @@ var getFileUrlFor = function (req, production, season, episode, callback) {
 var getAllFileUrls = function (req, production, callback) {
 
     if (sub.requestAccessTo(req, production)) {
-        console.log(`user can access ${production}`);
         db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
             var fileUrls = [[]];
             var season = 0;
-            fileUrls.push(['']); //push an empty placeholder, as index 0 will not be used
+            fileUrls.push(['']); //push an empty placeholder, as index [0][n] will not be used
 
             rows.forEach(function (row) {
-                if (season != row.seasonNumber) {
-                    fileUrls.push(['']);
+                if (season !== row.seasonNumber) {
+                    fileUrls.push(['']);//push an empty placeholder, as index [n][0] will not be used
                     season += 1;
                 }
 
