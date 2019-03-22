@@ -1,5 +1,22 @@
 var db = require('./db-helper.js');
 
+//not yet tested
+var syncSessionWithDb = function (req, callback) {
+    db.readOnlyConnection.query(`SELECT * FROM subscriptions WHERE subscriber = "${req.session.user}";`, function(err, rows, fields) {
+        req.session.subscriptionActiveUntil = rows[0].subscriptionExpiry;
+        req.session.slotsAllowed = rows[0].slotCount;
+    });
+
+    db.readOnlyConnection.query(`SELECT * FROM slots WHERE subscriber = "${req.session.user}";`, function(err, rows, fields) {
+        req.session.slots = [];
+        req.session.activeSlots = rows.length;
+        rows.forEach(function (slot) {
+            req.session.slots.push({"productionID": slot.production, "expiryDate": slot.expiry})
+
+        });
+    });
+};
+
 var activateSubscription = function (req, slots) {
     var expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 30);
@@ -11,7 +28,7 @@ var activateSubscription = function (req, slots) {
 };
 
 var renewSubscription = function (req) {
-    req.session.activeSubscriptionUntil.setDate(req.session.activeSubscriptionUntil.getDate() + 30);
+    req.session.subscriptionActiveUntil.setDate(req.session.subscriptionActiveUntil.getDate() + 30);
 };
 
 var cancelSubscription = function (req) {
@@ -25,18 +42,17 @@ var subscriptionActive = function (req) {
     return (req.session.subscriptionActiveUntil > now);
 };
 
-
-
 var hasAccessTo = function (req, production) {
+    var accessible = false;
     if (subscriptionActive(req)) {
         req.session.slots.forEach(function (slot) {
             if (slot.productionID === production) {
-                return true;
+                accessible = true;
             }
         });
     }
-    //else
-    return false;
+
+    return accessible;
 };
 
 var grantAccessTo = function (req, production) {
@@ -44,6 +60,7 @@ var grantAccessTo = function (req, production) {
         var expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 30);
         req.session.slots.push({"productionID": production, "expiryDate": expiryDate});
+        req.session.activeSlots += 1;
         return true;
     }
     else {
@@ -64,10 +81,12 @@ var removeAccessTo = function (req, production) {
     for (var i = 0; i < req.session.slots.length; i++) {
         if (req.session.slots[i].productionID === production) {
             req.session.slots.splice(i, 1);
+            req.session.activeSlots -= 1;
         }
     }
 };
 
+//not yet tested
 var refreshAccessLists = function (req) {
     var now = new Date();
     req.session.slots.forEach(function (slot) {
@@ -80,4 +99,4 @@ var refreshAccessLists = function (req) {
 
 
 
-exports = module.exports = {activateSubscription, renewSubscription, cancelSubscription, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
+exports = module.exports = {activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
