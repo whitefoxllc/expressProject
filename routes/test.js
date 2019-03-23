@@ -12,9 +12,13 @@ router.get('/', function(req, res, next) {
     if (req.session.user) {
         sub.syncSessionWithDb(req, function() {
             console.log(req.session);
-            res.render('test', { title: 'Whitefox Streaming Video', message: `Welcome, ${req.session.user}!`, user: req.session.user});
+            prods.getAllFileUrls(req, "mrRobot", function (fileUrls) {
+                console.log(fileUrls);
+                prods.getFileUrlFor(req, "mrRobot", 1, 1, function (fileUrl) {
+                    res.render('test', { title: 'Whitefox Streaming Video', message: `Welcome, ${req.session.user}!`, user: req.session.user, vidUrl: fileUrl});
+                })
+            })
         });
-
     }
     else {
         res.redirect("/");
