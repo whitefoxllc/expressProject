@@ -7,7 +7,7 @@ var clearSessionSubscriptionData = function (req) {
     req.session.activeSlots = 0;
     req.session.slots = [];
 };
-//not yet tested
+
 var syncSessionWithDb = function (req, callback) {
     clearSessionSubscriptionData(req);
     db.readOnlyConnection.query(`SELECT * FROM subscriptions WHERE subscriber = "${req.session.user}";`, function(err, rows, fields) {
@@ -81,7 +81,6 @@ var hasAccessTo = function (req, production) {
 var grantAccessTo = function (req, production, callback) {
     var grantSuccessful = false;
     if (req.session.subscriptionActiveUntil && req.session.activeSlots < req.session.slotsAllowed) {
-        console.log(`User has at least one free slot.`);
         var expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 30);
         db.writeSubscriptionsConnection.query(`INSERT INTO slots VALUES("${req.session.user}","${production}","${expiryDate.toISOString()}");`, function (err, rows, fields) {
@@ -91,16 +90,12 @@ var grantAccessTo = function (req, production, callback) {
         });
     }
     else {
-        console.log(`User has no free slots.`);
-        console.log(`User has no free slots. ${req.session.activeSlots} active of ${req.session.slotsAllowed} available`);
-        console.log(req.session.slots);
         return callback(false);
     }
 };
 
 var requestAccessTo = function (req, production, callback) {
     if (hasAccessTo(req, production)) {
-        console.log(`User already has access to ${production}`);
         callback(true);
     }
     else {

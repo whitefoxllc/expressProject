@@ -7,7 +7,6 @@ var login = require("../login-helper.js");
 
 router.get('/', function(req, res, next) {
     if (req.session.user) {
-        //todo: update relevant session variables (make a function)
         res.redirect("/home");
     }
     else {
@@ -18,14 +17,12 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 
     if (req.session.user) {
-        //todo: update relevant session variables (make a function)
         res.redirect("/home");
     }
     else {
         login.passwordIsValid(req.body.username, req.body.password, function (valid) {
             if (valid) {
                 req.session.user = req.body.username;
-                //todo: update relevant session variables (make a function)
                 res.redirect("/home");
             }
             else {
