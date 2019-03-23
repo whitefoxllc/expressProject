@@ -11,7 +11,7 @@ var syncSessionWithDb = function (req, callback) {
         req.session.slots = [];
         req.session.activeSlots = rows.length;
         rows.forEach(function (slot) {
-            req.session.slots.push({"productionID": slot.production, "expiryDate": slot.expiry})
+        req.session.slots.push({"productionID": slot.production, "expiryDate": slot.expiry})
 
         });
     });
@@ -20,6 +20,7 @@ var syncSessionWithDb = function (req, callback) {
 var activateSubscription = function (req, slots) {
     var expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 30);
+    db.writeSubscriptionsConnection.query(`INSERT INTO subscriptions VALUES("${req.session.user}","${expiryDate.toISOString()}","${slots}");`); //probably not necessary to wait/callback
     req.session.subscriptionActiveUntil = expiryDate;
     req.session.slotsAllowed = slots;
     req.session.activeSlots = 0;
@@ -28,10 +29,14 @@ var activateSubscription = function (req, slots) {
 };
 
 var renewSubscription = function (req) {
-    req.session.subscriptionActiveUntil.setDate(req.session.subscriptionActiveUntil.getDate() + 30);
+    var expiryDate = new Date(req.session.subscriptionActiveUntil);
+    expiryDate.setDate(expiryDate.getDate() + 30);
+    db.writeSubscriptionsConnection.query(`UPDATE subscriptions SET subscriptionExpiry = "${expiryDate.toISOString()}" WHERE subscriber = "${req.session.user}";`); //probably not necessary to wait/callback
+    req.session.subscriptionActiveUntil = expiryDate;
 };
 
 var cancelSubscription = function (req) {
+    db.writeProdsConnection.query(`DELETE FROM subscriptions WHERE subscriber = "${req.session.user}";`); //probably not necessary to wait/callback
     req.session.subscriptionActiveUntil = null;
     req.session.slotsAllowed = 0;
     req.session.activeSlots = 0;
@@ -92,6 +97,7 @@ var refreshAccessLists = function (req) {
     req.session.slots.forEach(function (slot) {
         if (slot.expiryDate < now) {
             removeAccessTo(req, slot.productionID);
+            db.writeSubscriptionsConnection.query(`DELETE FROM slots WHERE subscriber = "${req.session.user}" AND production = "${production}";`); //probably not necessary to wait/callback
         }
     });
 };

@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
             console.log(`Subscription should be two months from now: ${req.session.subscriptionActiveUntil}`);
             console.log(`Subscription ${sub.subscriptionActive(req) ? "is" : "is not"} active.\n`);
 
-            // sub.cancelSubscription(req);
+            sub.cancelSubscription(req);
             // console.log(`Subscription should be null: ${req.session.subscriptionActiveUntil}`);
             // console.log(`Subscription ${sub.subscriptionActive(req) ? "is" : "is not"} active.\n`);
 
@@ -51,12 +51,12 @@ router.get('/', function(req, res, next) {
                 console.log(`url for ${myProd2} is ${url} .\n`);
             });
 
-            prods.getAllFileUrls(req, myProd2,function (urls) {
-                console.log(`Getting all file URLs for ${myProd2} and displaying the last ep of each season`);
-                console.log(`${urls[1][10]}`);
-                console.log(`${urls[2][12]}`);
-                console.log(`${urls[3][10]}\n`);
-            });
+            // prods.getAllFileUrls(req, myProd2,function (urls) {
+            //     console.log(`Getting all file URLs for ${myProd2} and displaying the last ep of each season`);
+            //     console.log(`${urls[1][10]}`);
+            //     console.log(`${urls[2][12]}`);
+            //     console.log(`${urls[3][10]}\n`);
+            // });
 
             res.render('test', { title: 'Whitefox Streaming Video', message: `Welcome, ${req.session.user}!`, user: req.session.user, displayProductions: rows});
         });
