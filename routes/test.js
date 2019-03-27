@@ -39,14 +39,14 @@ router.get('/', function(req, res, next) {
                 }
             }
             else {
-                prods.getFileUrlFor(req, "mrRobot", 1, 1, function (fileUrl) {
-                    console.log(req.session.subscriptionActiveUntil);
+                prods.getAllFileUrls(req, "testProduction", function (fileUrls) {
+                    console.log(fileUrls);
 
                     res.render('test', {
                         title: 'Whitefox Streaming Video',
                         message: `Welcome, ${req.session.user}!`,
                         subscriptionActiveUntil: req.session.subscriptionActiveUntil,
-                        vidUrl: fileUrl
+                        vidUrls: fileUrls
                     });
                 });
             }
