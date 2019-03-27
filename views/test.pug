@@ -10,11 +10,30 @@ block topbar
     .row
         h1 #{message}
 block content
+
     p #{user} has logged in.  Enjoy your nightmare chungus.
+    p= subscriptionActiveUntil
     div.wrapper.col-10.offset-1.my-4
         video(id='my-video' class='video-js' controls preload='auto' width='1280' height='720'
         poster='MY_VIDEO_POSTER.jpg' data-setup='{"fluid":true}')
             source(src=vidUrl)
             p.vjs-no-js Please enable Javascript to see this video
+
+    div.subscriptionTest
+        div.subscriptionDisplay
+            p= `Subscription is currently ${subscriptionActiveUntil ? `active until ${subscriptionActiveUntil}.` : `inactive.`}`
+        div.subscriptionDriver
+            a.btn.btn-primary(href="/test/?action=activateSubscription") Activate Subscription
+            br
+            br
+
+            a.btn.btn-primary(href="/test/?action=renewSubscription") Renew Subscription
+            br
+            br
+
+            a.btn.btn-primary(href="/test/?action=cancelSubscription") Cancel Subscription
+            br
+            br
+
 
     a(href="./logout") Log Out

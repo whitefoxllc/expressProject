@@ -11,14 +11,45 @@ router.get('/', function(req, res, next) {
 
     if (req.session.user) {
         sub.syncSessionWithDb(req, function () {
-            prods.getFileUrlFor(req, "mrRobot", 1, 1, function (fileUrl) {
-                res.render('test', {
-                    title: 'Whitefox Streaming Video',
-                    message: `Welcome, ${req.session.user}!`,
-                    user: req.session.user,
-                    vidUrl: fileUrl
+            if (req.query.action) {
+                console.log(`Performing ${req.query.action}`);
+                if (req.query.action === "activateSubscription") {
+                    if (!sub.subscriptionActive(req)) {
+                        sub.activateSubscription(req, 10, function () {
+                            console.log("About to redirect");
+                            res.redirect("/test");
+                        });
+                    }
+                    else {
+                        res.redirect("/test");
+                    }
+                }
+                else if (req.query.action === "renewSubscription") {
+                    sub.renewSubscription(req, function () {
+                        res.redirect("/test");
+                    });
+                }
+                else if (req.query.action === "cancelSubscription") {
+                    sub.cancelSubscription(req, function () {
+                        res.redirect("/test");
+                    });
+                }
+                else {
+                    res.redirect("/test");
+                }
+            }
+            else {
+                prods.getFileUrlFor(req, "mrRobot", 1, 1, function (fileUrl) {
+                    console.log(req.session.subscriptionActiveUntil);
+
+                    res.render('test', {
+                        title: 'Whitefox Streaming Video',
+                        message: `Welcome, ${req.session.user}!`,
+                        subscriptionActiveUntil: req.session.subscriptionActiveUntil,
+                        vidUrl: fileUrl
+                    });
                 });
-            });
+            }
         });
     }
     else {
