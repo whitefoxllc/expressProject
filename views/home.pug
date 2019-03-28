@@ -1,0 +1,20 @@
+extends layout
+
+block scripts
+    link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
+    script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
+    script(src='https://vjs.zencdn.net/7.4.1/video.js')
+block topbar
+    .row
+        p Top menu goes here
+    .row
+        h1 #{message}
+block content
+    p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
+    //later we will replace these generated links with generated objects from bootstrap
+    each production in displayProductions
+        a(href= `./production/?production=${production.id}`)= production.title
+        p
+
+
+    a(href="./logout") Log Out
