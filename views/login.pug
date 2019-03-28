@@ -3,37 +3,66 @@ extends index
 block scripts
     script(src="javascripts/login.js")
 
-block topbar
-    .row
-        p Top menu goes here
-    .row.text-md-center
-        h3.text-md-center #{message}
 
 block ui
-    .main.container.align-content-md-centercenter
-        .login-form.border.rounded.p-4
+    .container-fluid.greeting.text-center#greeting
+        .row
+            .col-12
+                h3 Welcome to WhiteFox streaming service
+    .container-fluid.backgroundbox
+        .container.rounded.loginbox
             .row
-                .col-6
-                    p logo goes here
-                .col-6
+                .col-sm-6
+                    img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/logos.png" alt="logos", width='300')
+                    h5.font-weight-lighter All your favorite shows,
+                    h5 in one place.
+
+                .col-sm-6
                     h2.p2 Please enter your login credentials to continue.
 
                     form(method='POST' action='/login' class='form-login p-2')
                         .form-group
-                            label(for='username') Username:
+                            label.labelcolor(for='username') Username:
                             input#username.form-control(type='text' class='form-control form-control-lg' placeholder='' name='username')
                         .form-group
-                            label(for='password') Password:
+                            label.labelcolor(for='password') Password:
                             input#password.form-control(type='password' class='form-control form-control-lg' name='password')
                         .form-group
                             button.btn.btn-primary(id="loginButton" type='submit') Log in
 
                     h3.small Not a member?
-                        a(href="./register/")  Sign up!
+                        a(href="./register")  Sign up!
 
-    .row
-        .footer.contact-info
-            .col-md-12.offset-1
+
+        .container.cardcontainer
+            .row
+                .card-deck
+                    .card
+                        .card-body
+                            h2.card-title Basic
+                            h1.card-text $10
+                            br
+                            p.card-text Subscribe to 10 shows for a month, after you are allowed to switch it up
+
+
+
+                    .card
+                        .card-body
+                            h2.card-title Advanced
+                            h1.card-text $15
+                            br
+                            p.card-text Subscribe to 15 shows for a month, after you are allowed to switch it up
+
+                    .card
+                        .card-body
+                            h2.card-title Premium
+                            h1.card-text $20
+                            br
+                            p.card-text Subscribe to 25 shows for a month, after you are allowed to switch it up
+
+    .container-fluid.contact-info.rounded
+        .col-sm-12
+            .footer#back(style="margin-bottom:0")
                 h4 Creators
                 p Ricardo Benavides
                 p AJ Cericos
@@ -42,5 +71,17 @@ block ui
                 p Anthony Rodriguez
 
                 h4 Contact Us
-                a(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
+                a.footerlink(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
                 p
+
+
+
+
+
+
+
+
+
+
+
+
