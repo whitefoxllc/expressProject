@@ -31,7 +31,7 @@ router.post('/', function(req, res, next) {
         });
     }
 });
-
+// this is GUS
 /* GET logout*/
 router.get('/logout', function(req, res, next) {
     req.session.destroy(function(){
