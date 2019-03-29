@@ -1,5 +1,5 @@
 body {
-  background-color: #2B353B;
+  background-color: #080E15;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: absolute;
   min-height: 100%;
@@ -86,6 +86,7 @@ a.footerlink:hover{
 
 .backgroundbox{
   background-image: url("https://i.imgur.com/KQhuVje.png");
+  background-repeat: repeat;
 }
 .cardcontainer{
   margin-bottom: 25%;
@@ -96,5 +97,20 @@ a.footerlink:hover{
   padding-right: 5%;
   padding-top: 2%;
 }
+
+.box{
+  background-color: #2b353b;
+  margin-bottom: 10%;
+  margin-top: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-width: medium;
+}
+
+.previewGif{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
 
 
