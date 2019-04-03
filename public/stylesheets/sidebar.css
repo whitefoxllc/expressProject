@@ -1,16 +1,58 @@
+/*
+SIDEBAR STYLE
+*/
+
 .wrapper {
     display: flex;
+    width: 100%;
     align-items: stretch;
+    perspective: 1500px;
 }
 
 #sidebar {
     min-width: 250px;
     max-width: 250px;
-    min-height: 100vh
+    min-height: 100vh;
+    background: #1969ff;
+    color: #fff;
+    transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
+    transform-origin: bottom left;
 }
 
 #sidebar.active {
     margin-left: -250px;
+    transform: rotateY(100deg);
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #5587f3;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #6acdff60;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#sidebar ul li a:hover {
+    color: rgb(0, 51, 253);
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #6c82e6;
 }
 
 a[data-toggle="collapse"] {
@@ -25,12 +67,28 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6c82e6;
+}
+
+#sidebarCollapse span {
+    width: 80%;
+    height: 2px;
+    margin: 0 auto;
+    display: block;
+    background: #555;
+    transition: all 0.6s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+    transition-delay: 0.2s;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
     }
     #sidebar.active {
-        margin-left: 0;
+        margin-left: 10;
     }
 }
 
@@ -39,7 +97,12 @@ a[data-toggle="collapse"] {
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #ffffff;
+    background: #424242;
+}
+
+h2 {
+    color: #fff;
+    padding: 15px;
 }
 
 p {
@@ -47,7 +110,8 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
+    padding: 15px;
+    color: #ffffff;
 }
 
 a, a:hover, a:focus {
@@ -56,44 +120,36 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #1943ff;
-    color: #fff;
-    transition: all 0.3s;
-}
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+        transform: rotateY(90deg);
+    }
+    #sidebar.active {
+        margin-left: 0;
+        transform: none;
+    }
+    #sidebarCollapse span:first-of-type,
+    #sidebarCollapse span:nth-of-type(2),
+    #sidebarCollapse span:last-of-type {
+        transform: none;
+        opacity: 1;
+        margin: 5px auto;
+    }
+    #sidebarCollapse.active span {
+        margin: 0 auto;
+    }
+    #sidebarCollapse.active span:first-of-type {
+        transform: rotate(45deg) translate(2px, 2px);
+    }
+    #sidebarCollapse.active span:nth-of-type(2) {
+        opacity: 0;
+    }
+    #sidebarCollapse.active span:last-of-type {
+        transform: rotate(-45deg) translate(1px, -1px);
+    }
 
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: #1841f5;
-}
-
-#sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
-}
-
-#sidebar ul p {
-    color: #fff;
-    padding: 10px;
-}
-
-#sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-#sidebar ul li a:hover {
-    color: rgb(0, 51, 253);
-    background: #fff;
-}
-
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #1943ff;
-}
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #1943ff;
 }
