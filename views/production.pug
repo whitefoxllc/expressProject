@@ -1,32 +1,54 @@
-extends layout
+extends index
+
+block topbar
+    p top bar goes here
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
+
     script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
-block topbar
-    .row
-        p Top menu goes here
-    .row
-        h1 #{message}
-block content
 
-    .row
-        h1= productionData.title
-        if season
-            h1 &nbsp;- Season #{season}
-    .row
-        .col-3
-            //later we will replace these generated links with generated objects from bootstrap
-            - var i = 1;
-            while i <= productionData.seasonCount
-                a(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
-                p
-        .col-8
-                - var i = 1;
-                while i <= episodeCount
-                    a(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${i}`) Episode #{i++} - #{episodeData[i-2].title}
-                    p
+block addedstylesheet
+    link(rel='stylesheet', href='/stylesheets/productions.css')
+
+block content
+    .container-fluid.containsall.rounded.border
+        .container.border#productionbox
+            .row
+                .col-sm-2
+                .col-sm-4#showimage
+                    img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/logos.png" alt="logos", width='300')
+                    //
+                        if season
+                            h1 &nbsp;- Season #{season}
+                .col-sm-4
+                    h1= productionData.title
+                    p this is where the info of the show is going to go we need to get it from the database
+                .col-sm-2
+        .container.border#seasonsandeps
+            .row
+                .col-2.border
+                .col-3.border
+                    .dropdown
+                        button.buttoncolor.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                            Dropdown Season #{season}
+                        .dropdown-menu.buttoncolor
+                            - var i = 1;
+                            while i <= productionData.seasonCount
+                                a#link(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
+                                p
+            .container.border
+                - for (var j =1;j <= episodeCount; j++)
+                    if(j == 1 || j % 3 == 0)
+                        .row
+                            - for (var i=j; i<(3+j); i++ )
+                                - if(i>=episodeCount) break;
+                                    .col-sm-4.border
+                                        .card.epbox
+                                            img.card-img-top(src='/images/thumbplaceholders.jpg', alt='Card image', style='width:100%')
+                                            .card-body
+                                                a#link(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${j}`) Episode #{j++} - #{episodeData[j-2].title}
 
     a(href="../home") Go Home<br><br>
     a(href="../logout") Log Out

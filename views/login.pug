@@ -3,8 +3,11 @@ extends index
 block scripts
     script(src="javascripts/login.js")
 
+block sidebar
 
-block ui
+
+
+block content
     .container-fluid.greeting.text-center#greeting
         .row
             .col-12
@@ -37,7 +40,7 @@ block ui
         .container.cardcontainer
             .row
                 .card-deck
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Basic
                             h1.card-text $10
@@ -46,14 +49,14 @@ block ui
 
 
 
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Advanced
                             h1.card-text $15
                             br
                             p.card-text Subscribe to 15 shows for a month, after you are allowed to switch it up
 
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Premium
                             h1.card-text $20

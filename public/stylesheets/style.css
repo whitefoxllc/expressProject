@@ -38,7 +38,9 @@ p {
   min-height: 80%;
 }
 
+.static-modal {
 
+}
 
 .login-form {
   background-color: #2b353b;
@@ -61,7 +63,7 @@ a.footerlink:hover{
   color:white;
 }
 
-.card{
+.ad{
   background-color: #2b353b;
   padding-bottom: 10%;
 }
