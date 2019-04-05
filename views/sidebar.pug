@@ -1,27 +1,22 @@
+
 //
-    extends index
+    block scripts
+        script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js', integrity='sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ', crossorigin='anonymous')
+        script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js', integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm', crossorigin='anonymous')
 
-block scripts
-    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js', integrity='sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ', crossorigin='anonymous')
-    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js', integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm', crossorigin='anonymous')
-
-block addedstylesheet
-    link(rel='stylesheet', href='stylesheets/sidebar.css')
 
 block sidebar
+    
+    link(rel='stylesheet', href='stylesheets/sidebar.css')
+    
     .wrapper
-        
-        //
-            script(defer='', src='https://use.fontawesome.com/releases/v5.0.13/js/solid.js', integrity='sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ', crossorigin='anonymous')
-        //
-            script(defer='', src='https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js', integrity='sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY', crossorigin='anonymous')
         script(type='text/javascript').
-            $(document).ready(function () {
-                $('#sidebarCollapse').on('click', function () {
-                    $('#sidebar').toggleClass('active');
+                $(document).ready(function () {
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                    });
                 });
-            });
 
         nav#sidebar
             .sidebar-header
@@ -50,31 +45,14 @@ block sidebar
                     a(href='/home') Productions
                 li
                     a(href='/login') Login
-    //
         #content
-            nav.navbar.navbar-expand-lg.navbar.bg
-                .col-3
-                    button#sidebarCollapse.btn.btn-info(type='button')
-                        i.fas.fa-align-left
-                        
-                            span Open Sidebar
-                    button.btn.btn-dark.d-inline-block.d-lg-none.ml-auto(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
-                        i.fas.fa-align-justify
-                    #navbarSupportedContent.collapse.navbar-collapse
-                        ul.nav.navbar-nav.ml-auto
-                .col-6
-                    h1 #{message}
-                .col-3
+            .row-fluid.border
+                .col-sm-12.box.rounded
+                    p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
+                    later we will replace these generated links with generated objects from bootstrap
+                    p
+                    each production in displayProductions
+                        a(href= `./production/?production=${production.id}`)= production.title
+                        p
 
-            
-                .ui.border
-                    .container.border
-                        .row
-                            .col-sm-12.box.rounded
-                                p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
-                                each production in displayProductions
-                                    a(href= `./production/?production=${production.id}`)= production.title
-                                    p
-
-                    a(href="./logout") Log Out
-                    
+            a(href="./logout") Log Out

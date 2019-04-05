@@ -5,18 +5,70 @@ block scripts
     script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
 
+block sidebar
+    
+    .wrapper
+        link(rel='stylesheet', href='stylesheets/sidebar.css')
+        
+        
+        script(type='text/javascript').
+                $(document).ready(function () {
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                    });
+                });
 
+        nav#sidebar
+            .sidebar-header
+                h3 Side Menu
+            ul.list-unstyled.components
+                p Viewing Options
+                li.active
+                    a.dropdown-toggle(href='#homeSubmenu', data-toggle='collapse', aria-expanded='false') Watchlist
+                    ul#homeSubmenu.collapse.list-unstyled
+                        li
+                            a(href='#') Watch1
+                        li
+                            a(href='#') Watch2
+                        li
+                            a(href='#') Watch3
+                li
+                    a.dropdown-toggle(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false') Genres
+                    ul#pageSubmenu.collapse.list-unstyled
+                        li
+                            a(href='#') Genre1
+                        li
+                            a(href='#') Genre2
+                        li
+                            a(href='#') Genre3
+                li
+                    a(href='/home') Productions
+                li
+                    a(href='/login') Login
+
+        #content
+            .row-fluid.border
+                .col-sm-12.box.rounded
+                    p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
+                    later we will replace these generated links with generated objects from bootstrap
+                    p
+                    each production in displayProductions
+                        a(href= `./production/?production=${production.id}`)= production.title
+                        p
+
+            a(href="./logout") Log Out
 block content
-    //
-        .container.border
-            .row
-                .col-sm-3
-                .col-sm-6
-                    h1 #{message}
-                .col-sm-3
-    .container.border
-        .row
-            .col-sm-12.box.rounded.border
+    
+        //
+            .container.border
+                .row
+                    .col-sm-3
+                    .col-sm-6
+                        h1 #{message}
+                    .col-sm-3
+
+        .row.border
+            .col-sm-12.box.rounded
                 p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
                 later we will replace these generated links with generated objects from bootstrap
                 p
@@ -24,4 +76,4 @@ block content
                     a(href= `./production/?production=${production.id}`)= production.title
                     p
 
-    a(href="./logout") Log Out
+        a(href="./logout") Log Out
