@@ -14,7 +14,7 @@ SIDEBAR STYLE
     max-width: 250px;
     min-height: 100vh;
     background: #1969ff;
-    color: #fff;
+    color: rgb(255, 255, 255);
     transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
     transform-origin: bottom left;
 }
@@ -35,7 +35,7 @@ SIDEBAR STYLE
 }
 
 #sidebar ul p {
-    color: #fff;
+    color: rgb(255, 0, 0);
     padding: 10px;
 }
 
@@ -47,11 +47,11 @@ SIDEBAR STYLE
 
 #sidebar ul li a:hover {
     color: rgb(0, 51, 253);
-    background: #fff;
+    background: rgb(255, 255, 255);
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
+    color: rgb(255, 0, 0);
     background: #6c82e6;
 }
 
@@ -99,21 +99,22 @@ body {
     font-family: 'Poppins', sans-serif;
     background: #424242;
 }
-
+/*
 h2 {
-    color: #fff;
+    color: #000000;
     padding: 15px;
 }
-
+*/
+/*
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
     padding: 15px;
-    color: #ffffff;
+    color: #00000000;
 }
-
+*/
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;

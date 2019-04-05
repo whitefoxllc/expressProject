@@ -1,6 +1,5 @@
 body {
-  background-color: #4e6a88;
-  padding: 50px;
+  background-color: #080E15;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   position: absolute;
   min-height: 100%;
@@ -26,6 +25,9 @@ h3 {
 h4 {
   color: #ffffff;
 }
+h5{
+  color: #fff;
+}
 
 p {
   color: #ffffff;
@@ -45,10 +47,71 @@ p {
   border-width: medium;
   border-color: #09b4ea;
   max-height: 30em;
+  margin-bottom: 20%;
 }
 
-.footer {
-  position: absolute;
-  min-height: 10em;
-  bottom: 0;
+
+
+label.labelcolor{
+  color: white;
 }
+
+a.footerlink{
+  color: black;
+}
+a.footerlink:hover{
+  color:white;
+}
+
+.ad{
+  background-color: #2b353b;
+  padding-bottom: 10%;
+}
+
+
+
+#greeting{
+
+  background-color: #4E6A88;
+  width: 100%;
+}
+.loginbox{
+  background-color: #2b353b;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  padding: 5%;
+  border-width: medium;
+}
+
+.backgroundbox{
+  background-image: url("https://i.imgur.com/KQhuVje.png");
+  background-repeat: repeat;
+  padding-top:2%;
+  padding-bottom: 5%;
+}
+.cardcontainer{
+  margin-bottom: 10%;
+}
+.contact-info{
+  background-color: #4e6a88;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 2%;
+}
+
+.box{
+  background-color: #2b353b;
+  margin-bottom: 10%;
+  margin-top: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  border-width: medium;
+}
+
+.previewGif{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+
+

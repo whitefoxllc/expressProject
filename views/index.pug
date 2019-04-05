@@ -1,12 +1,28 @@
 extends layout
 
 block topbar
-    .row
-        p Top menu goes here
-    .row
-        h1 #{message}
+    include navbar
+    //
+        block sidebar
+            include sidebar
+
 block content
     .row
         block ui
-    .row
-        block footer
+
+
+block footer
+    .container-fluid.contact-info.rounded
+        .row
+            .col-sm-12
+                .footer#back(style="margin-bottom:0")
+                    h4 Creators
+                    p Ricardo Benavides
+                    p AJ Cericos
+                    p Alex Dunn
+                    p Gustavo Peralta
+                    p Anthony Rodriguez
+
+                    h4 Contact Us
+                    a.footerlink(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
+                    p
