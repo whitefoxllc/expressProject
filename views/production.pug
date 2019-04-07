@@ -24,7 +24,7 @@ block content
                             h1 &nbsp;- Season #{season}
                 .col-sm-4
                     h1= productionData.title
-                    p this is where the info of the show is going to go we need to get it from the database
+                    p= productionData.showSummary
                 .col-sm-2
         .container.border#seasonsandeps
             .row
@@ -42,8 +42,8 @@ block content
                 - for (var j =1;j <= episodeCount; j++)
                     if(j == 1 || j % 3 == 0)
                         .row
-                            - for (var i=j; i<(3+j); i++ )
-                                - if(i>=episodeCount) break;
+                            - for (var i = j; i <(3+j); i++ )
+                                - if(i >= episodeCount) break;
                                     .col-sm-4.border
                                         .card.epbox
                                             img.card-img-top(src='/images/thumbplaceholders.jpg', alt='Card image', style='width:100%')
