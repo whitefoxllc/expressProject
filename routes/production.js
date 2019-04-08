@@ -35,7 +35,7 @@ var def = 1;
                                 title: 'Whitefox Streaming Video',
                                 user: req.session.user,
                                 productionData: productionData[0],
-                                season: req.query.seasonSelection,
+                                season: req.query.seasonSelection ? req.query.seasonSelection : 1,
                                 episodeCount: rows.length,
                                 episodeData: rows,
                                 production_list: find
