@@ -13,11 +13,11 @@ connection.connect(function(err) {
 //Gets production title and ID
 var getIdTitle = function (req,callback) {
     connection.query('SELECT title , id FROM productions ',
-        function(err,sBar, fields)
+        function(err,find, fields)
         {
             if (err) throw (err);
 
-           return callback(sBar);
+           return callback(find);
 
         });
 }
