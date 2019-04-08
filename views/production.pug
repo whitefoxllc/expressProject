@@ -18,7 +18,35 @@ block content
             .row
                 .col-sm-2
                 .col-sm-4#showimage
-                    img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/logos.png" alt="logos", width='300')
+                    - var name = productionData.title
+                    case name
+                        when 'The Office'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theOffice.jpg" alt="the office", width='300')
+                        when 'Mr. Robot'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/mrRobot.jpg" alt="the office", width='300')
+                        when 'Parks and Recreations'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/parkAndRecreations.jpg" alt="the office", width='300')
+                        when 'American Gods'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/americanGods.jpg" alt="American Gods", width='300')
+                        when 'Game of Thrones'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/gameOfThrones.jpg" alt="Game of Thrones", width='300')
+                        when 'Hellboy'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/hellBoy.jpg" alt="Hellboy", width='300')
+                        when 'Seinfeld'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/seinfeld.jpg" alt="the sienfeld", width='300')
+                        when 'Shameless'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/shameless.jpeg" alt="shameless", width='300')
+                        when 'The Walking Dead'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theWalkingDead.jpg" alt="the walking dead", width='300')
+                        when 'True Detective'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/trueDetective.jpg" alt="True detective", width='300')
+                        when 'Velvet Buzzsaw'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/velvetBuzzsaw.jpg" alt="velvet buzzsaw", width='300')
+
+                        default
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/placeholder.jpg" alt="the office", width='300')
+
+
                     //
                         if season
                             h1 &nbsp;- Season #{season}
