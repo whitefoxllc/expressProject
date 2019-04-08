@@ -10,9 +10,22 @@ router.get('/', function(req, res, next) {
 
         if (req.session.user) {
             sub.syncSessionWithDb(req, function () {
-                //at present, the home page displays all productions.  In future, feature-specific functionality will determine displayProductions
-                db.readOnlyConnection.query(`SELECT id, title FROM productions;`, function (err, rows, fields) {
+
+                //filters the displayed production list according to (in order of precedence) watchlist or selected genre
+                var productionFilter;
+                if (req.query.filterToSubscriptions) {
+                    productionFilter = `WHERE id IN (SELECT production FROM slots WHERE subscriber = "${req.session.user}")`;
+                }
+                else if (req.query.genre) {
+                    productionFilter = `WHERE genre = "${req.query.genre}"`;
+                }
+
+                db.readOnlyConnection.query(`SELECT id, title FROM productions ${productionFilter};`, function (err, rows, fields) {
                     console.log(req.session);
+                    console.log(`filtering by genre ${productionFilter}`);
+                    console.log(`SELECT id, title FROM productions ${productionFilter};`);
+                    console.log(rows);
+
                     res.render('home', {
                         title: 'Whitefox Streaming Video',
                         message: `Welcome, ${req.session.user}!`,
