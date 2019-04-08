@@ -16,7 +16,7 @@ var registerRouter = require('./routes/register');
 var productionRouter = require('./routes/production');
 var homeRouter = require('./routes/home');
 var testRouter = require('./routes/test');
-var ricardoTestRouter= require('./routes/ricardoTest');
+
 
 var app = express();
 
@@ -49,7 +49,7 @@ app.use('/register', registerRouter);
 app.use('/production', productionRouter);
 app.use('/home', homeRouter);
 app.use('/test', testRouter);
-app.use('/search',ricardoTestRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
