@@ -1,0 +1,35 @@
+extends index
+block content
+    head
+        meta( charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.css")
+    body
+        div(class="container")
+            input(type="text" id="filterInput" placeholder="Search")
+            ul(id="productions" class= "collection with-header")
+                each prod in production_list
+                    li(class="collection-item")
+                        a(href=`/production/?production=${prod.id}`) #{prod.title}
+    script.
+        let filterInput = document.getElementById('filterInput');
+        filterInput.addEventListener('keyup',filterNames);
+        function filterNames() {
+            let filterValue = document.getElementById('filterInput').value.toUpperCase();
+            let ul = document.getElementById("productions");
+            let li = ul.querySelectorAll('li.collection-item');
+
+            for(let i = 0; i < li.length; i++)
+            {
+                let a = li[i].getElementsByTagName('a')[0];
+                if (a.innerHTML.toUpperCase().indexOf(filterValue) > -1)
+                {
+                    li[i].style.display= '';
+                }
+                else
+                {
+                    li[i].style.display='none';
+                }
+            }
+        }

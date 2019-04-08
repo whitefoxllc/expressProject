@@ -1,32 +1,110 @@
-extends layout
+extends index
+
+block topbar
+    include navbar
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
+
     script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
-block topbar
-    .row
-        p Top menu goes here
-    .row
-        h1 #{message}
-block content
 
-    .row
-        h1= productionData.title
-        if season
-            h1 &nbsp;- Season #{season}
-    .row
-        .col-3
-            //later we will replace these generated links with generated objects from bootstrap
-            - var i = 1;
-            while i <= productionData.seasonCount
-                a(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
-                p
-        .col-8
-                - var i = 1;
-                while i <= episodeCount
-                    a(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${i}`) Episode #{i++} - #{episodeData[i-2].title}
-                    p
+block append stylesheet
+    link(rel='stylesheet', href='/stylesheets/productions.css')
+
+block content
+    .container-fluid.backgroundproduction
+        .container-fluid#productionbox
+            .row
+                .col-sm-2
+                .col-sm-4#showimage
+                    - var name = productionData.title
+                    case name
+                        when 'The Office'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theOffice.jpg" alt="the office", width='300')
+                        when 'Mr. Robot'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/mrRobot.jpg" alt="the office", width='300')
+                        when 'Parks and Recreation'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/parksAndRecreations.jpg" alt="the office", width='300')
+                        when 'American Gods'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/americanGods.jpg" alt="American Gods", width='300')
+                        when 'Game of Thrones'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/gameOfThrones.jpg" alt="Game of Thrones", width='300')
+                        when 'Hellboy'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/hellBoy.jpg" alt="Hellboy", width='300')
+                        when 'Seinfeld'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/seinfeld.jpg" alt="the sienfeld", width='300')
+                        when 'Shameless'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/shameless.jpeg" alt="shameless", width='300')
+                        when 'The Walking Dead'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theWalkingDead.jpg" alt="the walking dead", width='300')
+                        when 'True Detective'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/trueDetective.jpg" alt="True detective", width='300')
+                        when 'Velvet Buzzsaw'
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/velvetBuzzsaw.jpg" alt="velvet buzzsaw", width='300')
+
+                        default
+                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/placeholder.jpg" alt="the office", width='300')
+
+
+                    //
+                        if season
+                            h1 &nbsp;- Season #{season}
+                .col-sm-4#showinfo
+                    h1= productionData.title
+                    p= productionData.showSummary
+                .col-sm-2
+                    button#sidebarCollapse.btn.fixed-top.buttoncolor.btn-info(type='button') Sidebar
+    .container.showgrid
+        .container.cardcontainer#seasonsandeps
+            .row
+                .col-sm-2
+                .col-sm-3
+                    .dropdown.select.selectpicker(data-dropup-auto='false')
+                        button.buttoncolor.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                            Dropdown Season #{season}
+                        .dropdown-menu.buttoncolor
+                            - var i = 1;
+                            while i <= productionData.seasonCount
+                                a#link(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
+                                p
+                .col-sm-7
+            .container
+                - for (var j =1;j <= episodeCount; j++)
+                    if(j == 1 || j % 3 == 0)
+                        .row
+                            - for (var i = j; i <(3+j); i++ )
+                                - if(i >= episodeCount) break;
+                                    .col-sm-4
+                                        .card.epbox
+                                            case name
+                                                when 'The Office'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/theOffice.jpg" alt="the office", width='300')
+                                                when 'Mr. Robot'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/mrRobot.jpg" alt="the office", width='300')
+                                                when 'Parks and Recreation'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/parksAndRecreations.jpg" alt="the office", width='300')
+                                                when 'American Gods'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/americanGods.jpg" alt="American Gods", width='300')
+                                                when 'Game of Thrones'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/gameOfThrones.jpg" alt="Game of Thrones", width='300')
+                                                when 'Hellboy'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/hellBoy.jpg" alt="Hellboy", width='300')
+                                                when 'Seinfeld'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/seinfeld.jpg" alt="the sienfeld", width='300')
+                                                when 'Shameless'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/shameless.jpg" alt="shameless", width='300')
+                                                when 'The Walking Dead'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/theWalkingDead.jpg" alt="the walking dead", width='300')
+                                                when 'True Detective'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/trueDetective.jpg" alt="True detective", width='300')
+                                                when 'Velvet Buzzsaw'
+                                                    img.card-img-top#logos(src="/images/epthumbnail/velvetBuzzsaw.jpg" alt="velvet buzzsaw", width='300')
+
+                                                default
+                                                    img.card-img-top#logos(src="/images/showthumbnail/placeholder.jpg" alt="the office", width='300')
+                                            .card-body
+                                                a#link(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${j}`) Episode #{j++} - #{episodeData[j-2].title}
 
     a(href="../home") Go Home<br><br>
     a(href="../logout") Log Out
