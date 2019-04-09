@@ -1,7 +1,7 @@
 extends index
 
 block topbar
-    p top bar goes here
+    include navbar
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
@@ -9,56 +9,27 @@ block scripts
     script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
 
-block addedstylesheet
+block append stylesheet
     link(rel='stylesheet', href='/stylesheets/productions.css')
 
 block content
-    .container-fluid.containsall.rounded.border
-        .container.border#productionbox
+    .container-fluid.backgroundproduction
+        .container-fluid#productionbox
             .row
                 .col-sm-2
                 .col-sm-4#showimage
-                    - var name = productionData.title
-                    case name
-                        when 'The Office'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theOffice.jpg" alt="the office", width='300')
-                        when 'Mr. Robot'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/mrRobot.jpg" alt="the office", width='300')
-                        when 'Parks and Recreations'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/parkAndRecreations.jpg" alt="the office", width='300')
-                        when 'American Gods'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/americanGods.jpg" alt="American Gods", width='300')
-                        when 'Game of Thrones'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/gameOfThrones.jpg" alt="Game of Thrones", width='300')
-                        when 'Hellboy'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/hellBoy.jpg" alt="Hellboy", width='300')
-                        when 'Seinfeld'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/seinfeld.jpg" alt="the sienfeld", width='300')
-                        when 'Shameless'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/shameless.jpeg" alt="shameless", width='300')
-                        when 'The Walking Dead'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/theWalkingDead.jpg" alt="the walking dead", width='300')
-                        when 'True Detective'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/trueDetective.jpg" alt="True detective", width='300')
-                        when 'Velvet Buzzsaw'
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/velvetBuzzsaw.jpg" alt="velvet buzzsaw", width='300')
-
-                        default
-                            img.img-fluid.rounded.mx-auto.logoimage#logos(src="/images/showthumbnail/placeholder.jpg" alt="the office", width='300')
-
-
-                    //
-                        if season
-                            h1 &nbsp;- Season #{season}
-                .col-sm-4
+                    img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                .col-sm-4#showinfo
                     h1= productionData.title
                     p= productionData.showSummary
                 .col-sm-2
-        .container.border#seasonsandeps
+                    button#sidebarCollapse.btn.fixed-top.buttoncolor.btn-info(type='button') Sidebar
+    .container.showgrid
+        .container.cardcontainer#seasonsandeps
             .row
-                .col-2.border
-                .col-3.border
-                    .dropdown
+                .col-sm-2
+                .col-sm-3
+                    .dropdown.select.selectpicker(data-dropup-auto='false')
                         button.buttoncolor.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
                             Dropdown Season #{season}
                         .dropdown-menu.buttoncolor
@@ -66,17 +37,17 @@ block content
                             while i <= productionData.seasonCount
                                 a#link(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
                                 p
-            .container.border
-                - for (var j =1;j <= episodeCount; j++)
-                    if(j == 1 || j % 3 == 0)
+                .col-sm-7
+            .container
+                - var episode = 1
+                while episode <= episodeCount
+                    if (episode % 3 === 1)
                         .row
-                            - for (var i = j; i <(3+j); i++ )
-                                - if(i >= episodeCount) break;
-                                    .col-sm-4.border
-                                        .card.epbox
-                                            img.card-img-top(src='/images/thumbplaceholders.jpg', alt='Card image', style='width:100%')
-                                            .card-body
-                                                a#link(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${j}`) Episode #{j++} - #{episodeData[j-2].title}
-
-    a(href="../home") Go Home<br><br>
-    a(href="../logout") Log Out
+                    .col-sm-4
+                        .card.epbox
+                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${episode}`
+                            a#link(href= episodeLink)
+                                img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                            .card-body
+                                 a#link(href= episodeLink) Episode #{episode} - #{episodeData[episode-1].title}
+                    - episode++

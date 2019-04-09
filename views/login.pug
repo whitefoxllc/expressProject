@@ -1,5 +1,7 @@
 extends index
 
+block topbar
+
 block scripts
     script(src="javascripts/login.js")
 
@@ -8,7 +10,7 @@ block sidebar
 
 
 block content
-    .container-fluid.greeting.text-center#greeting
+    .container-fluid.greeting.text-center.fixed-top#greeting
         .row
             .col-12
                 h3 Welcome to WhiteFox streaming service
@@ -20,7 +22,7 @@ block content
                     h5.font-weight-lighter All your favorite shows,
                     h5 in one place.
 
-                .col-sm-6
+                .col-sm-6.loginframe
                     h2.p2 Please enter your login credentials to continue.
 
                     form(method='POST' action='/login' class='form-login p-2')
