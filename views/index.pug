@@ -2,8 +2,25 @@ extends layout
 
 block topbar
     include navbar
+block sidebar
+    include sidebar
 block content
     .row
         block ui
-    .row
-        block footer
+
+block footer
+    .container-fluid.contact-info.rounded
+        .row
+            .col-sm-2
+                .footer#back(style="margin-bottom:0")
+                    h4 Creators
+                    p Ricardo Benavides
+                    p AJ Cericos
+                    p Alex Dunn
+                    p Gustavo Peralta
+                    p Anthony Rodriguez
+            .col-sm-10
+                .footer
+                    h4 Contact Us
+                    a.footerlink(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
+                    p

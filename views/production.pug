@@ -45,7 +45,9 @@ block content
                         .row
                     .col-sm-4
                         .card.epbox
-                            img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${episode}`
+                            a#link(href= episodeLink)
+                                img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                             .card-body
-                                 a#link(href= `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${episode}`) Episode #{episode} - #{episodeData[episode-1].title}
+                                 a#link(href= episodeLink) Episode #{episode} - #{episodeData[episode-1].title}
                     - episode++

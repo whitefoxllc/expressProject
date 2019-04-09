@@ -1,11 +1,16 @@
 extends index
 
+block topbar
+
 block scripts
     script(src="javascripts/login.js")
 
+block sidebar
 
-block ui
-    .container-fluid.greeting.text-center#greeting
+
+
+block content
+    .container-fluid.greeting.text-center.fixed-top#greeting
         .row
             .col-12
                 h3 Welcome to WhiteFox streaming service
@@ -17,7 +22,7 @@ block ui
                     h5.font-weight-lighter All your favorite shows,
                     h5 in one place.
 
-                .col-sm-6
+                .col-sm-6.loginframe
                     h2.p2 Please enter your login credentials to continue.
 
                     form(method='POST' action='/login' class='form-login p-2')
@@ -37,7 +42,7 @@ block ui
         .container.cardcontainer
             .row
                 .card-deck
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Basic
                             h1.card-text $10
@@ -46,33 +51,20 @@ block ui
 
 
 
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Advanced
                             h1.card-text $15
                             br
                             p.card-text Subscribe to 15 shows for a month, after you are allowed to switch it up
 
-                    .card
+                    .card.ad
                         .card-body
                             h2.card-title Premium
                             h1.card-text $20
                             br
                             p.card-text Subscribe to 25 shows for a month, after you are allowed to switch it up
 
-    .container-fluid.contact-info.rounded
-        .col-sm-12
-            .footer#back(style="margin-bottom:0")
-                h4 Creators
-                p Ricardo Benavides
-                p AJ Cericos
-                p Alex Dunn
-                p Gustavo Peralta
-                p Anthony Rodriguez
-
-                h4 Contact Us
-                a.footerlink(href="https://whitefoxllc.github.io/") https://whitefoxllc.github.io/
-                p
 
 
 

@@ -1,24 +1,27 @@
 extends index
+block topbar
 
-block ui
-    .main.container
-        .row
-            .col-md-6.col-md-offset-3
-                h1.display-4.m-b-2 Sign Up
-                h1.m-b-2 Please enter your registration details
-
-                form(method='POST' action='/register/' class='form-registration')
-                    div.form-group
-                        label(for='name') Username:
-                        input#name.form-control(type='text', name='username')
-                    div.form-group
-                        label(for='email') Email:
-                        input#email.form-control(type='email', name='email')
-                    div.form-group
-                        label(for='pw') Password:
-                        input#pw.form-control(type='password' name='password')
-                    div.form-group
-                        label(for='pw2') Confirm Password:
-                        input#pw2.form-control(type='password' name='confirmPassword')
-                    div.form-group
-                        button.btn.btn-primary(type='submit') Sign up
+block content
+    .container-fluid.backgroundbox
+        .container.box.rounded
+            .row
+                .col-sm-4
+                    h1 Sign Up
+                    h3 Please enter your registration details
+                    form(method='POST' action='/register/' class='form-registration')
+                        .form-group
+                            label.labelcolor(for='name') Username:
+                            input#name.form-control(type='text', name='username')
+                        .form-group
+                            label.labelcolor(for='email') Email:
+                            input#email.form-control(type='email', name='email')
+                        .form-group
+                            label.labelcolor(for='pw') Password:
+                            input#pw.form-control(type='password' name='password')
+                        .form-group
+                            label.labelcolor(for='pw2') Confirm Password:
+                            input#pw2.form-control(type='password' name='confirmPassword')
+                        .form-group
+                            button.btn.btn-primary(type='submit') Sign up
+                .col-sm-8.trailer
+                    img.mx-auto.d-block.img-fluid.float-right.rounded.previewGif(src='https://i.imgur.com/1jofA34.gif', style='width:100%')
