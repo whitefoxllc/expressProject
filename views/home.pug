@@ -20,7 +20,7 @@ block content
                 each production in displayProductions
                     .col-sm-3
                         .card.epbox
-                            - var titleLink = `./production/?production=${production.id}`
+                            - var titleLink = `/production/?production=${production.id}`
                             a#link(href= titleLink)
                                 img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
                             p
