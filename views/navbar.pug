@@ -1,0 +1,281 @@
+head
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    meta( charset="UTF-8")
+    link(rel='stylesheet', href="https://use.fontawesome.com/releases/v5.3.1/css/all.css")
+    link(rel="stylesheet", href="stylesheets/navbar.css")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
+    style.
+        body {
+            background: black !important;
+        }
+
+        nav {
+            list-style-type: none;
+
+        }
+
+        nav.navbar.navbar-default {
+            background-color: #202c39;
+        }
+
+        li.nav_dropdown {
+
+        }
+
+        ul.nav.navbar-left li.dropdown {
+            float: left;
+        }
+
+        ul.nav.navbar-right li {
+            float: left;
+        }
+
+        .btn-group {
+            margin-bottom: 0px;
+            position: relative;
+            top: 2px;
+        }
+
+        button.btn.btn-default.dropdown-toggle {
+            padding: 19px;
+            position: relative;
+            margin: 0px;
+            right: 14px;
+            bottom: 3px;
+            background-color: #000000;
+            border-color: #09b4ea;
+            z-index: 0;
+        }
+
+        ul.dropdown-menu {
+            background-color: #09b4ea;
+        }
+
+        ul.dropdown-menu li a {
+            color: #000000;
+        }
+
+        i.fa.fa-bars {
+            color: #09b4ea;
+
+        }
+
+        li.search input {
+            position: relative;
+            top: 18px;
+            background-color: #000000;
+            color: #09b4ea;
+            border: 5px solid transparent;
+
+        }
+
+        li.search option value {
+            color: #09b4ea;
+        }
+
+        li.search input::placeholder {
+            color: #09b4ea !important;
+        }
+
+        li.search-btn button {
+            margin-right: 100px;
+            position: relative;
+            top: 10px;
+            background-color: #09b4ea;
+        }
+
+        i.fa.fa-search {
+            padding: 8px;
+            position: relative;
+            color: #000000;
+
+        }
+
+        li.nav_button button {
+            background-color: #000000;
+            border-color: #09b4ea;
+        }
+
+        li.nav_button  .btn.btn-default:hover {
+            background-color: #0062cd;
+        }
+
+        li.nav_button  .btn.btn-default.dropdown-toggle:hover {
+            background-color: #0062cd;
+        }
+
+        i.fa.fa-envelope {
+            padding: 19px;
+            color: #09b4ea;
+        }
+
+        i.fa.fa-play {
+            padding: 19px;
+            color: #09b4ea;
+        }
+
+        i.fa.fa-user {
+            padding: 19px;
+            color: #09b4ea;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background: #202c39;
+            color: rgb(255, 255, 255);
+            overflow-x: hidden;
+            transition: all 0.5s ease 0s;
+            padding-top: 60px;
+            border: solid 1px lightgrey;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: rgb(0, 51, 253);
+            background: rgb(255, 255, 255);
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 40px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+        @media screen and (max-width: 700px) {
+            .navbar.navbar-default ul {
+                float: right;
+                width: 100%;
+            }
+        }
+
+body
+    div(id="mySidenav" class="sidenav")
+        a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times
+        h3 White Box Streaming
+        ul.list-unstyled.components
+            p Viewing options
+            li
+                a(href="/home/?filterToSubscriptions=true") SUBSCRIPTIONS
+            li
+                a.dropdown-togglez(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false') GENRES
+                ul#pageSubmenu.collapse.list-unstyled
+                    each gen in genre_list
+                        li
+                            a(href=`/home?genre=${gen.genre}`) #{gen.genre}
+            li
+                a(href='/home') HOME
+            li
+                a(href='./logout') LOG OUT
+    nav.navbar.navbar-default.navbar-expand( role="navigation" )
+        .navbar-header
+            button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" )
+                span(class="navbar-toggler-icon")
+        //a.navbar-brand WhiteBox
+        div(class="collapse navbar-collapse" id="navbarSupportedContent")
+            ul.nav.navbar-left
+                li.dropdown
+                    div.btn-group
+                        button.btn.btn-default.dropdown-toggle(type="button", onclick="openNav()")
+                            i.fa.fa-bars.fa-3x
+                        script.
+                            function openNav() {
+                                document.getElementById("mySidenav").style.width = "250px";
+                            }
+                            function closeNav() {
+                                document.getElementById("mySidenav").style.width = "0";
+                            }
+            ul.nav.navbar-right
+                li.search
+                    input(type="text" id="filterInput" list="productions" placeholder="Search"  )
+                    datalist(id="productions")
+                        each prod in production_list
+                            option(value= prod.title)
+                                a(href=`/production/?production=${prod.id}` id="val")
+                    script.
+                        $(document).ready(function () {
+                            $("#filterInput").keypress(function () {
+                                if (checksExist($("#filterInput").val()) === true) {
+
+                                    window.location.href = $("#productions option[value='" + $("[list='productions']").val() + "']").find("a").attr("href")
+                                }
+                            });
+                        });
+                            $("#filterInput").change(function () {
+
+                                if (checksExist($("#filterInput").val()) === true) {
+
+                                    window.location.href = $("#productions option[value='" + $("[list='productions']").val() + "']").find("a").attr("href")
+                                }
+                            });
+                        function checksExist(inputValue) {
+                            console.log(inputValue);
+                            var x = document.getElementById("productions");
+                            var i;
+                            var flag;
+                            for (i = 0; i < x.options.length; i++) {
+                                if (inputValue == x.options[i].value) {
+                                    flag = true;
+                                }
+                            }
+                            return flag
+
+                        }
+                li.search-btn
+                    button(class="btn btn-default" type="submit" id="searchbtn")
+                        i.fa.fa-search
+                    script.
+                        $(document).ready(function () {
+                            $("#searchbtn").click(function () {
+                                if(checksExist($("#filterInput").val()) === true) {
+
+                                    window.location.href = $("#productions option[value='" + $("[list='productions']").val() + "']").find("a").attr("href")
+                                }
+                            });
+                        });
+
+                        function checksExist(inputValue) {
+                            console.log(inputValue);
+                            var x = document.getElementById("productions");
+                            var i;
+                            var flag;
+                            for (i = 0; i < x.options.length; i++) {
+                                if (inputValue == x.options[i].value) {
+                                    flag = true;
+                                }
+                            }
+                            return flag
+
+                        }
+                li.nav_button
+                    button(class="btn btn-default " type="submit" id="envelope")
+                        i.fa.fa-envelope.fa-2x
+                li.nav_button
+                    button(class="btn btn-default " type="submit" id ="user_btn")
+                        i.fa.fa-user.fa-2x
