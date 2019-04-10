@@ -21,7 +21,16 @@ var getIdTitle = function (req,callback) {
 
         });
 }
-exports = module.exports ={getIdTitle};
+var getGenre = function (req,callback) {
+    connection.query('SELECT DISTINCT genre FROM productions ',
+        function(err,findGenre, fields)
+        {
+            if (err) throw (err);
 
- 
- 
+            return callback(findGenre);
+
+        });
+}
+exports = module.exports ={getIdTitle,getGenre};
+
+
