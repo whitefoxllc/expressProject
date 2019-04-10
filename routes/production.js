@@ -11,14 +11,14 @@ router.get('/', function(req, res, next) {
             search.getAllGenres(req, function (genres) {
                 db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
                     var productionData = rows;
-                    var season = req.query.seasonSelection ? req.query.seasonSelection : 1;
-                    db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${season}";`, function (err, rows, fields) {
+                    var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
+                    db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${seasonSelection}";`, function (err, rows, fields) {
                         if (err) throw err;
                         res.render('production', {
                             title: 'Whitefox Streaming Video',
                             user: req.session.user,
                             productionData: productionData[0],
-                            season: season,
+                            selectedSeason: seasonSelection,
                             episodeCount: rows.length,
                             episodeData: rows,
                             production_list: allProductions,

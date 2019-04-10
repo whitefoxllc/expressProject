@@ -33,7 +33,7 @@ block content
                 .col-sm-3
                     .dropdown.select.selectpicker(data-dropup-auto='false')
                         button.btn.btn-primary.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
-                            Dropdown Season #{season}
+                            Dropdown Season #{selectedSeason}
                         .dropdown-menu.bg-dark
                             - var season = 1;
                             while season <= productionData.seasonCount
@@ -48,7 +48,7 @@ block content
                         .row
                     .col-sm-4
                         .card.epbox
-                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${season}&episodeSelection=${episode}`
+                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
                             a#link(href= episodeLink)
                                 img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                             .card-body
