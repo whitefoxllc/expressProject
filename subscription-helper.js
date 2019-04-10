@@ -34,6 +34,7 @@ var activateSubscription = function (req, slots, callback) {
     var expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 30);
     db.writeSubscriptionsConnection.query(`INSERT INTO subscriptions VALUES("${req.session.user}","${expiryDate.toISOString()}","${slots}");`, function (err, rows, fields) {
+        if (err) throw err;
         req.session.subscriptionActiveUntil = expiryDate;
         req.session.slotsAllowed = slots;
         req.session.activeSlots = 0;
@@ -46,6 +47,7 @@ var renewSubscription = function (req, callback) {
     var expiryDate = new Date(req.session.subscriptionActiveUntil);
     expiryDate.setDate(expiryDate.getDate() + 30);
     db.writeSubscriptionsConnection.query(`UPDATE subscriptions SET subscriptionExpiry = "${expiryDate.toISOString()}" WHERE subscriber = "${req.session.user}";`, function (err, rows, fields) {
+        if (err) throw err;
         req.session.subscriptionActiveUntil = expiryDate;
         callback();
     });
@@ -53,6 +55,7 @@ var renewSubscription = function (req, callback) {
 
 var cancelSubscription = function (req, callback) {
     db.writeProdsConnection.query(`DELETE FROM subscriptions WHERE subscriber = "${req.session.user}";`, function (err, rows, fields) {
+        if (err) throw err;
         req.session.subscriptionActiveUntil = null;
         req.session.slotsAllowed = 0;
         req.session.activeSlots = 0;
@@ -84,6 +87,7 @@ var grantAccessTo = function (req, production, callback) {
         var expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 30);
         db.writeSubscriptionsConnection.query(`INSERT INTO slots VALUES("${req.session.user}","${production}","${expiryDate.toISOString()}");`, function (err, rows, fields) {
+            if (err) throw err;
             req.session.slots.push({"productionID": production, "expiryDate": expiryDate});
             req.session.activeSlots += 1;
             return callback(true);

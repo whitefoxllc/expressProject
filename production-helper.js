@@ -5,6 +5,7 @@ var getFileUrlFor = function (req, production, season, episode, callback) {
     sub.requestAccessTo(req, production, function (success) {
         if (success) {
             db.readOnlyConnection.query(`SELECT fileURL FROM episodes WHERE production = "${production}" AND seasonNumber = "${season}" AND episodeNumber = "${episode}";`, function (err, rows, fields) {
+                if (err) throw err;
                 return callback(rows[0].fileURL);
             });
         }
@@ -19,6 +20,7 @@ var getAllFileUrls = function (req, production, callback) {
     sub.requestAccessTo(req, production, function (success) {
         if (success) {
             db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
+                if (err) throw err;
                 var fileUrls = [[]];
                 var season = 0;
                 fileUrls.push(['']); //push an empty placeholder, as index [0][n] will not be used

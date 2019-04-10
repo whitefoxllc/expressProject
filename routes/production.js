@@ -12,6 +12,7 @@ router.get('/', function(req, res, next) {
                     var productionData = rows;
                     var season = req.query.seasonSelection ? req.query.seasonSelection : 1;
                     db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${season}";`, function (err, rows, fields) {
+                        if (err) throw err;
                         res.render('production', {
                             title: 'Whitefox Streaming Video',
                             user: req.session.user,

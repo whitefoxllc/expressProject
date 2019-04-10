@@ -24,6 +24,7 @@ router.get('/', function(req, res, next) {
                     console.log(`filtering by genre ${productionFilter}`);
                     console.log(`SELECT id, title FROM productions ${productionFilter};`);
                     db.readOnlyConnection.query(`SELECT id, title FROM productions ${productionFilter};`, function (err, rows, fields) {
+                        if (err) throw err;
                         console.log(req.session);
                         console.log(rows);
 
