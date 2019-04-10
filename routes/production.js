@@ -5,8 +5,8 @@ var db = require("../db-helper");
 var search = require("../search-helper");
 
 router.get('/', function(req, res, next) {
-    search.getIdTitle(req,function (find) {
-        search.getGenre(req, function (findGenre) {
+    search.getAllIdsTitles(req,function (find) {
+        search.getAllGenres(req, function (findGenre) {
             if (req.session.user) {
                 db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
                     var productionData = rows;

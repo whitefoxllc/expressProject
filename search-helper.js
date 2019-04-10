@@ -12,25 +12,25 @@ connection.connect(function (err) {
 });
 
 //Gets production title and ID
-var getIdTitle = function (req, callback) {
+var getAllIdsTitles = function (req, callback) {
     connection.query('SELECT title , id FROM productions ',
-        function (err, find, fields) {
+        function (err, rows, fields) {
             if (err) throw (err);
 
-            return callback(find);
+            return callback(rows);
 
         });
 };
 
-var getGenre = function (req, callback) {
+var getAllGenres = function (req, callback) {
     connection.query('SELECT genre FROM genres ',
-        function (err, findGenre, fields) {
+        function (err, genres, fields) {
             if (err) throw (err);
 
-            return callback(findGenre);
+            return callback(genres);
 
         });
 };
-exports = module.exports ={getIdTitle,getGenre};
+exports = module.exports ={getAllIdsTitles,getAllGenres};
 
 
