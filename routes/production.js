@@ -5,9 +5,10 @@ var db = require("../db-helper");
 var search = require("../search-helper");
 
 router.get('/', function(req, res, next) {
-    search.getAllIdsTitles(req,function (allProductions) {
-        search.getAllGenres(req, function (genres) {
-            if (req.session.user) {
+
+    if (req.session.user) {
+        search.getAllIdsTitles(req,function (allProductions) {
+            search.getAllGenres(req, function (genres) {
                 db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
                     var productionData = rows;
                     var season = req.query.seasonSelection ? req.query.seasonSelection : 1;
@@ -25,11 +26,12 @@ router.get('/', function(req, res, next) {
                         });
                     });
                 });
-            } else {
-                res.redirect("/");
-            }
+            });
         });
-    });
+    }
+    else {
+        res.redirect("/");
+    }
 });
 
 module.exports = router;
