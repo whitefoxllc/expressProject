@@ -14,13 +14,16 @@ block content
         .row
             .col-12
                     h1 #{message}
-                    button#sidebarCollapse.btn.buttoncolor.fixed-top.btn-info(type='button') Sidebar
+                    
     .container.contentsandstuff
             .row
-                .col-sm-12.box.rounded
-                    p #{user} has logged in.  Here are some recommended productions (not GoT, Hellboy or Velvet Buzzsaw, we have no episodes in the DB for that)
-                    //later we will replace these generated links with generated objects from bootstrap
-                    each production in displayProductions
-                        a(href= `./production/?production=${production.id}`)= production.title
-                        p
+                each production in displayProductions
+                    .col-sm-3
+                        .card.epbox
+                            - var titleLink = `./production/?production=${production.id}`
+                            a#link(href= titleLink)
+                                img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
+                            p
+                            a#link(href= titleLink)= production.title
+                        
     a(href="./logout") Log Out
