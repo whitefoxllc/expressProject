@@ -3,12 +3,18 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     position: absolute;
     min-height: 100%;
-    min-width: 100%;}
+    min-width: 100%;
+}
+
+h1{
+    color: white;
+}
+
 .buttoncolor {
     background-color: #2B353B;
 }
 #link{
-    color: black;
+    color: white;
 }
 
 .showbox{
@@ -20,16 +26,89 @@ body {
     margin-top: 10%;
     margin-bottom: 10%;
     padding-bottom: 10%;
-    background-color: grey;
+    background-color: #2B353B;
     border-color: #09b4ea;
     border-width: medium;
 
 }
-
 
 .backgroundproduction{
     background-image: url("https://i.imgur.com/bISvErC.jpg");
     background-size: 45%;
     background-repeat: repeat;
     padding: 5%;
+}
+
+
+
+
+.btnThriller{
+    background-color: red;
+    color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.btnComedy{
+    background-color: rgb(255, 255, 0);
+    color: black;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
+.btnamazon{
+    background-color: #FF9900;
+    color: black;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.btnhulu{
+    background-color: #1CE783;
+    color: #151515;
+    text-decoration-style: solid;
+    font-weight: bold;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnnetflix{
+    background-color: #e50914;
+    color: black;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnhbo{
+    background-color: black;
+    color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnFantasy{
+    background-color:rebeccapurple;
+    color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnAction{
+    background-color: firebrick;
+    color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnDrama{
+    background-color:cornflowerblue;
+    color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.btnCrime{
+    background-color: gainsboro;
+    color: black;
+    padding-left: 5%;
+    padding-right: 5%;
 }

@@ -1,7 +1,5 @@
 extends index
 
-block topbar
-    include navbar
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
@@ -20,22 +18,28 @@ block content
                 .col-sm-4#showimage
                     img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                 .col-sm-4#showinfo
-                    h1= productionData.title
+                    h1.text-white= productionData.title
                     p= productionData.showSummary
+                        //gus added buttons that say the genre and network, added link to genre but no network atm
+                    .container
+                        a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
+                        a(class='button' href=`#` )(class="btn"+productionData.hostNetwork).btn #{productionData.hostNetwork}
+
                 .col-sm-2
-                    button#sidebarCollapse.btn.fixed-top.buttoncolor.btn-info(type='button') Sidebar
+                    
+
     .container.showgrid
         .container.cardcontainer#seasonsandeps
             .row
                 .col-sm-2
                 .col-sm-3
                     .dropdown.select.selectpicker(data-dropup-auto='false')
-                        button.buttoncolor.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                        button.btn.btn-primary.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
                             Dropdown Season #{season}
-                        .dropdown-menu.buttoncolor
+                        .dropdown-menu.bg-dark
                             - var i = 1;
                             while i <= productionData.seasonCount
-                                a#link(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
+                                a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${i}`) Season #{i++}
                                 p
                 .col-sm-7
             .container
