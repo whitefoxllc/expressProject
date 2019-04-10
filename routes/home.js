@@ -18,13 +18,13 @@ router.get('/', function(req, res, next) {
                     if (req.query.filterToSubscriptions) {
                         productionFilter = `WHERE id IN (SELECT production FROM slots WHERE subscriber = "${req.session.user}")`;
                     } else if (req.query.genre) {
-                        productionFilter = `WHERE genre = "${req.query.genre}"`;
+                        productionFilter = `join genreTags on productions.id = genreTags.production WHERE genreTags.genre = "${req.query.genre}"`;
                     }
 
+                    console.log(`filtering by genre ${productionFilter}`);
+                    console.log(`SELECT id, title FROM productions ${productionFilter};`);
                     db.readOnlyConnection.query(`SELECT id, title FROM productions ${productionFilter};`, function (err, rows, fields) {
                         console.log(req.session);
-                        console.log(`filtering by genre ${productionFilter}`);
-                        console.log(`SELECT id, title FROM productions ${productionFilter};`);
                         console.log(rows);
 
                         res.render('home', {

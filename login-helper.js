@@ -14,6 +14,7 @@ passwordIsValid = function (username, password, callback) {
     var clientHash = createHash(password);
     console.log(`Hashed ${password} to ${clientHash}`);
     var hashQuery = db.readOnlyConnection.query(`SELECT plainTextPasswordLol FROM users WHERE users.username = "${username}";`, function(err, rows, fields) {
+        console.log(`SELECT plainTextPasswordLol FROM users WHERE users.username = "${username}";`);
         var serverHash = (rows.length > 0) ? rows[0].plainTextPasswordLol : "";
         var valid = (clientHash === serverHash);
         console.log(`Comparing clientHash=${clientHash} with type ${typeof clientHash} with serverHash=${serverHash} with type ${typeof serverHash} (${valid})`);
