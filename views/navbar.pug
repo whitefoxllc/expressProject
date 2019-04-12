@@ -9,23 +9,23 @@ head
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
 
 body
-    div(id="mySidenav" class="sidenav")
+    div(id="mySidenav" class="sidenav").text-center
         a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times
-        h3 White Box Streaming
-        ul.list-unstyled.components
-            p Viewing options
+        h1 White Fox
+        ul.list-unstyled.components.text-center
+            h4 Viewing options
             li
-                a(href="/home/?filterToSubscriptions=true") SUBSCRIPTIONS
+                a(href="/home/?filterToSubscriptions=true").border MY LIST
             li
-                a.dropdown-togglez(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false') GENRES
+                a.dropdown-togglez(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false').border GENRES
                 ul#pageSubmenu.collapse.list-unstyled
                     each gen in genre_list
                         li
                             a(href=`/home?genre=${gen.genre}`) #{gen.genre}
             li
-                a(href='/home') HOME
+                a(href='/home').border HOME
             li
-                a(href='/logout') LOG OUT
+                a(href='/logout').border LOG OUT
     nav.navbar.navbar-default.navbar-expand( role="navigation" )
         .navbar-header
             button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" )
