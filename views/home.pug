@@ -24,4 +24,5 @@ block content
                             a#link(href= titleLink)
                                 img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
                             p
-                            a#link(href= titleLink)= production.title
+                            .col.text-center
+                                a#link(href= titleLink)= production.title
