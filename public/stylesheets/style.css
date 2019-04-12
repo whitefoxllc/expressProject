@@ -112,7 +112,7 @@ a.footerlink:hover{
 .prodBox{
   margin-top: 10%;
   margin-bottom: 10%;
-  padding-bottom: 10%;
+  /*padding-bottom: 10%;*/
   background-color: #2B353B;
   border-color: #09b4ea;
   border-width: medium;
