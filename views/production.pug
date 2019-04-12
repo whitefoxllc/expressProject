@@ -52,5 +52,24 @@ block content
                             a#link(href= episodeLink)
                                 img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                             .card-body
-                                 a#link(href= episodeLink) Episode #{episode} - #{episodeData[episode-1].title}
+                                a.demolink(href='#' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
+                                    #myModal.modal.fade.bannerformmodal(tabindex='-1' role='dialog' aria-labelledby='bannerformmodal' aria-hidden='true')
+                                        .modal-dialog
+                                            .modal-content
+                                                .modal-header
+                                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                                        span(aria-hidden='true') ×
+                                                    h4#myModalLabel.modal-title episode_name
+                                                .modal-body
+                                                    | Season #{season} episode_name
+                                                    div.wrapper.col-10.offset-1.my-4
+                                                        video(id='my-video' class='video-js' controls preload='none' width='1280' height='720'
+                                                            poster='MY_VIDEO_POSTER.jpg' data-setup='{"fluid":true}')
+                                                            //source(src='video/chungus.mp4' type = video / mp4)
+                                                            p.vjs-no-js Please enable Javascript to see this video
+                                        script(type='text/javascript').
+                                            videojs("my-video").src([
+                                                {type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
+                                                //{type: "video/webm", src: "http://vjs.zencdn.net/v/oceans.webm"}
+                                            ]);
                     - episode++
