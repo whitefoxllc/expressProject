@@ -10,6 +10,16 @@ h1{
     color: white;
 }
 
+.btn-dark{
+    background-color: grey; !important;
+    color: white;
+}
+
+.season-select {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
 .buttoncolor {
     background-color: #2B353B;
 }
