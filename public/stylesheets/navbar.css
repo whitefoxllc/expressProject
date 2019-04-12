@@ -122,7 +122,7 @@ i.fa.fa-user {
     background: #202c39;
     color: rgb(255, 255, 255);
     overflow-x: hidden;
-    transition: all 0.5s ease 0s;
+    transition: all 0.3s ease 0s;
     padding-top: 60px;
     border: solid 1px lightgrey;
 }
@@ -131,14 +131,14 @@ i.fa.fa-user {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color:#09b4ea;
     display: block;
     transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: rgb(0, 51, 253);
-    background: rgb(255, 255, 255);
+    color:#0062cd;
+    background: #A0A0A0;
 }
 
 .sidenav .closebtn {
