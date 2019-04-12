@@ -12,14 +12,14 @@ block scripts
 block content
     .container-fluid.greeting.text-center#greeting
         .row
-            .col-12
+            .col-12.border-bottom
                     h1 #{message}
                     
     .container.contentsandstuff
             .row
                 each production in displayProductions
                     .col-sm-3
-                        .card.epbox
+                        .card.prodBox
                             - var titleLink = `/production/?production=${production.id}`
                             a#link(href= titleLink)
                                 img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
