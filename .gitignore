@@ -5,3 +5,5 @@ peralta.js
 .idea/*
 node_modules/
 public/video/
+test/*
+lib/*
