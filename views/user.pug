@@ -1,0 +1,55 @@
+extends index
+
+block topbar
+    include  navbar
+
+block strips
+    link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
+    script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
+    script(src='https://vjs.zencdn.net/7.4.1/video.js')
+
+block content
+
+    .container-fluid.greeting.text-center#greeting
+        .row
+            .col-4
+                p  This is where the user profile will go
+            .col-8
+                .row
+                    h1 #{message}
+                .row
+                    p This is the about
+        .row
+            p  Recent Activity
+
+    .container
+        .row
+            .col-8
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                
+            .col-4
+                H3 Top 10
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+                li  
+                    p The first comment/review
+    .container
+        .row
+            .col-sm-2
+                .card.prodBox
+                    p Productions

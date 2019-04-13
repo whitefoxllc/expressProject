@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+var db = require("../db-helper");
+var sub = require("../subscription-helper");
+var search = require("../search-helper");
+
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+
+
 });
 
 module.exports = router;
