@@ -10,15 +10,11 @@ createHash = function (password) {
 
 //todo implement actual crypto.  This is non-trivial as it cannot be done purely client-side.
 passwordIsValid = function (username, password, callback) {
-    console.log(`Checking password for user "${username}"`);
     var clientHash = createHash(password);
-    console.log(`Hashed ${password} to ${clientHash}`);
     var hashQuery = db.readOnlyConnection.query(`SELECT plainTextPasswordLol FROM users WHERE users.username = "${username}";`, function(err, rows, fields) {
         if (err) throw err;
-        console.log(`SELECT plainTextPasswordLol FROM users WHERE users.username = "${username}";`);
         var serverHash = (rows.length > 0) ? rows[0].plainTextPasswordLol : "";
         var valid = (clientHash === serverHash);
-        console.log(`Comparing clientHash=${clientHash} with type ${typeof clientHash} with serverHash=${serverHash} with type ${typeof serverHash} (${valid})`);
         return callback(valid);
     });
 };
