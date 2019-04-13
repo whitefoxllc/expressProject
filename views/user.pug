@@ -1,55 +1,90 @@
 extends index
 
 block topbar
-    include  navbar
-
-block strips
-    link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
-    script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
-    script(src='https://vjs.zencdn.net/7.4.1/video.js')
+    .col-fluid.border
+        p this is the top bar for now
 
 block content
 
-    .container-fluid.greeting.text-center#greeting
+    .container.greeting.text-center#greeting.border
         .row
-            .col-4
-                p  This is where the user profile will go
-            .col-8
+            .col-3
+                a#link(href='/home/?filterToSubscriptions=true')
+                    img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/userPic.png`, width='100', height='100')
+            .col-6.border
+                .row.border
+                    h3 groucho
                 .row
-                    h1 #{message}
-                .row
-                    p This is the about
+                    p This is the about. This should be saved and taken to and from the database.
+            .col-3.border
         .row
-            p  Recent Activity
+            .col.text-center.border-top
+                h2  Recent Activity
 
     .container
         .row
             .col-8
-                li  
+                //  need to figure out a way to save a user's top 10 through DB
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
+                    p The first comment/review
+                .row.border
+                    p The first comment/review
+                .row.border
                     p The first comment/review
                 
-            .col-4
-                H3 Top 10
-                li  
-                    p The first comment/review
-                li  
-                    p The first comment/review
-                li  
-                    p The first comment/review
-                li  
-                    p The first comment/review
-                li  
-                    p The first comment/review
-    .container
+            .col-4.border
+                .row
+                    .col.text-center
+                        H3 Top 10
+                .row
+                    .col
+                        li  
+                            p Production
+                        li  
+                            p Production
+                        li  
+                            p Production
+                        li  
+                            p Production
+                        li  
+                            p Production
+    .container.border
         .row
-            .col-sm-2
+            .col.text-center.border.greeting#greeting
+                h2 Watchlist
+        .row
+            .col-sm-4
                 .card.prodBox
-                    p Productions
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production
+            .col-sm-4
+                .card.prodBox
+                    p Production

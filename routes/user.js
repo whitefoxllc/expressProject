@@ -7,7 +7,7 @@ var search = require("../search-helper");
 
 router.get('/', function(req, res, next) {
 
-
+    res.render("user", {title: 'userProfile'});
 });
 
 module.exports = router;
