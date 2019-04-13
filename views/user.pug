@@ -10,7 +10,7 @@ block strips
 
 block content
 
-    .container-fluid.greeting.text-center#greeting
+    .container.greeting.text-center#greeting.border
         .row
             .col-4
                 p  This is where the user profile will go
@@ -18,25 +18,30 @@ block content
                 .row
                     h1 #{message}
                 .row
-                    p This is the about
+                    p This is the about #{user}
         .row
-            p  Recent Activity
+            .col.text-center
+                p  Recent Activity
 
     .container
         .row
             .col-8
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
                     p The first comment/review
-                li  
+                .row.border
+                    p The first comment/review
+                .row.border
+                    p The first comment/review
+                .row.border
                     p The first comment/review
                 
-            .col-4
+            .col-4.text-center.border
                 H3 Top 10
                 li  
                     p The first comment/review
@@ -48,8 +53,23 @@ block content
                     p The first comment/review
                 li  
                     p The first comment/review
-    .container
+    .container.border
+        .row
+            .col.text-center.border
+                h2 Watchlist
         .row
             .col-sm-2
                 .card.prodBox
-                    p Productions
+                    p Production
+            .col-sm-2
+                .card.prodBox
+                    p Production
+            .col-sm-2
+                .card.prodBox
+                    p Production
+            .col-sm-2
+                .card.prodBox
+                    p Production
+            .col-sm-2
+                .card.prodBox
+                    p Production
