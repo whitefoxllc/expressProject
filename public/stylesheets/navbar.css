@@ -6,16 +6,23 @@ nav {
     list-style-type: none;
 
 }
+.navbar {
+    padding-top:    0.25rem; /* 0px does not look good on small screens */
+    padding-bottom: 0.25rem;
+    font-size: smaller;      /* Just because I am using big size font */
+    line-height: 1em;
+}
+.navbar-left > li > a , navbar-brand, .navbar-right > li > a {
+    padding-top: 5px !important;
+    height: 30px;
+}
 
 nav.navbar.navbar-default {
     background-color: #202c39;
 }
 
-li.nav_dropdown {
 
-}
-
-ul.nav.navbar-left li.dropdown {
+ul.nav.navbar-left li {
     float: left;
 }
 
@@ -24,20 +31,20 @@ ul.nav.navbar-right li {
 }
 
 .btn-group {
-    margin-bottom: 0px;
-    position: relative;
-    top: 2px;
-}
 
-button.btn.btn-default.dropdown-toggle {
-    padding: 19px;
     position: relative;
-    margin: 0px;
-    right: 14px;
-    bottom: 3px;
+    right: 24px;
+}
+li.nav_button {
+    left: 7px;
+}
+button.btn.btn-default sidebtn {
+
+    position: relative;
     background-color: #000000;
     border-color: #09b4ea;
     z-index: 0;
+    padding: 4px;
 }
 
 ul.dropdown-menu {
@@ -50,12 +57,12 @@ ul.dropdown-menu li a {
 
 i.fa.fa-bars {
     color: #09b4ea;
-
+    padding: 5px;
 }
 
 li.search input {
     position: relative;
-    top: 18px;
+    top: 12px;
     background-color: #000000;
     color: #09b4ea;
     border: 5px solid transparent;
@@ -73,12 +80,12 @@ li.search input::placeholder {
 li.search-btn button {
     margin-right: 100px;
     position: relative;
-    top: 10px;
+    top: 8px;
     background-color: #09b4ea;
 }
 
 i.fa.fa-search {
-    padding: 8px;
+
     position: relative;
     color: #000000;
 
@@ -87,28 +94,32 @@ i.fa.fa-search {
 li.nav_button button {
     background-color: #000000;
     border-color: #09b4ea;
+    padding: 9px;
 }
 
-li.nav_button  .btn.btn-default:hover {
+li.nav_button  .btn.btn-default:hover, sidebtn:hover {
     background-color: #0062cd;
 }
 
-li.nav_button  .btn.btn-default.dropdown-toggle:hover {
-    background-color: #0062cd;
-}
 
+
+li.side_btn button{
+    background-color: #000000;
+    border-color: #09b4ea;
+    padding: 5px;
+}
 i.fa.fa-envelope {
-    padding: 19px;
+
     color: #09b4ea;
 }
 
 i.fa.fa-play {
-    padding: 19px;
+
     color: #09b4ea;
 }
 
 i.fa.fa-user {
-    padding: 19px;
+
     color: #09b4ea;
 }
 
@@ -116,7 +127,7 @@ i.fa.fa-user {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     top: 0;
     left: 0;
     background: #202c39;
@@ -124,7 +135,7 @@ i.fa.fa-user {
     overflow-x: hidden;
     transition: all 0.3s ease 0s;
     padding-top: 60px;
-    border: solid 1px lightgrey;
+
 }
 
 .sidenav a {
@@ -139,6 +150,7 @@ i.fa.fa-user {
 .sidenav a:hover {
     color:#0062cd;
     background: #A0A0A0;
+
 }
 
 .sidenav .closebtn {
@@ -158,9 +170,7 @@ i.fa.fa-user {
         font-size: 18px;
     }
 }
-@media screen and (max-width: 700px) {
-    .navbar.navbar-default ul {
-        float: right;
-        width: 100%;
-    }
+
+.navbar-default{
+    border-color: black;
 }
