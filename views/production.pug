@@ -8,6 +8,7 @@ block scripts
 
 block append stylesheet
     link(rel='stylesheet', href='/stylesheets/productions.css')
+    //link(rel='stylesheet', href='/stylesheets/player.css')
 
 block content
     .container-fluid.backgroundproduction
@@ -50,11 +51,52 @@ block content
                         .col-sm-4
                             .card.epbox
                                 - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                a#link(href= episodeLink)
+                                a#link(href= '#' data-toggle='modal' data-target='#myModal')
+                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                //a#link(href= episodeLink data-toggle='modal' data-target='#myModal')
                                     img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                 .card-body
-                                    a.demolink(href='#' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
-                                        #myModal.modal.fade.bannerformmodal(tabindex='-1' role='dialog' aria-labelledby='bannerformmodal' aria-hidden='true')
+                                    style(type='text/css').
+
+                                        @media screen and (min-width: 768px) {
+                                            .modal-dialog {
+                                                width: 700px; /* New width for default modal */
+                                            }
+
+                                            .modal-sm {
+                                                width: 350px; /* New width for small modal */
+                                            }
+                                        }
+
+                                        @media screen and (min-width: 992px) {
+                                            .modal-lg {
+                                                width: 950px; /* New width for large modal */
+                                            }
+                                        }
+
+                                    // Trigger the modal with a button
+                                    button.btn.btn-info.btn-lg(type='button' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
+                                    // Modal
+                                    #myModal.modal.fade(role='dialog')
+                                        .modal-dialog.modal-lg
+                                            // Modal content
+                                            .modal-content
+                                                .modal-header
+                                                    button.close(type='button' data-dismiss='modal') &times;
+                                                    h4.modal-title Modal Header
+                                                .modal-body
+                                                    video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
+                                                        source(src = '/video/chungus.mp4' type = 'video/mp4')
+                                                        p.vjs-no-js Please enable Javascript to see this video
+                                                //.modal-footer
+                                                    button.btn.btn-default(type='button' data-dismiss='modal') Close
+                                    //script('type/javascript').
+                                        $(".modal-wide").on("show.bs.modal", function () {
+                                            var height = $(window).height() - 200;
+                                            $(this).find(".modal-body").css("max-height", height);
+                                        });
+                                    //a.demolink(href='#' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
+                                        #myModal.modal(tabindex='-1' role='dialog' aria-labelledby='bannerformmodal' aria-hidden='true')
                                             .modal-dialog
                                                 .modal-content
                                                     .modal-header
@@ -62,15 +104,14 @@ block content
                                                             span(aria-hidden='true') ×
                                                         h4#myModalLabel.modal-title episode_name
                                                     .modal-body
-                                                        | Season #{season} episode_name
-                                                        div.wrapper.col-10.offset-1.my-4
+                                                        | Season #{selectedSeason} Episode #{episode}
+                                                        div
                                                             video(id='my-video' class='video-js' controls preload='none' width='1280' height='720'
-                                                                poster='MY_VIDEO_POSTER.jpg' data-setup='{"fluid":true}')
+                                                                poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
                                                                 //source(src='video/chungus.mp4' type = video / mp4)
                                                                 p.vjs-no-js Please enable Javascript to see this video
-                                            script(type='text/javascript').
-                                                videojs("my-video").src([
-                                                    {type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
-                                                    //{type: "video/webm", src: "http://vjs.zencdn.net/v/oceans.webm"}
-                                                ]);
+                                                            //script(type='text/javascript').
+                                                                videojs("my-video").src([
+                                                                    {type: "video/mp4", src: "/video/chungus.mp4"},
+                                                                ]);
                         - episode++
