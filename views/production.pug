@@ -51,12 +51,12 @@ block content
                         .col-sm-4
                             .card.epbox
                                 - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                a#link(href= '#' data-toggle='modal' data-target='#myModal')
+                                a#link.btn-link(href= '#' data-target-color="blue" data-toggle='modal' data-target='#myModal')
                                     img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                 //a#link(href= episodeLink data-toggle='modal' data-target='#myModal')
                                 .card-body
                                     // Trigger the modal with a button
-                                    button.btn.btn-info.btn-lg(type='button' data-target-color="blue" data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
+                                    button.btn-link.btn-info.btn-lg(type='button' data-target-color="blue" data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
                                     // Modal
                                     #myModal.modal.fade(data-modal-color='' role='dialog')
                                         .modal-dialog.modal-lg
@@ -73,7 +73,7 @@ block content
                                                     //allows for colored bg of modal
                                                     script('text/javascript').
                                                         $(document).ready(function () {
-                                                            $('body').on('click', '.btn', function () {
+                                                            $('body').on('click', '.btn-link', function () {
                                                                 var color = $(this).data('target-color');
                                                                 $('#myModal').attr('data-modal-color', color);
                                                             });
