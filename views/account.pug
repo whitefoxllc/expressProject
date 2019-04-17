@@ -1,0 +1,177 @@
+extends index
+
+block topbar
+    include navbar
+    link(rel="stylesheet" href="/stylesheets/account.css")
+
+
+block content
+    body
+        div(class="modal fade" id="modalUserName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter New Username
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                 .form-group
+                                     i(class="fas fa-user prefix grey-text")
+                                     input(type="text" id="orangeForm-name" class="form-control validate" name="displayName")
+                                     label(data-error="wrong" data-success="right" for="orangeForm-name") New Username
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Username
+        div(class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter New Password
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                .form-group
+                                    i(class="fas fa-lock prefix grey-text")
+                                    input(type="text" id="orangeForm-oldpass" class="form-control validate" name="old-password")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-oldpass") Old Password
+                                    br
+                                    i(class="fas fa-lock prefix grey-text")
+                                    input(type="text" id="orangeForm-pass" class="form-control validate" name="password")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-pass") New Password
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Password
+        div(class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter New Email
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                .form-group
+                                    i(class="fas fa-envelope prefix grey-text")
+                                    input(type="text" id="orangeForm-email" class="form-control validate" name="email")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-email") New Email
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Email
+        div(class="modal fade" id="modalPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter New Payment Method
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                .form-group
+                                    input(type="text" id="orangeForm-pay" class="form-control validate" name="pay")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-pay") New Credit Card
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Payment Method
+        div(class="modal fade" id="modalBilling" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter Billing Address
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                .form-group
+                                    input(type="text" id="orangeForm-address" class="form-control validate" name="str1")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-address") Street Line 1
+                                    input(type="text" id="orangeForm-address2" class="form-control validate" name="str2")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-address2") Street Line 2
+                                    input(type="text" id="orangeForm-state" class="form-control validate" name="state")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-state") State
+                                    input(type="text" id="orangeForm-zip" class="form-control validate" name="zip")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-zip") Zip Code
+                                    input(type="text" id="orangeForm-country" class="form-control validate" name="country")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-country") Country
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Plan
+        div(class="modal fade" id="modalPlan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog" role="document")
+                div(class="modal-content")
+                    div(class="modal-header text-center")
+                        h4(class="model-title w-100 font-weight-bold") Enter New Plan
+                        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                            span(aria-hidden="true") &times;
+                    div(class="modal-body mx-3")
+                        form(method='POST' action='/account/' class='form-registration')
+                            div(class="md-form mb-5")
+                                .form-group
+                                    input(type="text" id="orangeForm-plan" class="form-control validate" name="plan")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-plan") New Plan
+                            div(class="modal-footer d-flex justify-content-center")
+                                .form-group
+                                    button(class="btn btn-deep-orange" type="submit") Change Plan
+        h1 Account
+        hr
+        div.membership
+            h3 Profile Information
+            button(class="btn btn-default " type="submit" id="cancelbtn") Cancel Membership
+            ul.member
+                li Name: #{user}
+                li Username: #{name}
+                   span
+                       a(href=""  data-toggle="modal" data-target="#modalUserName") change username
+                li
+                    span Password:
+                    input(type="password" value=`${password}` id="passText")
+                    input(type="checkbox" onclick="togglePassword()")
+                    span Show Password
+                    a(href=""  data-toggle="modal" data-target="#modalPassword") change password
+                    script.
+                        function togglePassword() {
+                            var x = document.getElementById("passText");
+                            if (x.type == "password") {
+                                x.type = "text";
+                            } else {
+                                x.type = "password";
+                            }
+                        }
+                li Email: #{email}
+                    a(href="" data-toggle="modal" data-target="#modalEmail") Change email
+
+                li Date Created: #{dateCreated}
+            hr
+            h3 Billing
+            ul.bill
+                li Payment Info
+                    a(href=""  data-toggle="modal" data-target="#modalPay") update payment info
+                div.address
+                    li Street Line 1:
+                    li Street Line 2:
+                    li State:
+                    li Zip Code:
+                    li Country:
+                    li
+                        a(href=""  data-toggle="modal" data-target="#modalBilling") update billing address
+            br
+            br
+            br
+            br
+            hr
+            h3 Plan Details
+            ul.plans
+                li Plan: #{status}
+                    a(href=""  data-toggle="modal" data-target="#modalPlan") Change plan
+            hr
+
+
+
+
+

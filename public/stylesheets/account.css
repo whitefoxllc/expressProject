@@ -1,0 +1,54 @@
+h1, h3 {
+    color: #0062cd;
+}
+
+ul {
+    list-style-type: none;
+    float: right;
+}
+ ul li {
+     color: #09b4ea;
+
+ }
+ ul.member li {
+     position: relative;
+     bottom: 50px;
+ }
+
+ ul li a, ul.plans li a {
+     margin-left: 50px;
+     float: right;
+ }
+ input {
+     background-color: #000000;
+     border-color: transparent;
+ }
+ .plan ul.plans {
+     float: right;
+ }
+ ul.plans li {
+     position: relative;
+     bottom: 15px;
+     right: 342px;
+ }
+
+ul.plans li a {
+    position: relative;
+    left: 340px;
+}
+ul.bill {
+    font-size: 15px;
+    float: right;
+}
+ul.bill li {
+    position: relative;
+    left: 316px;
+}
+ul.bill li a {
+    position: relative;
+    left: 236px;
+}
+ul.bill  {
+    position: relative;
+    bottom: 45px;
+}
