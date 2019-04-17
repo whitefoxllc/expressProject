@@ -8,7 +8,7 @@ block scripts
 
 block append stylesheet
     link(rel='stylesheet', href='/stylesheets/productions.css')
-    //link(rel='stylesheet', href='/stylesheets/player.css')
+    link(rel='stylesheet', href='/stylesheets/player.css')
 
 block content
     .container-fluid.backgroundproduction
@@ -54,40 +54,30 @@ block content
                                 a#link(href= '#' data-toggle='modal' data-target='#myModal')
                                     img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                 //a#link(href= episodeLink data-toggle='modal' data-target='#myModal')
-                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                 .card-body
-                                    style(type='text/css').
-
-                                        @media screen and (min-width: 768px) {
-                                            .modal-dialog {
-                                                width: 700px; /* New width for default modal */
-                                            }
-
-                                            .modal-sm {
-                                                width: 350px; /* New width for small modal */
-                                            }
-                                        }
-
-                                        @media screen and (min-width: 992px) {
-                                            .modal-lg {
-                                                width: 950px; /* New width for large modal */
-                                            }
-                                        }
-
                                     // Trigger the modal with a button
-                                    button.btn.btn-info.btn-lg(type='button' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
+                                    button.btn.btn-info.btn-lg(type='button' data-target-color="blue" data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
                                     // Modal
-                                    #myModal.modal.fade(role='dialog')
+                                    #myModal.modal.fade(data-modal-color='' role='dialog')
                                         .modal-dialog.modal-lg
                                             // Modal content
                                             .modal-content
                                                 .modal-header
+                                                    h4.modal-title WhiteFox Streaming Video
                                                     button.close(type='button' data-dismiss='modal') &times;
-                                                    h4.modal-title Modal Header
                                                 .modal-body
                                                     video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
                                                         source(src = '/video/chungus.mp4' type = 'video/mp4')
                                                         p.vjs-no-js Please enable Javascript to see this video
+
+                                                    //allows for colored bg of modal
+                                                    script('text/javascript').
+                                                        $(document).ready(function () {
+                                                            $('body').on('click', '.btn', function () {
+                                                                var color = $(this).data('target-color');
+                                                                $('#myModal').attr('data-modal-color', color);
+                                                            });
+                                                        });
                                                 //.modal-footer
                                                     button.btn.btn-default(type='button' data-dismiss='modal') Close
                                     //script('type/javascript').
