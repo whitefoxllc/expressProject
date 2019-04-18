@@ -12,12 +12,13 @@ var clearSessionSubscriptionData = function (req) {
 var syncSessionWithDb = function (req, callback) {
     clearSessionSubscriptionData(req);
     db.readOnlyConnection.query(`SELECT * FROM subscriptions WHERE subscriber = "${req.session.user}";`, function(err, rows, fields) {
+        if(err) throw err;
         if (rows.length > 0) {
             req.session.subscriptionActiveUntil = rows[0].subscriptionExpiry;
             req.session.slotsAllowed = rows[0].slotCount;
 
             db.readOnlyConnection.query(`SELECT * FROM slots WHERE subscriber = "${req.session.user}";`, function(err, rows, fields) {
-                // req.session.slots = [];
+                if(err) throw err;
                 req.session.activeSlots = rows.length;
                 rows.forEach(function (slot) {
                     req.session.slots.push({"productionID": slot.production, "expiryDate": slot.expiry})
