@@ -81,16 +81,16 @@ describe("subscription-helper", function () {
             });
         });
     });
-    //
+
     describe("activateSubscription", function () {
         it("activates a subscription", function (done) {
             subs.clearSessionSubscriptionData(dummyReq);
             db.coverageRootConnection.query(`delete from subscriptions where subscriber="coverage";`, function () {
                 const TEMPSLOTS = 50;
                 subs.activateSubscription(dummyReq, TEMPSLOTS, function () {
-                    var expiryDate = new Date();
-                    expiryDate.setDate(expiryDate.getDate() + 30);
-                    assert((expiryDate - dummyReq.session.subscriptionActiveUntil) < 1000);
+                    var approximateExpiry = new Date();
+                    approximateExpiry.setDate(approximateExpiry.getDate() + 30);
+                    assert((approximateExpiry - dummyReq.session.subscriptionActiveUntil) < 1000);
                     assert.strictEqual(dummyReq.session.slotsAllowed, TEMPSLOTS);
                     assert.strictEqual(dummyReq.session.activeSlots, 0);
                     assert.strictEqual(dummyReq.session.slots.length, 0);
@@ -99,19 +99,34 @@ describe("subscription-helper", function () {
             })
         });
     });
-    //
-    // describe("renewSubscription", function () {
-    //     it("adds 30 days to the expiry date of a subscription", function () {
-    //         assert.strictEqual(true, true);
-    //     });
-    // });
-    //
-    // describe("cancelSubscription", function () {
-    //     it("cancels a subscription", function () {
-    //         assert.strictEqual(true, true);
-    //     });
-    // });
-    //
+
+    describe("renewSubscription", function () {
+        it("adds 30 days to the expiry date of a subscription", function (done) {
+            subs.renewSubscription(dummyReq, function () {
+                subs.syncSessionWithDb(dummyReq, function () {
+                    var approximateExpiry = new Date();
+                    approximateExpiry.setDate(approximateExpiry.getDate() + 60);
+                    assert((dummyReq.session.subscriptionActiveUntil.getDate() - approximateExpiry.getDate()) <= 1);
+                    done();
+                });
+            })
+        });
+    });
+
+    describe("cancelSubscription", function () {
+        it("cancels a subscription", function (done) {
+            subs.cancelSubscription(dummyReq, function () {
+                subs.syncSessionWithDb(dummyReq, function () {
+                    assert.strictEqual(dummyReq.session.subscriptionActiveUntil, null);
+                    assert.strictEqual(dummyReq.session.slotsAllowed, 0);
+                    assert.strictEqual(dummyReq.session.activeSlots, 0);
+                    assert.strictEqual(dummyReq.session.slots.length, 0);
+                    done();
+                })
+            })
+        });
+    });
+
     // describe("subscriptionActive", function () {
     //     it("returns whether a subscription is active or not", function () {
     //         assert.strictEqual(true, true);
