@@ -33,18 +33,8 @@ before(function (done) {
 //this needs to end up as a connection pool so it can be closed in one go, but I'll do that later
 after(function (done) {
     console.log("Testing complete - closing db connections!");
-    db.readOnlyConnection.end(function () {
-        db.sessionStoreConnection.end(function () {
-            db.writeProdsConnection.end(function () {
-                db.writeSubscriptionsConnection.end(function () {
-                    db.writeUsersConnection.end(function () {
-                        db.coverageRootConnection.end(function () {
-                            done();
-                        });
-                    });
-                });
-            });
-        });
+    db.coverageRootConnection.end(function () {
+        done();
     });
 });
 
@@ -92,11 +82,23 @@ describe("subscription-helper", function () {
         });
     });
     //
-    // describe("activateSubscription", function () {
-    //     it("activates a subscription", function () {
-    //         assert.strictEqual(true, true);
-    //     });
-    // });
+    describe("activateSubscription", function () {
+        it("activates a subscription", function (done) {
+            subs.clearSessionSubscriptionData(dummyReq);
+            db.coverageRootConnection.query(`delete from subscriptions where subscriber="coverage";`, function () {
+                const TEMPSLOTS = 50;
+                subs.activateSubscription(dummyReq, TEMPSLOTS, function () {
+                    var expiryDate = new Date();
+                    expiryDate.setDate(expiryDate.getDate() + 30);
+                    assert((expiryDate - dummyReq.session.subscriptionActiveUntil) < 1000);
+                    assert.strictEqual(dummyReq.session.slotsAllowed, TEMPSLOTS);
+                    assert.strictEqual(dummyReq.session.activeSlots, 0);
+                    assert.strictEqual(dummyReq.session.slots.length, 0);
+                    done();
+                })
+            })
+        });
+    });
     //
     // describe("renewSubscription", function () {
     //     it("adds 30 days to the expiry date of a subscription", function () {
