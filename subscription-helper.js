@@ -6,6 +6,7 @@ var clearSessionSubscriptionData = function (req) {
     req.session.slotsAllowed = 0;
     req.session.activeSlots = 0;
     req.session.slots = [];
+    console.log(req.session.slots);
 };
 
 var syncSessionWithDb = function (req, callback) {
@@ -132,4 +133,4 @@ var refreshAccessLists = function (req, callback) {
 
 
 
-exports = module.exports = {syncSessionWithDb, activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
+exports = module.exports = {clearSessionSubscriptionData, syncSessionWithDb, activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
