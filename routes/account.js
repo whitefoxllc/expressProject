@@ -10,7 +10,8 @@ router.get('/', function(req, res, next) {
         search.getAllGenres(req, function (findGenre) {
 
             const accountQuery = `SELECT *  FROM users WHERE username = "${req.session.user}"`;
-            db.readOnlyConnection.query(accountQuery,(err,rows, fields) => {
+            const addressQuery = `SELECT * FROM userBillingAddress WHERE user = "${req.session.user}"`;
+            db.readOnlyConnection.query(accountQuery,addressQuery,(err,rows, fields) => {
 
                 res.render('account',{user: req.session.user,
                     email: rows[0].emailaddress,
@@ -28,11 +29,46 @@ router.get('/', function(req, res, next) {
     });
 });
 router.post('/', function(req, res) {
-    db.writeUsersConnection.query(`UPDATE users SET displayName = "${req.body.displayName}" WHERE username= "${req.session.user}";`, function (err, rows, fields) {
-        console.log(`UPDATE users SET displayName = "${req.body.displayName}" WHERE username= "${req.session.user}";`);
-        console.log("new name " + req.body.displayName + " name: " + req.session.user)
+    if (typeof req.body.displayName !== 'undefined') {
+        db.writeUsersConnection.query(`UPDATE users SET displayName = "${req.body.displayName}" WHERE username= "${req.session.user}";`, function (err, rows, fields) {
+            console.log(`UPDATE users SET displayName = "${req.body.displayName}" WHERE username= "${req.session.user}";`);
+            console.log("new name " + req.body.displayName + " name: " + req.session.user)
+            res.redirect('/account');
+        });
+    }
+    else if (typeof req.body.password !== 'undefined') {
+        db.writeUsersConnection.query(`UPDATE users SET plainTextPasswordLol = "${req.body.password}" Where username = "${req.session.user}";`,function (err,rows,fields) {
+            res.redirect('/account');
+        });
+
+    }
+    else if (typeof req.body.email !== 'undefined')
+    {
+        db.writeUsersConnection.query(`UPDATE users SET emailaddress = "${req.body.email}" Where username = "${req.session.user}";`,function (err,rows,fields) {
+            res.redirect('/account');
+        });
+    }
+    else if (typeof req.body.str1 !== 'undefined')
+    {
+        db.writeUsersConnection.query(`Select * FROM userBillingAddress WHERE "${req.session.user}";`,function (err,rows,flieds) {
+            if (!rows.user )
+            {
+                db.writeUsersConnection.query(`INSERT INTO userBillingAddress (user, streetLine1,streetLine2,state,zipCode,country)
+                                                VALUES ("${req.session.user}", "${req.body.str1}","${req.body.str2}","${req.body.state}","${req.body.zip}","${req.body.country}";`,
+                    function (err,rows,fields) {
+                    res.redirect('/account');
+                });
+            }
+            else {
+                db.writeUsersConnection.query(`UPDATE userbillingAddress SET streetLine1 = "${req.body.srt1}", streetLine2  `)
+            }
+
+        });
+    }
+    else
+    {
         res.redirect('/account');
-    });
+    }
 
 });
 

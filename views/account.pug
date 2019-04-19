@@ -19,7 +19,7 @@ block content
                             div(class="md-form mb-5")
                                  .form-group
                                      i(class="fas fa-user prefix grey-text")
-                                     input(type="text" id="orangeForm-name" class="form-control validate" name="displayName")
+                                     input(type="text" id="orangeForm-name" class="form-control validate" value ="" required name="displayName")
                                      label(data-error="wrong" data-success="right" for="orangeForm-name") New Username
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -36,11 +36,11 @@ block content
                             div(class="md-form mb-5")
                                 .form-group
                                     i(class="fas fa-lock prefix grey-text")
-                                    input(type="text" id="orangeForm-oldpass" class="form-control validate" name="old-password")
+                                    input(type="password" id="orangeForm-oldpass" class="form-control validate" value ="" required name="old-password")
                                     label(data-error="wrong" data-success="right" for="orangeForm-oldpass") Old Password
                                     br
                                     i(class="fas fa-lock prefix grey-text")
-                                    input(type="text" id="orangeForm-pass" class="form-control validate" name="password")
+                                    input(type="password" id="orangeForm-pass" class="form-control validate" value ="" required name="password")
                                     label(data-error="wrong" data-success="right" for="orangeForm-pass") New Password
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -57,7 +57,7 @@ block content
                             div(class="md-form mb-5")
                                 .form-group
                                     i(class="fas fa-envelope prefix grey-text")
-                                    input(type="text" id="orangeForm-email" class="form-control validate" name="email")
+                                    input(type="email" id="orangeForm-email" class="form-control validate" value =""  required name="email" )
                                     label(data-error="wrong" data-success="right" for="orangeForm-email") New Email
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -73,7 +73,7 @@ block content
                         form(method='POST' action='/account/' class='form-registration')
                             div(class="md-form mb-5")
                                 .form-group
-                                    input(type="text" id="orangeForm-pay" class="form-control validate" name="pay")
+                                    input(type="text" id="orangeForm-pay" class="form-control validate" value ="" required name="pay")
                                     label(data-error="wrong" data-success="right" for="orangeForm-pay") New Credit Card
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -89,15 +89,15 @@ block content
                         form(method='POST' action='/account/' class='form-registration')
                             div(class="md-form mb-5")
                                 .form-group
-                                    input(type="text" id="orangeForm-address" class="form-control validate" name="str1")
+                                    input(type="text" id="orangeForm-address" class="form-control validate" value ="" required name="str1")
                                     label(data-error="wrong" data-success="right" for="orangeForm-address") Street Line 1
-                                    input(type="text" id="orangeForm-address2" class="form-control validate" name="str2")
+                                    input(type="text" id="orangeForm-address2" class="form-control validate" value ="" required name="str2")
                                     label(data-error="wrong" data-success="right" for="orangeForm-address2") Street Line 2
-                                    input(type="text" id="orangeForm-state" class="form-control validate" name="state")
+                                    input(type="text" id="orangeForm-state" class="form-control validate" value ="" required name="state")
                                     label(data-error="wrong" data-success="right" for="orangeForm-state") State
-                                    input(type="text" id="orangeForm-zip" class="form-control validate" name="zip")
+                                    input(type="text" id="orangeForm-zip" class="form-control validate" value ="" required name="zip")
                                     label(data-error="wrong" data-success="right" for="orangeForm-zip") Zip Code
-                                    input(type="text" id="orangeForm-country" class="form-control validate" name="country")
+                                    input(type="text" id="orangeForm-country" class="form-control validate" value ="" required name="country")
                                     label(data-error="wrong" data-success="right" for="orangeForm-country") Country
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -113,7 +113,7 @@ block content
                         form(method='POST' action='/account/' class='form-registration')
                             div(class="md-form mb-5")
                                 .form-group
-                                    input(type="text" id="orangeForm-plan" class="form-control validate" name="plan")
+                                    input(type="text" id="orangeForm-plan" class="form-control validate" value ="" required name="plan")
                                     label(data-error="wrong" data-success="right" for="orangeForm-plan") New Plan
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -168,7 +168,7 @@ block content
             h3 Plan Details
             ul.plans
                 li Plan: #{status}
-                    a(href=""  data-toggle="modal" data-target="#modalPlan") Change plan
+                    a(href=""  data-toggle="modal" data-target="#modalPlan") change plan
             hr
 
 
