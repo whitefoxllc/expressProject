@@ -68,12 +68,28 @@ a.footerlink:hover{
   padding-bottom: 10%;
 }
 
-
-
 #greeting{
 
   background-color: #4E6A88;
   width: 100%;
+}
+#greetingdark{
+
+  background-color: #202c39;
+  color: #ffffff;
+}
+#greetingblack{
+
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.reviewBorder{
+  
+  background-color: #fff;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 .loginbox{
   background-color: #2b353b;
