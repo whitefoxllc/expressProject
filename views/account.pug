@@ -36,15 +36,60 @@ block content
                             div(class="md-form mb-5")
                                 .form-group
                                     i(class="fas fa-lock prefix grey-text")
-                                    input(type="password" id="orangeForm-oldpass" class="form-control validate" value ="" required name="old-password")
-                                    label(data-error="wrong" data-success="right" for="orangeForm-oldpass") Old Password
+                                    input(type="password" id="orangeForm-oldpass" class="form-control validate" value ="" required name="old-password" placeholder="Current Password")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-oldpass")
+                                    span(id="currentpass" class="glyphicon glyphicon-remove" style="color:#FF0004;") Matches current password
                                     br
                                     i(class="fas fa-lock prefix grey-text")
-                                    input(type="password" id="orangeForm-pass" class="form-control validate" value ="" required name="password")
-                                    label(data-error="wrong" data-success="right" for="orangeForm-pass") New Password
+                                    input(type="password" id="orangeForm-pass" class="form-control validate" value ="" required name="password" placeholder="New Password")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-pass")
+                                    span(id="newpass" class="glyphicon glyphicon-remove" style="color:#FF0004;") Different from old password
+                                    br
+                                    i(class="fas fa-lock prefix grey-text")
+                                    input(type="password" id="orangeForm-repeat" class="form-control validate" value ="" required  placeholder="Repeat New Password")
+                                    label(data-error="wrong" data-success="right" for="orangeForm-repeat")
+                                    span(id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;") Passwords match
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
-                                    button(class="btn btn-deep-orange" type="submit") Change Password
+                                    button(class="btn btn-deep-orange" type="submit" id="passbtn") Change Password
+                            script.
+                                $("input[type=password]").keyup(function () {
+                                    var oldpassacon = document.getElementById("passText");
+                                    if (oldpassacon.value == $("#orangeForm-oldpass").val()) {
+                                        $("#currentpass").removeClass("glyphicon-remove");
+                                        $("#currentpass").addClass("glyphicon-ok");
+                                        $("#currentpass").css("color", "#00A41E");
+                                        $("#passbtn").attr("disabled", false);
+                                    } else {
+                                        $("#currentpass").removeClass("glyphicon-ok");
+                                        $("#currentpass").addClass("glyphicon-remove");
+                                        $("#currrentpass").css("color", "#FF0004");
+                                        $("#passbtn").attr("disabled", true);
+                                    }
+
+                                    if (oldpassacon.value !== $("#orangeForm-pass").val()) {
+                                        $("#newpass").removeClass("glyphicon-remove");
+                                        $("#newpass").addClass("glyphicon-ok");
+                                        $("#newpass").css("color", "#00A41E");
+                                        $("#passbtn").attr("disabled", false);
+                                    } else {
+                                        $("#newpass").removeClass("glyphicon-ok");
+                                        $("#newpass").addClass("glyphicon-remove");
+                                        $("#newpass").css("color", "#FF0004");
+                                        $("#passbtn").attr("disabled", true);
+                                    }
+                                    if ($("#orangeForm-repeat").val() == $("#orangeForm-pass").val() &&$("#orangeForm-pass").val().length !== 0 ) {
+                                        $("#pwmatch").removeClass("glyphicon-remove");
+                                        $("#pwmatch").addClass("glyphicon-ok");
+                                        $("#pwmatch").css("color", "#00A41E");
+                                        $("#passbtn").attr("disabled",false);
+                                    } else {
+                                        $("#pwmatch").removeClass("glyphicon-ok");
+                                        $("#pwmatch").addClass("glyphicon-remove");
+                                        $("#pwmatch").css("color", "#FF0004");
+                                        $("#passbtn").attr("disabled",true);
+                                    }
+                                });
         div(class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             div(class="modal-dialog" role="document")
                 div(class="modal-content")

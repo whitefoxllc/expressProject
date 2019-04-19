@@ -52,3 +52,6 @@ ul.bill  {
     position: relative;
     bottom: 45px;
 }
+.glyphicon.glyphicon-remove {
+    font-size: 10px;
+}
