@@ -60,7 +60,7 @@ router.post('/', function(req, res) {
                 });
             }
             else {
-                db.writeUsersConnection.query(`UPDATE userbillingAddress SET streetLine1 = "${req.body.srt1}", streetLine2  `)
+                db.writeUsersConnection.query(`UPDATE userbillingAddress SET streetLine1 = "${req.body.srt1}", streetLine2 = "${req.body.str2}", state = "${req.body.state}", zipCode = "${req.body.zip}",country = "${req.body.country}" `)
             }
 
         });
