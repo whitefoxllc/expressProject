@@ -3,19 +3,19 @@ const assert  = require('assert');
 //login-helper tests
 db = require("../db-helper");
 subs = require("../subscription-helper");
+dates = require("../date-helper");
 
 
 
     //dummy variables used to simulate valid requests
 var now = new Date();
-
-var later = new Date();
-later.setDate(later.getDate() + 30);
+var oneMonthFromNow = new Date();
+oneMonthFromNow.setDate(now.getDate() + 30);
 
 var farLater = new Date('January 1, 5000 00:00:00');
 var farLaterStr = "5000-00-00 00:00:00";
 
-const dummySlotArray = [{productionID:"testProduction", expiryDate:farLaterStr}];
+const dummySlotArray = [{productionID:"testProduction", expiryDate:oneMonthFromNow}];
 const maxSlots = 127;
 console.log();
 
@@ -25,21 +25,27 @@ function makeDummyReq(username, subscriptionActive, slotsArray, createSpareSlots
     req = {
         session: {
             user: username,
-            subscriptionActiveUntil: subscriptionActive ? farLaterStr : null,
+            subscriptionActiveUntil: subscriptionActive ? oneMonthFromNow : null,
             slotsAllowed: createSpareSlots ? maxSlots : slotsArray.length,
             activeSlots: slotsArray.length,
             slots: slotsArray
         }
     };
+
+    if (!subscriptionActive) {
+        req.session.slotsAllowed = 0;
+        req.session.activeSlots = 0;
+    }
+
     testUsers.push(req.session.user);
     let creationQueriesString = `INSERT INTO users (username, emailaddress, dateCreated, plaintextPasswordLol) VALUES ("${username}", "emailaddress", NOW(), "plainTextPasswordLol");`;
 
     if (subscriptionActive) {
-        creationQueriesString += `insert into subscriptions values('${req.session.user}', '${req.session.subscriptionActiveUntil}', '${req.session.slotsAllowed}');`;
+        creationQueriesString += `insert into subscriptions values('${req.session.user}', '${dates.dateToSqlDatetime(req.session.subscriptionActiveUntil)}', '${req.session.slotsAllowed}');`;
     }
 
     slotsArray.forEach(function (element) {
-        creationQueriesString += `insert into slots values('${req.session.user}','${element.productionID}','${element.expiryDate}');`;
+        creationQueriesString += `insert into slots values('${req.session.user}','${element.productionID}','${dates.dateToSqlDatetime(element.expiryDate)}');`;
     });
 
     db.coverageRootConnection.query(creationQueriesString, function (err, rows, fields) {
@@ -79,7 +85,7 @@ describe("subscription-helper", function () {
     describe("clearSessionSubscriptionData", function () {
         it("clears the four relevant session variables", function (done) {
             makeDummyReq("clearSessionSubscriptionData", true, dummySlotArray, true, function (req) {
-                assert.strictEqual(req.session.subscriptionActiveUntil, farLaterStr);
+                assert.strictEqual(req.session.subscriptionActiveUntil, oneMonthFromNow);
                 assert.strictEqual(req.session.slotsAllowed, maxSlots);
                 assert.strictEqual(req.session.activeSlots, 1);
                 assert.strictEqual(req.session.slots, dummySlotArray);
@@ -100,35 +106,34 @@ describe("subscription-helper", function () {
             makeDummyReq("syncSessionWithDb", true, dummySlotArray, true, function (req) {
                 subs.clearSessionSubscriptionData(req);
                 subs.syncSessionWithDb(req, function () {
-                    assert.strictEqual(req.session.subscriptionActiveUntil, farLaterStr);
+                    assert(dates.timesAreApproximatelyEqual(req.session.subscriptionActiveUntil, oneMonthFromNow));
                     assert.strictEqual(req.session.slotsAllowed, maxSlots);
                     assert.strictEqual(req.session.activeSlots, 1);
                     assert.strictEqual(req.session.slots[0].productionID, 'testProduction');
-                    assert.strictEqual(req.session.slots[0].expiryDate, farLaterStr);
+                    assert(dates.timesAreApproximatelyEqual(req.session.slots[0].expiryDate, oneMonthFromNow));
                     assert.strictEqual(true, true);
                     done();
                 });
             });
         });
     });
-    //
-    // describe("activateSubscription", function () {
-    //     it("activates a subscription", function (done) {
-    //         subs.clearSessionSubscriptionData(dummyReq);
-    //         db.coverageRootConnection.query(`delete from subscriptions where subscriber="${testUsername}";`, function () {
-    //             const TEMPSLOTS = 50;
-    //             subs.activateSubscription(dummyReq, TEMPSLOTS, function () {
-    //                 var approximateExpiry = new Date();
-    //                 approximateExpiry.setDate(approximateExpiry.getDate() + 30);
-    //                 assert((approximateExpiry - dummyReq.session.subscriptionActiveUntil) < 1000);
-    //                 assert.strictEqual(dummyReq.session.slotsAllowed, TEMPSLOTS);
-    //                 assert.strictEqual(dummyReq.session.activeSlots, 0);
-    //                 assert.strictEqual(dummyReq.session.slots.length, 0);
-    //                 done();
-    //             })
-    //         })
-    //     });
-    // });
+
+    describe("activateSubscription", function () {
+        it("activates a subscription", function (done) {
+            makeDummyReq("activateSubscription", false, [], false, function (req) {
+                assert(!req.session.subscriptionActiveUntil);
+                subs.activateSubscription(req, maxSlots, function () {
+                    var approximateExpiry = new Date();
+                    approximateExpiry.setDate(approximateExpiry.getDate() + 30);
+                    assert(dates.timesAreApproximatelyEqual(req.session.subscriptionActiveUntil, oneMonthFromNow));
+                    assert.strictEqual(req.session.slotsAllowed, maxSlots);
+                    assert.strictEqual(req.session.activeSlots, 0);
+                    assert.strictEqual(req.session.slots.length, 0);
+                    done();
+                })
+            });
+        });
+    });
     //
     // describe("renewSubscription", function () {
     //     it("adds 30 days to the expiry date of a subscription", function (done) {

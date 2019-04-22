@@ -1,5 +1,5 @@
-var db = require('./db-helper.js');
-
+const db = require('./db-helper.js');
+const dates = require('./date-helper');
 
 var clearSessionSubscriptionData = function (req) {
     req.session.subscriptionActiveUntil = null;
@@ -13,7 +13,7 @@ var syncSessionWithDb = function (req, callback) {
     db.readOnlyConnection.query(`SELECT * FROM subscriptions WHERE subscriber = "${req.session.user}";`, {}, function(err, rows, fields) {
         if(err) throw err;
         if (rows.length > 0) {
-            req.session.subscriptionActiveUntil = rows[0].subscriptionExpiry;
+            req.session.subscriptionActiveUntil = dates.dateFromSqlDatetime(rows[0].subscriptionExpiry);
             req.session.slotsAllowed = rows[0].slotCount;
         }
 
@@ -22,7 +22,7 @@ var syncSessionWithDb = function (req, callback) {
 
             req.session.activeSlots = rows.length;
             rows.forEach(function (slot) {
-                req.session.slots.push({"productionID": slot.production, "expiryDate": slot.expiry})
+                req.session.slots.push({"productionID": slot.production, "expiryDate": dates.dateFromSqlDatetime(slot.expiry)})
             });
 
             callback();
@@ -30,13 +30,13 @@ var syncSessionWithDb = function (req, callback) {
     });
 };
 
-var activateSubscription = function (req, slots, callback) {
+var activateSubscription = function (req, slotsAllowed, callback) {
     var expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 30);
-    db.writeSubscriptionsConnection.query(`INSERT INTO subscriptions VALUES("${req.session.user}","${expiryDate.toISOString()}","${slots}");`, {}, function (err, rows, fields) {
+    db.writeSubscriptionsConnection.query(`INSERT INTO subscriptions VALUES("${req.session.user}","${dates.dateToSqlDatetime(expiryDate)}","${slotsAllowed}");`, {}, function (err, rows, fields) {
         if (err) throw err;
         req.session.subscriptionActiveUntil = expiryDate;
-        req.session.slotsAllowed = slots;
+        req.session.slotsAllowed = slotsAllowed;
         req.session.activeSlots = 0;
         req.session.slots = [];
         callback();
@@ -46,7 +46,7 @@ var activateSubscription = function (req, slots, callback) {
 var renewSubscription = function (req, callback) {
     var expiryDate = new Date(req.session.subscriptionActiveUntil);
     expiryDate.setDate(expiryDate.getDate() + 30);
-    db.writeSubscriptionsConnection.query(`UPDATE subscriptions SET subscriptionExpiry = "${expiryDate.toISOString()}" WHERE subscriber = "${req.session.user}";`, {}, function (err, rows, fields) {
+    db.writeSubscriptionsConnection.query(`UPDATE subscriptions SET subscriptionExpiry = "${dates.dateToSqlDatetime(expiryDate)}" WHERE subscriber = "${req.session.user}";`, {}, function (err, rows, fields) {
         if (err) throw err;
         req.session.subscriptionActiveUntil = expiryDate;
         callback();
@@ -86,7 +86,7 @@ var grantAccessTo = function (req, production, callback) {
     if (req.session.subscriptionActiveUntil && req.session.activeSlots < req.session.slotsAllowed) {
         var expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 30);
-        db.writeSubscriptionsConnection.query(`INSERT INTO slots VALUES("${req.session.user}","${production}","${expiryDate.toISOString()}");`, {}, function (err, rows, fields) {
+        db.writeSubscriptionsConnection.query(`INSERT INTO slots VALUES("${req.session.user}","${production}","${dates.dateToSqlDatetime(expiryDate)}");`, {}, function (err, rows, fields) {
             if (err) throw err;
             req.session.slots.push({"productionID": production, "expiryDate": expiryDate});
             req.session.activeSlots += 1;
