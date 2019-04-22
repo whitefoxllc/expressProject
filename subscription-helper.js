@@ -71,11 +71,22 @@ var subscriptionActive = function (req) {
 var hasAccessTo = function (req, production) {
     var accessible = false;
     if (subscriptionActive(req)) {
+        let now = new Date();
+        let refreshedSlots = [];
+            ////prune expired slots, and set accessible if an unexpired slot exists for the production
         req.session.slots.forEach(function (slot) {
-            if (slot.productionID === production) {
-                accessible = true;
+            if (slot.expiryDate > now) {
+                refreshedSlots.push(slot);
+                if (slot.productionID === production) {
+                    accessible = true;
+                }
+            }
+            else {
+                req.session.activeSlots -= 1;
             }
         });
+
+        req.session.slots = refreshedSlots;
     }
 
     return accessible;
@@ -83,14 +94,20 @@ var hasAccessTo = function (req, production) {
 
 var grantAccessTo = function (req, production, callback) {
     var grantSuccessful = false;
-    if (req.session.subscriptionActiveUntil && req.session.activeSlots < req.session.slotsAllowed) {
+    if (hasAccessTo(req, production)) {
+        return callback(true);
+    }
+    else if (req.session.subscriptionActiveUntil && req.session.activeSlots < req.session.slotsAllowed) {
         var expiryDate = new Date();
         expiryDate.setDate(expiryDate.getDate() + 30);
-        db.writeSubscriptionsConnection.query(`INSERT INTO slots VALUES("${req.session.user}","${production}","${dates.dateToSqlDatetime(expiryDate)}");`, {}, function (err, rows, fields) {
+        db.writeSubscriptionsConnection.query(`delete from slots where subscriber='${req.session.user}' and production='${production}'`, function (err, rows, fields) {
             if (err) throw err;
-            req.session.slots.push({"productionID": production, "expiryDate": expiryDate});
-            req.session.activeSlots += 1;
-            return callback(true);
+            db.writeSubscriptionsConnection.query(`insert into slots values("${req.session.user}","${production}","${dates.dateToSqlDatetime(expiryDate)}");`, {}, function (err, rows, fields) {
+                if (err) throw err;
+                req.session.slots.push({"productionID": production, "expiryDate": expiryDate});
+                req.session.activeSlots += 1;
+                return callback(true);
+            });
         });
     }
     else {
@@ -121,4 +138,4 @@ var removeAccessTo = function (req, production, callback) {
     }
 };
 
-exports = module.exports = {clearSessionSubscriptionData, syncSessionWithDb, activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
+exports = module.exports = {clearSessionSubscriptionData, syncSessionWithDb, activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo};

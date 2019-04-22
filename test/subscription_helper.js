@@ -12,12 +12,8 @@ var now = new Date();
 var oneMonthFromNow = new Date();
 oneMonthFromNow.setDate(now.getDate() + 30);
 
-var farLater = new Date('January 1, 5000 00:00:00');
-var farLaterStr = "5000-00-00 00:00:00";
-
 const dummySlotArray = [{productionID:"testProduction", expiryDate:oneMonthFromNow}];
 const maxSlots = 127;
-console.log();
 
 var testUsers = [];
 
@@ -183,35 +179,49 @@ describe("subscription-helper", function () {
     });
 
     describe("hasAccessTo", function () {
-        it("returns whether or not a user has an active slot for a production", function () {
-            it("returns false because no subscription exists", function (done) {
-                makeDummyReq("hasAccessTo-1", false, [], false, function (req) {
-                    assert.strictEqual(subs.hasAccessTo(dummyReq, "testProduction"), false);
-                    done();
-                });
+        it("returns whether or not a user has an active slot for a production (false because no subscription exists)", function (done) {
+            makeDummyReq("hasAccessTo-1", false, [], false, function (req) {
+                assert.strictEqual(subs.hasAccessTo(req, "testProduction"), false);
+                done();
             });
+        });
 
-            it("returns false because no slot exists", function (done) {
-                makeDummyReq("hasAccessTo-2", true, [], true, function (req) {
-                    assert.strictEqual(subs.hasAccessTo(dummyReq, "testProduction"), false);
-                    done();
-                });
+        it("returns whether or not a user has an active slot for a production (false because no slot exists)", function (done) {
+            makeDummyReq("hasAccessTo-2", true, [], true, function (req) {
+                assert.strictEqual(subs.hasAccessTo(req, "testProduction"), false);
+                done();
             });
+        });
 
+        it("returns whether or not a user has an active slot for a production (true because a subscription is active)", function (done) {
+            makeDummyReq("hasAccessTo-3", true, [{productionID: "testProduction", expiryDate: oneMonthFromNow}], true, function (req) {
+                assert.strictEqual(subs.hasAccessTo(req, "testProduction"), true);
+                done();
+            });
+        });
 
-
-            it("returns true because a subscription is active", function (done) {
-                makeDummyReq("hasAccessTo-3", true, [{productionID: "testProduction", expiryDate: oneMonthFromNow}], true, function (req) {
-                    assert.strictEqual(subs.hasAccessTo(dummyReq, "testProduction"), true);
-                    done();
-                });
+        it("returns whether or not a user has an active slot for a production (prunes an expired slot)", function (done) {
+            let inThePast = new Date();
+            inThePast.setDate(inThePast.getDate() - 1);
+            makeDummyReq("hasAccessTo-4", true, [{productionID: "testProduction", expiryDate: inThePast}], false, function (req) {
+                assert.strictEqual(subs.hasAccessTo(req, "testProduction"), false);
+                done();
             });
         });
     });
 
     describe("grantAccessTo", function () {
+        it("grants access because unexpired matching slot already exists", function (done) {
+            makeDummyReq("grantAccessTo-1", true, [{productionID: "testProduction", expiryDate: oneMonthFromNow}], false, function (req) {
+                subs.grantAccessTo(req, "testProduction", function () {
+                    assert.strictEqual(subs.hasAccessTo(req, "testProduction"), true);
+                    done();
+                });
+            });
+        });
+
         it("creates a slot for a user and production with an expiry 30 days out", function (done) {
-            makeDummyReq("grantAccessTo-1", true, [], true, function (req) {
+            makeDummyReq("grantAccessTo-2", true, [], true, function (req) {
                 subs.grantAccessTo(req, "testProduction", function () {
                     assert.strictEqual(subs.hasAccessTo(req, "testProduction"), true);
                     done();
@@ -220,7 +230,7 @@ describe("subscription-helper", function () {
         });
 
         it("fails to create a slot for a user and production because no subscription exists", function (done) {
-            makeDummyReq("grantAccessTo-2", false, [], false, function (req) {
+            makeDummyReq("grantAccessTo-3", false, [], false, function (req) {
                 subs.grantAccessTo(req, "testProduction", function () {
                     assert.strictEqual(subs.hasAccessTo(req, "testProduction"), false);
                     done();
@@ -229,7 +239,7 @@ describe("subscription-helper", function () {
         });
 
         it("fails to create a slot for a user and production because no spare slots exist", function (done) {
-            makeDummyReq("grantAccessTo-3", true, [], false, function (req) {
+            makeDummyReq("grantAccessTo-4", true, [], false, function (req) {
                 subs.grantAccessTo(req, "testProduction", function () {
                     assert.strictEqual(subs.hasAccessTo(req, "testProduction"), false);
                     done();
