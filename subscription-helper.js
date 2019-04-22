@@ -114,22 +114,11 @@ var removeAccessTo = function (req, production, callback) {
         if (req.session.slots[i].productionID === production) {
             req.session.slots.splice(i, 1);
             req.session.activeSlots -= 1;
-            db.writeProdsConnection.query(`DELETE FROM slots WHERE subscriber = "${req.session.user}" AND production = "${production}";`);
+            db.writeProdsConnection.query(`DELETE FROM slots WHERE subscriber = "${req.session.user}" AND production = "${production}";`, function () {
+                callback();
+            });
         }
     }
 };
-
-//not yet tested
-var refreshAccessLists = function (req, callback) {
-    var now = new Date();
-    req.session.slots.forEach(function (slot) {
-        if (slot.expiryDate < now) {
-            removeAccessTo(req, slot.productionID, callback);
-        }
-    });
-};
-
-
-
 
 exports = module.exports = {clearSessionSubscriptionData, syncSessionWithDb, activateSubscription, renewSubscription, cancelSubscription, subscriptionActive, hasAccessTo, grantAccessTo, requestAccessTo, removeAccessTo, refreshAccessLists};
