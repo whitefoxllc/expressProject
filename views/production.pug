@@ -63,7 +63,7 @@ block content
                                             // Modal content
                                             .modal-content
                                                 .modal-header
-                                                    h4.modal-title WhiteFox Streaming Video
+                                                    h4.modal-title WhiteFox Streaming Video #{episode}
                                                     button.close(type='button' data-dismiss='modal') &times;
                                                 .modal-body
                                                     video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
@@ -76,6 +76,12 @@ block content
                                                             $('body').on('click', '.btn-link', function () {
                                                                 var color = $(this).data('target-color');
                                                                 $('#myModal').attr('data-modal-color', color);
+                                                            });
+                                                            $('body').on('hidden.bs.modal', '.modal', function () {
+                                                                $('video').trigger('pause');
+                                                            });
+                                                            $('body').on('shown.bs.modal', '.modal', function () {
+                                                                $('video').trigger('play');
                                                             });
                                                         });
                                                 //.modal-footer
