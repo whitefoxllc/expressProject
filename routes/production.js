@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
                                 user: req.session.user,
                                 productionData: productionData[0],
                                 selectedSeason: seasonSelection,
-                                episodeCount: epData ? epData[seasonSelection].length : 0,
+                                episodeCount: epData ? (epData[seasonSelection].length - 1) : 0,
                                 episodeData: epData,
                                 production_list: allProductions,
                                 genre_list: genres
