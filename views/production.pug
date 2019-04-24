@@ -45,69 +45,15 @@ block content
             .row
                 .container
                     - var episode = 1
-                    while episode <= episodeCount
-                        if (episode % 3 === 1)
-                            .row
-                        .col-sm-4
-                            .card.epbox
-                                - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                a#link.btn-link(href= '#' data-target-color="blue" data-toggle='modal' data-target='#myModal')
-                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                //a#link(href= episodeLink data-toggle='modal' data-target='#myModal')
-                                .card-body
-                                    // Trigger the modal with a button
-                                    button.btn-link.btn-info.btn-lg(type='button' data-target-color="blue" data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
-                                    // Modal
-                                    #myModal.modal.fade(data-modal-color='' role='dialog')
-                                        .modal-dialog.modal-lg
-                                            // Modal content
-                                            .modal-content
-                                                .modal-header
-                                                    h4.modal-title WhiteFox Streaming Video #{episode}
-                                                    button.close(type='button' data-dismiss='modal') &times;
-                                                .modal-body
-                                                    video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
-                                                        source(src = '/video/chungus.mp4' type = 'video/mp4')
-                                                        p.vjs-no-js Please enable Javascript to see this video
-
-                                                    //allows for colored bg of modal
-                                                    script('text/javascript').
-                                                        $(document).ready(function () {
-                                                            $('body').on('click', '.btn-link', function () {
-                                                                var color = $(this).data('target-color');
-                                                                $('#myModal').attr('data-modal-color', color);
-                                                            });
-                                                            $('body').on('hidden.bs.modal', '.modal', function () {
-                                                                $('video').trigger('pause');
-                                                            });
-                                                            $('body').on('shown.bs.modal', '.modal', function () {
-                                                                $('video').trigger('play');
-                                                            });
-                                                        });
-                                                //.modal-footer
-                                                    button.btn.btn-default(type='button' data-dismiss='modal') Close
-                                    //script('type/javascript').
-                                        $(".modal-wide").on("show.bs.modal", function () {
-                                            var height = $(window).height() - 200;
-                                            $(this).find(".modal-body").css("max-height", height);
-                                        });
-                                    //a.demolink(href='#' data-toggle='modal' data-target='#myModal') Episode #{episode} - #{episodeData[episode - 1].title}
-                                        #myModal.modal(tabindex='-1' role='dialog' aria-labelledby='bannerformmodal' aria-hidden='true')
-                                            .modal-dialog
-                                                .modal-content
-                                                    .modal-header
-                                                        button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                                            span(aria-hidden='true') ×
-                                                        h4#myModalLabel.modal-title episode_name
-                                                    .modal-body
-                                                        | Season #{selectedSeason} Episode #{episode}
-                                                        div
-                                                            video(id='my-video' class='video-js' controls preload='none' width='1280' height='720'
-                                                                poster='/images/showthumbnail/testProduction.jpg' data-setup='{"fluid":true}')
-                                                                //source(src='video/chungus.mp4' type = video / mp4)
-                                                                p.vjs-no-js Please enable Javascript to see this video
-                                                            //script(type='text/javascript').
-                                                                videojs("my-video").src([
-                                                                    {type: "video/mp4", src: "/video/chungus.mp4"},
-                                                                ]);
-                        - episode++
+                        while episode <= episodeCount
+                            if (episode % 3 === 1)
+                                .row
+                                    - for (var i= episode; i<(3+episode); i++)
+                                        - if (i>episodeCount) break;
+                                            .col-sm-4
+                                                .card.epbox
+                                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                    - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
+                                                    .card-body
+                                                        a#link(href= `${episodeLink}`)=episodeData[selectedSeason][episode-1].title
+                                        - episode++
