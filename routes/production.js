@@ -4,6 +4,7 @@ var router = express.Router();
 var db = require("../db-helper");
 var search = require("../search-helper");
 var subs = require("../subscription-helper");
+var prods = require("../production-helper");
 
 router.get('/', function(req, res, next) {
 
@@ -14,15 +15,16 @@ router.get('/', function(req, res, next) {
                     var productionData = rows;
                     var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
                     subs.hasAccessTo(req, req.query.production);
-                    db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${seasonSelection}";`, function (err, rows, fields) {
-                        if (err) throw err;
+                    //db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${seasonSelection}";`, function (err, rows, fields) {
+                    prods.getAllFileUrls(req, req.query.production, function(epData) {
+                        // if (err) throw err;
                         res.render('production', {
                             title: 'Whitefox Streaming Video',
                             user: req.session.user,
                             productionData: productionData[0],
                             selectedSeason: seasonSelection,
-                            episodeCount: rows.length,
-                            episodeData: rows,
+                            episodeCount: epData[seasonSelection].length,
+                            episodeData: epData,
                             production_list: allProductions,
                             genre_list: genres
                         });

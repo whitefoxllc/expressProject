@@ -19,8 +19,7 @@ var getFileUrlFor = function (req, production, season, episode, callback) {
 var getAllFileUrls = function (req, production, callback) {
     sub.requestAccessTo(req, production, function (success) {
         if (success) {
-            db.readOnlyConnection.q
-            uery(`SELECT seasonNumber, episodeNumber, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
+            db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, title, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
                 if (err) throw err;
                 var fileUrls = [[]];
                 var season = 0;
@@ -32,7 +31,7 @@ var getAllFileUrls = function (req, production, callback) {
                         season += 1;
                     }
 
-                    fileUrls[season].push(row.fileURL);
+                    fileUrls[season].push({title: row.title, url:row.fileURL});
                 });
 
                 return callback(fileUrls);
