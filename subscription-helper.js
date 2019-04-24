@@ -64,8 +64,9 @@ var cancelSubscription = function (req, callback) {
 };
 
 var subscriptionActive = function (req) {
-    var now = new Date();
-    return (req.session.subscriptionActiveUntil > now);
+    let now = new Date();
+    let expiry = new Date(req.session.subscriptionActiveUntil);
+    return (expiry > now);
 };
 
 var hasAccessTo = function (req, production) {
@@ -75,7 +76,8 @@ var hasAccessTo = function (req, production) {
         let refreshedSlots = [];
             ////prune expired slots, and set accessible if an unexpired slot exists for the production
         req.session.slots.forEach(function (slot) {
-            if (slot.expiryDate > now) {
+            var expiry = new Date(slot.expiryDate);
+            if (expiry > now) {
                 refreshedSlots.push(slot);
                 if (slot.productionID === production) {
                     accessible = true;

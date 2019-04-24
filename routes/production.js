@@ -3,6 +3,7 @@ var router = express.Router();
 
 var db = require("../db-helper");
 var search = require("../search-helper");
+var subs = require("../subscription-helper");
 
 router.get('/', function(req, res, next) {
 
@@ -12,6 +13,7 @@ router.get('/', function(req, res, next) {
                 db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
                     var productionData = rows;
                     var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
+                    subs.hasAccessTo(req, req.query.production);
                     db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${seasonSelection}";`, function (err, rows, fields) {
                         if (err) throw err;
                         res.render('production', {
