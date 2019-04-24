@@ -9,29 +9,28 @@ var prods = require("../production-helper");
 router.get('/', function(req, res, next) {
 
     if (req.session.user) {
-        search.getAllIdsTitles(req,function (allProductions) {
-            search.getAllGenres(req, function (genres) {
-                db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
-                    var productionData = rows;
-                    var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
-                    subs.hasAccessTo(req, req.query.production);
-                    //db.readOnlyConnection.query(`SELECT episodeNumber, title, fileURL FROM episodes WHERE production = "${req.query.production}" AND seasonNumber = "${seasonSelection}";`, function (err, rows, fields) {
-                    prods.getAllFileUrls(req, req.query.production, function(epData) {
-                        // if (err) throw err;
-                        res.render('production', {
-                            title: 'Whitefox Streaming Video',
-                            user: req.session.user,
-                            productionData: productionData[0],
-                            selectedSeason: seasonSelection,
-                            episodeCount: epData[seasonSelection].length,
-                            episodeData: epData,
-                            production_list: allProductions,
-                            genre_list: genres
+        subs.syncSessionWithDb(req, function () {
+            search.getAllIdsTitles(req,function (allProductions) {
+                search.getAllGenres(req, function (genres) {
+                    db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
+                        var productionData = rows;
+                        var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
+                        prods.getAllFileUrls(req, req.query.production, function(epData) {
+                            res.render('production', {
+                                title: 'Whitefox Streaming Video',
+                                user: req.session.user,
+                                productionData: productionData[0],
+                                selectedSeason: seasonSelection,
+                                episodeCount: epData ? epData[seasonSelection].length : 0,
+                                episodeData: epData,
+                                production_list: allProductions,
+                                genre_list: genres
+                            });
                         });
                     });
                 });
             });
-        });
+        })
     }
     else {
         res.redirect("/");
