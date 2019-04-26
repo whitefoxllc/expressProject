@@ -68,10 +68,9 @@ block content
                                             - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
                                             .col-sm-4
                                                 .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
-                                                    a(href= episodeLink)
-                                                        img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                                     .card-body
-                                                                a#link(href= episodeLink) #{episodeData[selectedSeason][episode].title}
+                                                        p= episodeData[selectedSeason][episode].title
                                             - episode++
     script(src="/javascripts/production.js")
 
