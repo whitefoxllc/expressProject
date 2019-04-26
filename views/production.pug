@@ -43,35 +43,37 @@ block content
 
                 .col-sm-2
 
+    if (userCanAccess)
     .container.showgrid
         .container.cardcontainer#seasonsandeps
-            .row
-                .col-sm-4
-                    .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
-                        button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
-                            Dropdown Season #{selectedSeason}
-                        .dropdown-menu.bg-dark.dropdown-dark
-                            - var season = 1;
-                            while season <= productionData.seasonCount
-                                a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
-                                - season++
-                                p
-                .col-sm-8
-            .row
-                .container
-                    - var episode = 1
-                        while episode <= episodeCount
-                            if (episode % 3 === 1)
-                                .row
-                                    - for (var i= episode; i<(3+episode); i++)
-                                        - if (i>episodeCount) break;
-                                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                            .col-sm-4
-                                                .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
-                                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                                    .card-body
-                                                        p= episodeData[selectedSeason][episode].title
-                                            - episode++
+            if (userCanAccess)
+                .row
+                    .col-sm-4
+                        .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
+                            button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
+                                Dropdown Season #{selectedSeason}
+                            .dropdown-menu.bg-dark.dropdown-dark
+                                - var season = 1;
+                                while season <= productionData.seasonCount
+                                    a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
+                                    - season++
+                                    p
+                    .col-sm-8
+                .row
+                    .container
+                        - var episode = 1
+                            while episode <= episodeCount
+                                if (episode % 3 === 1)
+                                    .row
+                                        - for (var i= episode; i<(3+episode); i++)
+                                            - if (i>episodeCount) break;
+                                                - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
+                                                .col-sm-4
+                                                    .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
+                                                        img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                        .card-body
+                                                            p= episodeData[selectedSeason][episode].title
+                                                - episode++
     script(src="/javascripts/production.js")
 
 
