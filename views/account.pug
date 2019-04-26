@@ -192,13 +192,13 @@ block content
                                     script.
                                         $("#orangeForm-state").change(function () {
 
-                                            if (checksExist($("#orangeForm-state").val()) === false) {
+                                            if (checksExists($("#orangeForm-state").val()) === false) {
 
                                                 alert("Value is not a state.")
                                                 document.getElementById('orangeForm-state').value = ''
                                             }
                                         });
-                                        function checksExist(inputValue) {
+                                        function checksExists(inputValue) {
                                             console.log(inputValue);
                                             var x = document.getElementById("state_list");
                                             var i;
