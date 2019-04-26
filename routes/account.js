@@ -171,7 +171,7 @@ router.post('/', function(req, res) {
     else if (typeof req.body.auto !== 'undefined')
     {
         console.log("auto Renew enabled " + req.body.auto);
-        break;
+        
     }
     else
     {
