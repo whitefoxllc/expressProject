@@ -14,7 +14,7 @@ $(document).ready(function () {
         });
     } else {
         $(".epbox").click(function () {
-            window.location.replace($(this).attr("pageUrl"));
+            window.location.href = $(this).attr("pageUrl");
         });
     }
 });
