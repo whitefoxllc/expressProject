@@ -23,6 +23,8 @@ body
                         li
                             a(href=`/home?genre=${gen.genre}`) #{gen.genre}
             li
+                a(href='/account') ACCOUNT
+            li
                 a(href='/home') HOME
             li
                 a(href='/logout') LOG OUT
@@ -46,12 +48,23 @@ body
                             }
             ul.nav.navbar-right
                 li.search
-                    input(type="text" id="filterInput" list="productions" placeholder="Search"  )
+                    input(type="text" id="filterInput" list="fake" data-list="productions" placeholder="Search"  )
+                    datalist(id="fake")
                     datalist(id="productions")
                         each prod in production_list
                             option(value= prod.title)
                                 a(href=`/production/?production=${prod.id}` id="val")
                     script.
+                        $('#filterInput[list]').on('input', function (e) {
+                            var input=$(e.target),
+                                datalist = input.attr('data-list');
+                            if(input.val().length < 3)
+                            {
+                                input.attr('list', '');
+                            } else {
+                                input.attr('list', datalist);
+                            }
+                        })
                         $(document).ready(function () {
                             $("#filterInput").keypress(function () {
                                 if (checksExist($("#filterInput").val()) === true) {
@@ -106,9 +119,7 @@ body
                             return flag
 
                         }
-                li.nav_button
-                    button(class="btn btn-default " type="submit" id="envelope")
-                        i.fa.fa-envelope.fa-2x
+
                 li.nav_button
                     button(class="btn btn-default " type="submit" id ="user_btn")
                         i.fa.fa-user.fa-2x
