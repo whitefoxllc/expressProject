@@ -46,7 +46,6 @@ block content
     .container.showgrid
         .container.cardcontainer#seasonsandeps
             .row
-                //.col-sm-1
                 .col-sm-4
                     .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
                         button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
@@ -60,8 +59,6 @@ block content
                 .col-sm-8
             .row
                 .container
-                    // Modal
-
                     - var episode = 1
                         while episode <= episodeCount
                             if (episode % 3 === 1)
@@ -70,20 +67,12 @@ block content
                                         - if (i>episodeCount) break;
                                             - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
                                             .col-sm-4
-                                                .card.epbox
+                                                .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
                                                     a(href= episodeLink)
                                                         img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                                     .card-body
                                                                 a#link(href= episodeLink) #{episodeData[selectedSeason][episode].title}
                                             - episode++
     script(src="/javascripts/production.js")
-    //script('text/javascript').
-    //    $(document).ready(function () {
-    //        var myPlayer = videojs("my-video");
-    //        let episodeSelected = $("#persistentVariables").attr("episodeSelected");
-    //        // alert(episodeSelected);
-    //        if (episodeSelected) {
-    //            myPlayer.play();
-    //        }
-    //    });
+
 
