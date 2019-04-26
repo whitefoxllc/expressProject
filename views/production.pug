@@ -3,7 +3,7 @@ extends index
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
-    script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
+    //script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
 
 block append stylesheet
@@ -11,38 +11,37 @@ block append stylesheet
     link(rel='stylesheet', href='/stylesheets/player.css')
 
 block content
-    .container
-        .row
-            .col-sm-2
-            .col-sm-8
-                - var check = episodeData;
-                 if ( check)
-                     video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
-                         source(src = '/' + `${episodeData[selectedSeason][selectedEpisode].url}` type = 'video/mp4')
-                 else
-                     p.text-white NO SUBSCRIPTION
-                     img(src ='https://i.imgur.com/7bjAfuk.png' ,width = '550')
-            .col-sm-2
-    .container-fluid.backgroundproduction
-        .container-fluid#productionbox
+    - var userCanAccess = episodeData;
+    input#persistentVariables(type='hidden',episodeSelected=selectedEpisode)
+    if (!selectedEpisode)
+        .container-fluid.backgroundproduction
+            .container-fluid#productionbox
+                .row
+                    .col-sm-2
+                    .col-sm-4#showimage
+                        img.img-fluid.rounded.mx-auto.logoimage(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                    .col-sm-4#showinfo
+                        h1.text-white= productionData.title
+                        p= productionData.showSummary
+                        .container
+                            //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
+                            //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
+                        .container.mt-5
+                            table.table.table-striped
+                                .stars-outer
+                                    .stars-inner
+                                span.number-rating
+
+                    .col-sm-2
+    if (userCanAccess && selectedEpisode)
+        .container(style="padding-top=10px;")
             .row
                 .col-sm-2
-                .col-sm-4#showimage
-                    img.img-fluid.rounded.mx-auto.logoimage(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                .col-sm-4#showinfo
-                    h1.text-white= productionData.title
-                    p= productionData.showSummary
-                    .container
-                        //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
-                        //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
-                    .container.mt-5
-                        table.table.table-striped
-                            .stars-outer
-                                .stars-inner
-                            span.number-rating
+                .col-sm-8
+                    video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
+                        source(src = '/' + `${episodeData[selectedSeason][selectedEpisode].url}` type = 'video/mp4')
 
                 .col-sm-2
-
 
     .container.showgrid
         .container.cardcontainer#seasonsandeps
@@ -69,30 +68,22 @@ block content
                                 .row
                                     - for (var i= episode; i<(3+episode); i++)
                                         - if (i>episodeCount) break;
+                                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
                                             .col-sm-4
                                                 .card.epbox
-                                                    //a.episode-button(url=`${episodeData[selectedSeason][episode].url}` data-target-color="blue" data-toggle='modal' data-target='#myModal')
-                                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                                    //a#link(href= episodeLink data-toggle='modal' data-target='#myModal')
+                                                    a(href= episodeLink)
+                                                        img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
                                                     .card-body
-                                                        // Trigger the modal with a button
-                                                        - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
                                                                 a#link(href= episodeLink) #{episodeData[selectedSeason][episode].title}
-                                                                        //script('text/javascript').
-                                                                            $(document).ready(function ()
-                                                                            {
-
-                                                                            });
                                             - episode++
-                    script(src="/"+"/javascripts/production.js")
-        #infoProduct.invisible
-            //.modalBody
-                p.text-dark this has been injected
-                p.text-dark= selectedSeason + ' this is the seas number'
-                p.text-dark= episodeChoice + ' this is the ep number'
-                video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
-                    source(src = '/' + `${episodeData[selectedSeason][episodeChoice].url}` type = 'video/mp4')
-                    p.vjs-no-js Please enable Javascript to see this video
-
-    script(src="/javascripts/modalHelp.js")
+    script(src="/javascripts/production.js")
+    //script('text/javascript').
+    //    $(document).ready(function () {
+    //        var myPlayer = videojs("my-video");
+    //        let episodeSelected = $("#persistentVariables").attr("episodeSelected");
+    //        // alert(episodeSelected);
+    //        if (episodeSelected) {
+    //            myPlayer.play();
+    //        }
+    //    });
 

@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
                     db.readOnlyConnection.query(`SELECT * FROM productions where id = "${req.query.production}";`, function (err, rows, fields) {
                         var productionData = rows;
                         var seasonSelection = req.query.seasonSelection ? req.query.seasonSelection : 1;
-                        var episodeSelection = req.query.episodeSelection ? req.query.episodeSelection : 0;
+                        var episodeSelection = req.query.episodeSelection ? req.query.episodeSelection : null;
                         prods.getAllFileUrls(req, req.query.production, function(epData) {
                             res.render('production', {
                                 title: 'Whitefox Streaming Video',

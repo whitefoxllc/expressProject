@@ -1,7 +1,13 @@
 $(document).ready(function () {
     var myPlayer = videojs("my-video");
     console.log(myPlayer);
-    // var videoMP4 = document.getElementById("videoMP4")
+
+    let episodeSelected = $("#persistentVariables").attr("episodeSelected");
+    // alert(episodeSelected);
+    if (episodeSelected) {
+        myPlayer.load();
+        myPlayer.play();
+    }
 
     $(".episode-button").click(function () {
 
