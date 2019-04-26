@@ -28,30 +28,52 @@ ul {
  }
  ul.plans li {
      position: relative;
-     bottom: 15px;
-     right: 342px;
+     bottom: 20px;
+     left: -265px;
+     font-size: 15px;
  }
 
 ul.plans li a {
     position: relative;
-    left: 340px;
+    left: 130px;
 }
 ul.bill {
     font-size: 15px;
     float: right;
+    left: 415px;
 }
 ul.bill li {
     position: relative;
-    left: 316px;
+
 }
 ul.bill li a {
     position: relative;
-    left: 236px;
+    left: 0px;
 }
 ul.bill  {
     position: relative;
     bottom: 45px;
+    font-size: 15px;
 }
 .glyphicon.glyphicon-remove {
     font-size: 10px;
+}
+input.passText:focus {
+    outline: none 0;
+}
+*:focus {
+    outline: none;
+}
+ul.member {
+    position: relative;
+    bottom: 10px;
+    margin-right: 10%;
+}
+ul.member li a {
+    position: relative;
+    left: 58px;
+}
+.autoRenew {
+    background-color: black;
+    color: black;
 }
