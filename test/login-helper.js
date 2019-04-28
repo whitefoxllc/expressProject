@@ -1,44 +1,62 @@
-// const assert  = require('assert');
-//
-// //login-helper tests
-// db = require("../db-helper");
-// login = require("../login-helper");
-//
-// //this needs to end up as a connection pool so it can be closed in one go, but I'll do that later
-// after(function (done) {
-//     db.readOnlyConnection.end(function () {
-//         db.sessionStoreConnection.end(function () {
-//             db.writeProdsConnection.end(function () {
-//                 db.writeSubscriptionsConnection.end(function () {
-//                     db.writeUsersConnection.end(function () {
-//                         done();
-//                     });
-//                 });
-//             });
-//         });
-//     });
-// });
-//
-// describe("login-helper", function () {
-//     describe("hash", function () {
-//         it("returns a (non)hash of the input", function () {
-//             assert.strictEqual(login.hash("test"), "test");
-//         });
-//     });
-//
-//     describe("createHash", function () {
-//         it("returns a hash of the input using the extant hash function", function () {
-//             assert.strictEqual(login.hash("test"), "test");
-//         });
-//     });
-//
-//     describe("passwordIsValid", function () {
-//         it("confirms that the password is valid", function (done) {
-//             login.passwordIsValid("test", "test", function (validity) {
-//                 assert.strictEqual(validity, true);
-//                 done();
-//             });
-//         })
-//     });
-//
-// });
+const assert  = require('assert');
+
+//login-helper tests
+db = require("../db-helper");
+login = require("../login-helper");
+reg = require("../registration-helper");
+
+before(function (done) {
+    dummyUserJSON = {
+        username:"passwordIsValidTestUsername",
+        email: "passwordIsValidTestEmail",
+        password: "passwordIsValidTestPassword"
+    };
+
+    reg.createUser(dummyUserJSON, function () {
+        done();
+    })
+});
+
+after(function (done) {
+    db.coverageRootConnection.query(`delete from users where username='passwordIsValidTestUsername';`, function () {
+        done();
+    });
+});
+
+describe("login-helper", function () {
+
+    describe("hash", function () {
+        it("returns the hash of a string", function () {
+            const hashToCompare = function (password) {
+                return password;
+            };
+
+            assert.strictEqual(login.hash('testString'), hashToCompare('testString'));
+        });
+    });
+
+    describe("createHash", function () {
+        it("creates a hash", function () {
+            assert.strictEqual(login.createHash('testString'), login.hash('testString'));
+        });
+    });
+
+    describe("passwordIsValid-1", function () {
+        it("returns true for a valid username/password", function (done) {
+            login.passwordIsValid("passwordIsValidTestUsername", "passwordIsValidTestPassword", function (valid) {
+                assert(valid);
+                done();
+            });
+        });
+    });
+
+    describe("passwordIsValid-2", function () {
+        it("returns false for an  invalid username/password", function (done) {
+            login.passwordIsValid("passwordIsValidTestUsername", "notThePassword", function (valid) {
+                assert(!valid);
+                done();
+            });
+        });
+    });
+});
+
