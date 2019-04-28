@@ -168,10 +168,20 @@ router.post('/', function(req, res) {
            }
         });
     }
-    else if (typeof req.body.auto !== 'undefined')
+    else if (typeof req.body.auto !== 'undefined' || typeof req.body.off !== 'undefined')
     {
-        console.log("auto Renew enabled " + req.body.auto);
-
+        console.log("auto Renew enabled " + req.body.auto +" disabled " + req.body.off);
+        if (req.body.auto == 1){
+            db.writeUsersConnection.query(`UPDATE users SET  autoRenewalEnabled = "${req.body.auto}" WHERE username= "${req.session.user}";`, function (err, rows, fields) {
+                res.redirect('/account');
+            });
+        }
+        else{
+            db.writeUsersConnection.query(`UPDATE users SET  autoRenewalEnabled = "${req.body.off}" WHERE username= "${req.session.user}";`, function (err, rows, fields) {
+                res.redirect('/account');
+            });
+        }
+        
     }
     else
     {
