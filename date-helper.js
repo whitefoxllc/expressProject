@@ -14,7 +14,7 @@ function dateFromSqlDatetime(datetime) {
 
 function timesAreApproximatelyEqual(t1, t2) {
     let differenceInMilliseconds = Math.abs(t1  - t2);
-    return  differenceInMilliseconds < 1000;
+    return  differenceInMilliseconds < 10000;
 }
 
 exports = module.exports = {dateToSqlDatetime, dateFromSqlDatetime, timesAreApproximatelyEqual};

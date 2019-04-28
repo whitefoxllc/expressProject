@@ -12,12 +12,8 @@ var now = new Date();
 var oneMonthFromNow = new Date();
 oneMonthFromNow.setDate(now.getDate() + 30);
 
-var farLater = new Date('January 1, 5000 00:00:00');
-var farLaterStr = "5000-00-00 00:00:00";
-
 const dummySlotArray = [{productionID:"testProduction", expiryDate:oneMonthFromNow}];
 const maxSlots = 127;
-console.log();
 
 var testUsers = [];
 
@@ -58,7 +54,6 @@ before(function (done) {
     done();
 });
 
-//this needs to end up as a connection pool so it can be closed in one go, but I'll do that later
 after(function (done) {
     let queryString = `delete from users where `;
     testUsers.forEach(function (name) {
@@ -72,11 +67,7 @@ after(function (done) {
 
     db.coverageRootConnection.query(queryString, function (err, rows, fields) {
         if (err) throw err;
-        console.log("Testing complete - closing db connections!");
-        db.coverageRootConnection.end(function () {
-            console.log("Connections successfully closed!");
-            done();
-        });
+        done();
     });
 });
 
