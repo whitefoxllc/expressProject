@@ -6,32 +6,32 @@ ul {
     list-style-type: none;
     float: right;
 }
- ul li {
-     color: #09b4ea;
+ul li {
+    color: #09b4ea;
 
- }
- ul.member li {
-     position: relative;
-     bottom: 50px;
- }
+}
+ul.member li {
+    position: relative;
+    bottom: 50px;
+}
 
- ul li a, ul.plans li a {
-     margin-left: 50px;
-     float: right;
- }
- input {
-     background-color: #000000;
-     border-color: transparent;
- }
- .plan ul.plans {
-     float: right;
- }
- ul.plans li {
-     position: relative;
-     bottom: 20px;
-     left: -265px;
-     font-size: 15px;
- }
+ul li a, ul.plans li a {
+    margin-left: 50px;
+    float: right;
+}
+input {
+    background-color: #000000;
+    border-color: transparent;
+}
+.plan ul.plans {
+    float: right;
+}
+ul.plans li {
+    position: relative;
+    bottom: 25px;
+    left: -323px;
+    font-size: 15px;
+}
 
 ul.plans li a {
     position: relative;
@@ -48,7 +48,7 @@ ul.bill li {
 }
 ul.bill li a {
     position: relative;
-    left: 0px;
+    left: 55px;
 }
 ul.bill  {
     position: relative;

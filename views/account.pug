@@ -3,10 +3,11 @@ extends index
 block topbar
     include navbar
     link(rel="stylesheet" href="/stylesheets/account.css")
+    script(src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js")
 
 
 block content
-    body
+    body(onload="getStatus()")
         div(class="modal fade" id="modalUserName" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             div(class="modal-dialog" role="document")
                 div(class="modal-content")
@@ -278,19 +279,26 @@ block content
             h3 Subscription Settings
             ul.plans
                 li
-                    //form(method='POST' action='/account/' class='form-registration' onchange="this.form.submit()")
-                    .form-group
-                        input(value="0" readonly hidden name="auto")
-                        div(class="checkbox")
-                            input(class="form-check-input" type="checkbox" value="1" id="autoRenew" name="auto" onchange="this.form.submit()")
-                            label(class="form-check-label" for="autoRenew")  auto-renew every month
+                    form(method='POST' action='/account/' class='form-registration' onchange="this.form.submit()")
+                        .form-group
+                            input(value=`${status}` readonly hidden name="stat" id="status")
+                            input(value="0" readonly hidden name="off" id ="off")
+                            div(class="checkbox")
+                                input(class="form-check-input" type="checkbox" value="1" id="autoRenew" name="auto" onchange="this.form.submit()")
+                                label(class="form-check-label" for="autoRenew")  auto-renew every month
 
-                            script.
-                                $(document).ready(function () {
-                                    $("#autoRenew").on("change","input:checkbox",function () {
-                                        $("#autoRenew").submit();
-                                    })
-                                });
+                                script.
+                                    function getStatus() {
+                                       var status = document.getElementById('status').value;
+
+                                       if (status == 1){
+                                           $('#autoRenew').prop('checked',true);
+                                       }
+                                       else {
+                                           $('#autoRenew').prop('checked', false);
+                                       }
+                                    }
+
             hr
 
 
