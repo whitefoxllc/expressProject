@@ -18,7 +18,7 @@ block content
     div.wrapper.col-10.offset-1.my-4
         video(id='my-video' class='video-js' controls preload='auto' width='1280' height='720'
         poster='MY_VIDEO_POSTER.jpg' data-setup='{"fluid":true}')
-            source(src=vidUrls?vidUrls[1][1]:null)
+            source(src=vidUrls?vidUrls[1][1].url:null)
             p.vjs-no-js Please enable Javascript to see this video
 
     div.subscriptionTest
@@ -43,7 +43,7 @@ block content
     while episode <= episodeCount
         div.episodesTest
             div.episodeButtons
-                button.btn.btn-primary.episode-button(season=selectedSeason, episode=episode, url=vidUrls[selectedSeason][episode])= "Episode " + episode++
+                button.btn.btn-primary.episode-button(season=selectedSeason, episode=episode, url=vidUrls[selectedSeason][episode].url)= "Episode " + episode++
 
     a(href="./logout") Log Out
 

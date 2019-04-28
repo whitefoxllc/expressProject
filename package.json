@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "test":     "mocha --reporter dot",
+    "test": "mocha --reporter dot",
     "coverage": "nyc --reporter html --reporter text npm test"
   },
   "dependencies": {

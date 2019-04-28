@@ -33,13 +33,15 @@ h1{
 }
 
 .epbox{
-    margin-top: 10%;
-    margin-bottom: 10%;
-    /*padding-bottom: 10%;*/
+    margin:10%;
     background-color: #2B353B;
     border-color: #09b4ea;
     border-width: medium;
+    height: 87%;
 
+}
+.contsize{
+    margin-bottom: 5%;
 }
 
 .backgroundproduction{
