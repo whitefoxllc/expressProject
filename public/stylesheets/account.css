@@ -1,12 +1,12 @@
-h1, h3 {
+h1,.membership h3 {
     color: #0062cd;
 }
 
-ul {
+.membership ul {
     list-style-type: none;
     float: right;
 }
-ul li {
+.membership ul li {
     color: #09b4ea;
 
 }
@@ -15,7 +15,7 @@ ul.member li {
     bottom: 50px;
 }
 
-ul li a, ul.plans li a {
+.membership ul li a, ul.plans li a {
     margin-left: 50px;
     float: right;
 }

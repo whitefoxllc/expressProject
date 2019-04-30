@@ -3,7 +3,7 @@ extends index
 block topbar
     include navbar
     link(rel="stylesheet" href="/stylesheets/account.css")
-    script(src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js")
+
 
 
 block content
@@ -60,7 +60,7 @@ block content
                                 $("input[type=password]").keyup(function () {
 
 
-                                    if ($("#orangeForm-oldpass").val()!== $("#orangeForm-pass").val()) {
+                                    if ($("#orangeForm-oldpass").val()!== $("#orangeForm-pass").val() && $("#orangeForm-pass").val().length !== 0 && $("#orangeForm-oldpass").val().length !== 0) {
                                         $("#newpass").removeClass("glyphicon-remove");
                                         $("#newpass").addClass("glyphicon-ok");
                                         $("#newpass").css("color", "#00A41E");
@@ -71,16 +71,19 @@ block content
                                         $("#newpass").css("color", "#FF0004");
                                         $("#passbtn").attr("disabled", true);
                                     }
-                                    if ($("#orangeForm-repeat").val() == $("#orangeForm-pass").val() && $("#orangeForm-pass").val().length !== 0) {
+                                    if ($("#orangeForm-repeat").val() == $("#orangeForm-pass").val() && $("#orangeForm-pass").val().length !== 0 ) {
                                         $("#pwmatch").removeClass("glyphicon-remove");
                                         $("#pwmatch").addClass("glyphicon-ok");
                                         $("#pwmatch").css("color", "#00A41E");
-                                        $("#passbtn").attr("disabled", false);
+                                       if($("#orangeForm-oldpass").val()!== $("#orangeForm-pass").val() && $("#orangeForm-pass").val().length !== 0 && $("#orangeForm-oldpass").val().length !== 0) {
+                                           $("#passbtn").attr("disabled", false);
+                                       }
                                     } else {
-                                        $("#pwmatch").removeClass("glyphicon-ok");
-                                        $("#pwmatch").addClass("glyphicon-remove");
-                                        $("#pwmatch").css("color", "#FF0004");
-                                        $("#passbtn").attr("disabled", true);
+
+                                            $("#pwmatch").removeClass("glyphicon-ok");
+                                            $("#pwmatch").addClass("glyphicon-remove");
+                                            $("#pwmatch").css("color", "#FF0004");
+                                            $("#passbtn").attr("disabled", true);
                                     }
                                 });
 
@@ -143,7 +146,7 @@ block content
                                         option(value="2024") 2024
                                         option(value="2025") 2025
                                         option(value="2026") 2026
-                                .form-group(id="credit_cards")
+
 
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
@@ -238,7 +241,7 @@ block content
         h1 Account
         hr
         div.membership
-            h3 Profile Information
+            h3#PI Profile Information
             br
             ul.member
                 li Username: #{user}

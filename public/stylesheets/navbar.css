@@ -94,7 +94,12 @@ i.fa.fa-search {
 li.nav_button button {
     background-color: #000000;
     border-color: #09b4ea;
-    padding: 9px;
+    position: relative;
+    top: 2px;
+    padding: 7px;
+    margin-left: 8px;
+    margin-right: 8px;
+
 }
 
 li.nav_button  .btn.btn-default:hover, sidebtn:hover {
@@ -107,6 +112,7 @@ li.side_btn button{
     background-color: #000000;
     border-color: #09b4ea;
     padding: 5px;
+
 }
 i.fa.fa-envelope {
 
