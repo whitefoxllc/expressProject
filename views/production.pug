@@ -3,55 +3,77 @@ extends index
 
 block scripts
     link(href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet")
-    script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
+    //script(src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js")
     script(src='https://vjs.zencdn.net/7.4.1/video.js')
 
 block append stylesheet
     link(rel='stylesheet', href='/stylesheets/productions.css')
+    link(rel='stylesheet', href='/stylesheets/player.css')
 
 block content
-    .container-fluid.backgroundproduction
-        .container-fluid#productionbox
+    - var userCanAccess = episodeData;
+    input#persistentVariables(type='hidden',episodeSelected=selectedEpisode)
+    if (!selectedEpisode)
+        .container-fluid.backgroundproduction
+            .container-fluid#productionbox
+                .row
+                    .col-sm-2
+                    .col-sm-4#showimage
+                        img.img-fluid.rounded.mx-auto.logoimage(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                    .col-sm-4#showinfo
+                        h1.text-white= productionData.title
+                        p= productionData.showSummary
+                        .container
+                            //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
+                            //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
+                        //.container.mt-5
+                            table.table.table-striped
+                                .stars-outer
+                                    .stars-inner
+                                span.number-rating
+
+                    .col-sm-2
+    if (userCanAccess && selectedEpisode)
+        .container(style="padding-top=10px;")
             .row
                 .col-sm-2
-                .col-sm-4#showimage
-                    img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                .col-sm-4#showinfo
-                    h1.text-white= productionData.title
-                    p= productionData.showSummary
-                    .container
-                        //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
-                        //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
+                .col-sm-8
+                    video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
+                        source(src = '/' + `${episodeData[selectedSeason][selectedEpisode].url}` type = 'video/mp4')
 
                 .col-sm-2
-                    
 
+    if (userCanAccess)
     .container.showgrid
         .container.cardcontainer#seasonsandeps
-            .row
-                //.col-sm-1
-                .col-sm-4
-                    .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
-                        button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
-                            Dropdown Season #{selectedSeason}
-                        .dropdown-menu.bg-dark.dropdown-dark
-                            - var season = 1;
-                            while season <= productionData.seasonCount
-                                a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
-                                - season++
-                                p
-                .col-sm-8
-            .row
-                .container
-                    - var episode = 1
-                    while episode <= episodeCount
-                        if (episode % 3 === 1)
-                            .row
-                        .col-sm-4
-                            .card.epbox
-                                - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                a#link(href= episodeLink)
-                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                .card-body
-                                     a#link(href= episodeLink) Episode #{episode} - #{episodeData[episode-1].title}
-                        - episode++
+            if (userCanAccess)
+                .row
+                    .col-sm-4
+                        .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
+                            button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
+                                Dropdown Season #{selectedSeason}
+                            .dropdown-menu.bg-dark.dropdown-dark
+                                - var season = 1;
+                                while season <= productionData.seasonCount
+                                    a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
+                                    - season++
+                                    p
+                    .col-sm-8
+                .row
+                    .container
+                        - var episode = 1
+                            while episode <= episodeCount
+                                if (episode % 3 === 1)
+                                    .row
+                                        - for (var i= episode; i<(3+episode); i++)
+                                            - if (i>episodeCount) break;
+                                                - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
+                                                .col-sm-4
+                                                    .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
+                                                        img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                        .card-body
+                                                            p= episodeData[selectedSeason][episode].title
+                                                - episode++
+    script(src="/javascripts/production.js")
+
+

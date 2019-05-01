@@ -11,21 +11,23 @@ head
 body
     div(id="mySidenav" class="sidenav").text-center
         a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times
-        h1 White Fox
+        h3 White Fox
         ul.list-unstyled.components.text-center
-            h4 Viewing options
+            p Viewing options
             li
-                a(href="/home/?filterToSubscriptions=true").border MY LIST
+                a(href="/home/?filterToSubscriptions=true") MY LIST
             li
-                a.dropdown-togglez(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false').border GENRES
+                a.dropdown-togglez(href='#pageSubmenu', data-toggle='collapse', aria-expanded='false') GENRES
                 ul#pageSubmenu.collapse.list-unstyled
                     each gen in genre_list
                         li
                             a(href=`/home?genre=${gen.genre}`) #{gen.genre}
             li
-                a(href='/home').border HOME
+                a(href='/account') ACCOUNT
             li
-                a(href='/logout').border LOG OUT
+                a(href='/home') HOME
+            li
+                a(href='/logout') LOG OUT
     nav.navbar.navbar-default.navbar-expand( role="navigation" )
         .navbar-header
             button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" )
@@ -33,10 +35,10 @@ body
         //a.navbar-brand WhiteBox
         div(class="collapse navbar-collapse" id="navbarSupportedContent")
             ul.nav.navbar-left
-                li.dropdown
+                li.side_btn
                     div.btn-group
-                        button.btn.btn-default.dropdown-toggle(type="button", onclick="openNav()")
-                            i.fa.fa-bars.fa-3x
+                        button.btn.btn-default(type="button", onclick="openNav()" id="sidebtn")
+                            i.fa.fa-bars.fa-2x
                         script.
                             function openNav() {
                                 document.getElementById("mySidenav").style.width = "250px";
@@ -46,12 +48,23 @@ body
                             }
             ul.nav.navbar-right
                 li.search
-                    input(type="text" id="filterInput" list="productions" placeholder="Search"  )
+                    input(type="text" id="filterInput" list="fake" data-list="productions" placeholder="Search"  )
+                    datalist(id="fake")
                     datalist(id="productions")
                         each prod in production_list
                             option(value= prod.title)
                                 a(href=`/production/?production=${prod.id}` id="val")
                     script.
+                        $('#filterInput[list]').on('input', function (e) {
+                            var input=$(e.target),
+                                datalist = input.attr('data-list');
+                            if(input.val().length < 3)
+                            {
+                                input.attr('list', '');
+                            } else {
+                                input.attr('list', datalist);
+                            }
+                        })
                         $(document).ready(function () {
                             $("#filterInput").keypress(function () {
                                 if (checksExist($("#filterInput").val()) === true) {
@@ -106,9 +119,13 @@ body
                             return flag
 
                         }
-                li.nav_button
-                    button(class="btn btn-default " type="submit" id="envelope")
-                        i.fa.fa-envelope.fa-2x
+
                 li.nav_button
                     button(class="btn btn-default " type="submit" id ="user_btn")
                         i.fa.fa-user.fa-2x
+                    script.
+                        $(document).ready(function () {
+                            $("#user_btn").click(function () {
+                                    window.location.href = "/user"
+                            });
+                        });

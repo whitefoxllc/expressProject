@@ -11,17 +11,29 @@ block content
                     form(method='POST' action='/register/' class='form-registration')
                         .form-group
                             label.labelcolor(for='name') Username:
-                            input#name.form-control(type='text', name='username')
+                            input#name.form-control(type='text', name='username' maxlength="12" required )
                         .form-group
                             label.labelcolor(for='email') Email:
-                            input#email.form-control(type='email', name='email')
+                            input#email.form-control(type='email', name='email' required)
                         .form-group
-                            label.labelcolor(for='pw') Password:
-                            input#pw.form-control(type='password' name='password')
+                            label.labelcolor(for='pw' ) Password:
+                            input#pw.form-control(type='password' name='password' required )
                         .form-group
                             label.labelcolor(for='pw2') Confirm Password:
-                            input#pw2.form-control(type='password' name='confirmPassword')
+                            input#pw2.form-control(type='password' name='confirmPassword' required)
                         .form-group
-                            button.btn.btn-primary(type='submit') Sign up
+                            button.btn.btn-primary(type='submit' id="regbtn") Sign up
+                        script.
+                            $('#regbtn').on("click",function (e) {
+                               var pw = document.getElementById('pw') .value;
+                               var pw2 = document.getElementById('pw2').value;
+                               if(pw !== pw2)
+                               {
+                                   e.preventDefault();
+                                   alert("passwords must match");
+                                   return false;
+                               }
+                            });
+
                 .col-sm-8.trailer
                     img.mx-auto.d-block.img-fluid.float-right.rounded.previewGif(src='https://i.imgur.com/1jofA34.gif', style='width:100%')

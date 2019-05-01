@@ -14,7 +14,6 @@ router.get('/', function(req, res, next) {
             if (req.session.user){
                 sub.syncSessionWithDb(req, function(){
                     revs.reviewRead(req, req.session.user, function(reviewstuff){
-
                     var productionFilter;
                     if (req.query.filterToSubscriptions) {
                         productionFilter = `WHERE id IN (SELECT production FROM slots WHERE subscriber = "${req.session.user}")`;
@@ -39,6 +38,7 @@ router.get('/', function(req, res, next) {
                         });
                     });
                     });
+
                 });
             }
             

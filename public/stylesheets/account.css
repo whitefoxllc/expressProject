@@ -1,0 +1,79 @@
+h1,.membership h3 {
+    color: #0062cd;
+}
+
+.membership ul {
+    list-style-type: none;
+    float: right;
+}
+.membership ul li {
+    color: #09b4ea;
+
+}
+ul.member li {
+    position: relative;
+    bottom: 50px;
+}
+
+.membership ul li a, ul.plans li a {
+    margin-left: 50px;
+    float: right;
+}
+input {
+    background-color: #000000;
+    border-color: transparent;
+}
+.plan ul.plans {
+    float: right;
+}
+ul.plans li {
+    position: relative;
+    bottom: 25px;
+    left: -323px;
+    font-size: 15px;
+}
+
+ul.plans li a {
+    position: relative;
+    left: 130px;
+}
+ul.bill {
+    font-size: 15px;
+    float: right;
+    left: 415px;
+}
+ul.bill li {
+    position: relative;
+
+}
+ul.bill li a {
+    position: relative;
+    left: 55px;
+}
+ul.bill  {
+    position: relative;
+    bottom: 45px;
+    font-size: 15px;
+}
+.glyphicon.glyphicon-remove {
+    font-size: 10px;
+}
+input.passText:focus {
+    outline: none 0;
+}
+*:focus {
+    outline: none;
+}
+ul.member {
+    position: relative;
+    bottom: 10px;
+    margin-right: 10%;
+}
+ul.member li a {
+    position: relative;
+    left: 58px;
+}
+.autoRenew {
+    background-color: black;
+    color: black;
+}

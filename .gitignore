@@ -5,3 +5,6 @@ peralta.js
 .idea/*
 node_modules/
 public/video/
+.nyc_output
+.nyc_output/*
+coverage
