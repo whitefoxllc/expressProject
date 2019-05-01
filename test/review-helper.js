@@ -29,9 +29,10 @@ before(function (done) {
 });
 
 after(function (done) {
-    db.coverageRootConnection.query(`delete from users where username='revTest1' or username='revTest2'`, function (err, rows, fields) {
+    db.coverageRootConnection.query(`delete from users where username like 'revTest%'`, function (err, rows, fields) {
         if (err) throw err;
         db.coverageRootConnection.query(`delete from productions where id='revTest';`, function (err, rows, fields) {
+            if (err) throw err;
             done();
         });
     });
