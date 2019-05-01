@@ -8,7 +8,7 @@ var readOnlyConnection = mysql.createConnection({
 });
 
 var reviewRead = function (req, username, callback) {
-    var checksql = `SELECT * FROM whitefoxdb.reviews WHERE user= '${req.session.user}';`
+    var checksql = `SELECT * FROM whitefoxdb.reviews as r join productions as p on p.id=r.production WHERE r.user= '${req.session.user}';`
     console.log(req.session.user);
     readOnlyConnection.query(checksql, function (err, row, field) {
         if (err)throw err;
@@ -16,7 +16,7 @@ var reviewRead = function (req, username, callback) {
         var count = 0;
         row.forEach(function (row) {
             theseAreTheRevs.push({user: row.user,
-                production:row.production,
+                production:row.title,
                 date: row.date,
                 rating: row.rating,
                 review: row.text});
