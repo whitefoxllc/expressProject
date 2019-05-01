@@ -4,6 +4,8 @@ var router = express.Router();
 var db = require("../db-helper");
 var sub = require("../subscription-helper");
 var search = require("../search-helper");
+var rev = require("../review-helper");
+var revs = require("../comment-helper");
 
 router.get('/', function(req, res, next) {
     search.getAllIdsTitles(req,function (find) {
@@ -11,7 +13,7 @@ router.get('/', function(req, res, next) {
 
             if (req.session.user){
                 sub.syncSessionWithDb(req, function(){
-
+                    revs.reviewRead(req, req.session.user, function(reviewstuff){
                     var productionFilter;
                     if (req.query.filterToSubscriptions) {
                         productionFilter = `WHERE id IN (SELECT production FROM slots WHERE subscriber = "${req.session.user}")`;
@@ -31,9 +33,12 @@ router.get('/', function(req, res, next) {
                             title: req.session.user,
                             displayProductions: rows,
                             production_list: find,
-                            genre_list: findGenre
+                            genre_list: findGenre,
+                            reviews:reviewstuff
                         });
                     });
+                    });
+
                 });
             }
             

@@ -70,6 +70,26 @@ a.footerlink:hover{
 
   background-color: #4E6A88;
   width: 100%;
+  color: #ffffff;
+}
+#greetingdark{
+
+  background-color: #202c39;
+  color: #ffffff;
+
+}
+#greetingblack{
+
+  background-color: #000000;
+  color: #ffffff;
+
+}
+
+img.reviewImage{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 #greetingdark{
 
@@ -102,6 +122,7 @@ a.footerlink:hover{
   background-repeat: repeat;
   padding-top:2%;
   padding-bottom: 5%;
+  background-size: 80%;
 }
 .cardcontainer{
   margin-bottom: 10%;
@@ -122,6 +143,18 @@ a.footerlink:hover{
   border-width: medium;
 }
 
+.reviewBorder{
+  background-color: #fff;
+  margin-bottom: 2%;
+  margin-left: 2%;
+  margin-right: 2%;
+
+}
+.top10Border{
+  background-color: #fff;
+  margin
+}
+
 .previewGif{
   margin-top: 5%;
   margin-bottom: 5%;
@@ -134,4 +167,47 @@ a.footerlink:hover{
   background-color: #2B353B;
   border-color: #09b4ea;
   border-width: medium;
+}
+
+.footerBottom{
+
+  padding-bottom: 5%;
+}
+
+.rating {
+  display: inline-block;
+}
+.star {
+  color:#FFFFFF;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  padding: 0 0.15em;
+  cursor: pointer;
+}
+.star.is-active {
+  color: #F9DC5C;
+}
+.screen-reader {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.reviews{
+
+  background-color: #4E6A88;
+  color: #ffffff;
+  padding-top: 0.1em;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-bottom: 3%;
+  margin-bottom: 5%;
+  margin-top: 5%;
 }

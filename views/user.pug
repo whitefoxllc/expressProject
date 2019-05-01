@@ -2,8 +2,6 @@ extends index
 
 block topbar
     include navbar
-        p this is the top bar for now
-
 block content
 
     .container.greeting.text-center#greeting.border
@@ -28,43 +26,29 @@ block content
         .row
             .col-8
                 //  need to figure out a way to save a user's top 10 through DB
-                .row.reviewBorder
-                    .col-2
-                        img.reviewImage.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/userPic.png`, width='75', height='75')
-                    .col-10#greeting
-                        p The first comment/review
-                .row.reviewBorder
-                    .col-2
-                        img.reviewImage.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/userPic.png`, width='75', height='75')
-                    .col-10#greeting
-                        p The first comment/review
-                .row.reviewBorder
-                    .col-2
-                        img.reviewImage.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/userPic.png`, width='75', height='75')
-                    .col-10#greeting
-                        p The first comment/review
-                .row.reviewBorder
-                    .col-2
-                        img.reviewImage.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/userPic.png`, width='75', height='75')
-                    .col-10#greeting
-                        p The first comment/review
-                
+                h3.text-white.text-center Recent Reviews
+                each review in reviews
+                    .reviews
+                        h3 #{review.production}
+                        p #{review.review}
+                        h6.text-white rating: #{review.rating}
+                        h6.text-white #{review.date}
+
             .col-4#greetingdark
-                .row
-                    .col.text-center
-                        H3 Top 10
-                .row
-                    .col
-                        li  
-                            p Production
-                        li  
-                            p Production
-                        li  
-                            p Production
-                        li  
-                            p Production
-                        li  
-                            p Production
+
+                h3.text-center Top 10
+
+                ol
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
+                    li Production
         .row#greetingblack
             .col
                 h1
@@ -80,3 +64,5 @@ block content
                         - var titleLink = `/production/?production=${production.id}`
                             a#link(href= titleLink)
                                 img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
+
+
