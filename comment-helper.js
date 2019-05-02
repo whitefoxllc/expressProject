@@ -25,5 +25,23 @@ var reviewRead = function (req, username, callback) {
 
     });
 };
+var productionReviews = function (req, production, callback) {
+    var checksql = `SELECT * FROM whitefoxdb.reviews where production= '${production}' ORDER BY date DESC;`
+    console.log(production);
+    readOnlyConnection.query(checksql, function (err, row, field) {
+        if (err)throw err;
+        var theseAreTheRevs = [];
+        var count = 0;
+        row.forEach(function (row) {
+            theseAreTheRevs.push({
+                user: row.user,
+                production:row.title,
+                date: row.date,
+                rating: row.rating,
+                review: row.text});
+        });
+        return callback(theseAreTheRevs);
 
-exports = module.exports = {reviewRead};
+    });
+};
+exports = module.exports = {reviewRead, productionReviews};

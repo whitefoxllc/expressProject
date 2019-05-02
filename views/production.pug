@@ -75,5 +75,24 @@ block content
                                                             p= episodeData[selectedSeason][episode].title
                                                 - episode++
     script(src="/javascripts/production.js")
+block reviews
+    .container
+        h1.text-center.text-white Reviews
+        each review in reviews
+            .container.reviews.rounded
+                .row
+                    .col-sm-4
+                        h3 #{review.user}
+                    .col-sm-6
+                    .col-sm-2
+                        h6.text-dark #{review.date}
+                .row
+                    .col-sm-4
+                        h4.text-white rating: #{review.rating} out of 10
+                .row
+                    .col-sm-1
+                    .col-sm-10
+                        p #{review.review}
+                    .col-sm-1
 
 
