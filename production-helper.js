@@ -17,31 +17,32 @@ var getFileUrlFor = function (req, production, season, episode, callback) {
 };
 
 var getAllFileUrls = function (req, production, callback) {
-    sub.requestAccessTo(req, production, function (success) {
-        if (success) {
-            db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, title, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
-                if (err) throw err;
-                var fileUrls = [[]];
-                var season = 0;
-                fileUrls.push(['']); //push an empty placeholder, as index [0][n] will not be used
+    if (sub.hasAccessTo(req, production)) {
+        db.readOnlyConnection.query(`SELECT seasonNumber, episodeNumber, title, fileURL FROM episodes WHERE production = "${production}" ORDER BY seasonNumber, episodeNumber;`, function (err, rows, fields) {
+            if (err) throw err;
+            var fileUrls = [[]];
+            var season = 0;
+            fileUrls.push(['']); //push an empty placeholder, as index [0][n] will not be used
 
-                rows.forEach(function (row) {
-                    if (season !== row.seasonNumber) {
-                        fileUrls.push(['']);//push an empty placeholder, as index [n][0] will not be used
-                        season += 1;
-                    }
+            rows.forEach(function (row) {
+                if (season !== row.seasonNumber) {
+                    fileUrls.push(['']);//push an empty placeholder, as index [n][0] will not be used
+                    season += 1;
+                }
 
-                    fileUrls[season].push({title: row.title, url:row.fileURL});
-                });
-
-                return callback(fileUrls);
+                fileUrls[season].push({title: row.title, url:row.fileURL});
             });
-        }
-        else {
-            return callback(null);
-        }
-    })
+
+            return callback(fileUrls);
+        });
+    }
+    else {
+        return callback(null);
+    }
 };
+
+
+
 
 
 exports = module.exports = {getFileUrlFor, getAllFileUrls};

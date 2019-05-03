@@ -41,7 +41,9 @@ router.get('/', function(req, res, next) {
                                             state: address[0].state,
                                             zip: address[0].zipCode,
                                             country: address[0].country,
-                                            stateList: stateL
+                                            stateList: stateL,
+                                            maxSlots: req.session.slotsAllowed,
+                                            currentSlots: req.session.activeSlots
 
                                         });
                                         console.log("auto Renew" + rows[0].autoRenewalEnabled)
@@ -58,7 +60,9 @@ router.get('/', function(req, res, next) {
                                     password: "••••••••••••••••••",
                                     production_list: find,
                                     genre_list: findGenre,
-                                    stateList: stateL
+                                    stateList: stateL,
+                                    maxSlots: req.session.slotsAllowed,
+                                    currentSlots: req.session.activeSlots
                                 });
                             } else if (!exists && ccExists) {
                                 currentPass=rows[0].plainTextPasswordLol;
@@ -73,7 +77,9 @@ router.get('/', function(req, res, next) {
                                         production_list: find,
                                         genre_list: findGenre,
                                         ccNumber: card[0].ccNumber,
-                                        stateList: stateL
+                                        stateList: stateL,
+                                        maxSlots: req.session.slotsAllowed,
+                                        currentSlots: req.session.activeSlots
                                     });
                                 });
                             } else {
@@ -94,7 +100,9 @@ router.get('/', function(req, res, next) {
                                         state: address[0].state,
                                         zip: address[0].zipCode,
                                         country: address[0].country,
-                                        stateList: stateL
+                                        stateList: stateL,
+                                        maxSlots: req.session.slotsAllowed,
+                                        currentSlots: req.session.activeSlots
                                     });
                                 });
                             }
@@ -183,11 +191,25 @@ router.post('/', function(req, res) {
         }
         
     }
-    else
+    else if(typeof req.body.plan !== 'undefined')
     {
-        res.redirect('/account');
-    }
+        console.log("Plan " + req.body.plan + " slots Allowed " + req.session.slotsAllowed);
+        db.writeUsersConnection.query(`SELECT subscriber FROM subscriptions WHERE subscriber = "${req.session.user}";`, function (err,rows,fields) {
+            if (rows.length > 0) {
+                db.writeUsersConnection.query(`UPDATE subscriptions SET slotCount = "${req.body.plan}" WHERE subscriber = "${req.session.user}";`,
+                    function (err, rows, fields) {
+                        req.session.slotsAllowed = req.body.plan;
+                        res.redirect('/account');
+                    });
+            } else {
+                console.log('Not in subscriptions: Expiriry ' + req.session.subscriptionActiveUntil);
 
+               sub.activateSubscription(req,req.body.plan, function () {
+                  res.redirect('/account');
+               });
+            }
+        });
+    }
 });
 
 module.exports = router;
