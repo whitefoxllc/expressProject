@@ -24,7 +24,7 @@ block content
                                      label(data-error="wrong" data-success="right" for="orangeForm-name")
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
-                                    button(class="btn btn-deep-orange" type="submit") Change Username
+                                    button(class="btn btn-deep-orange" type="submit") Change Display Name
         div(class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             div(class="modal-dialog" role="document")
                 div(class="modal-content")
@@ -235,21 +235,21 @@ block content
                                 .form-group
                                     div.radio
                                         input(type="radio" name='plan' id='basic' value='10' required)
-                                        label(for='basic') Basic
+                                        label(for='basic') Basic (10 slots/$10 per month)
                                     div.radio
                                         input(type="radio" name='plan' id='advanced' value='15' required)
-                                        label(for='advanced') Advanced
+                                        label(for='advanced') Advanced (15 slots/$15 per month)
                                     div.radio
                                         input(type="radio" name='plan' id='premium' value='25' required)
-                                        label(for='premium') Premium
+                                        label(for='premium') Premium (25 slots/$20 per month)
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
                                     button(class="btn btn-deep-orange" type="submit" id="subbtn") Change Subscription Plan
                                     script.
                                         $('#subbtn').on('click' , function (e) {
                                             var cc = document.getElementById("cc");
-                                           
-                                            if(cc.value == 'undefined')
+                                            var bill = document.getElementById('bill');
+                                            if(cc.value == 'undefined' || bill.value == 'undefined')
                                             {
                                                 alert('You must enter payment credentials before changing subscription plan.')
                                                 e.preventDefault();
@@ -298,6 +298,7 @@ block content
                 li Country: #{country}
                 li
                     a(href=""  data-toggle="modal" data-target="#modalBilling") update billing address
+                    input(value=`${str1}` id='bill' hidden readonly)
             br
             br
             br

@@ -34,9 +34,9 @@ block content
                                     input(value=`${productionData.id}` id="title" readonly hidden name='prod')
                                     input(value=`${maxSlots}` id="maxSlots" readonly hidden type='number')
                                     select(id="inSub" hidden readonly)
-                                       - for (var j = 0; j < slots.length; j++)
-                                            option(value=`${slots[j].productionID}`) #{slots[j].productionID}
-                                    input( value="" id="sub" name="sub"  class="btn btn-primary" type="submit")
+                                        - for (var j = 0; j < slots.length; j++)
+                                        option(value=`${slots[j].productionID}`) #{slots[j].productionID}
+                                    input( value="" id="sub" name="sub"  class="btn btn-primary" type="hidden")
 
                                     script.
                                         $('#sub').on("click", function (e) {
@@ -50,7 +50,7 @@ block content
                                                     sub.value = "Subscribed";
                                                 }
                                                 else {
-                                                    alert("not enough Slots please update subscription plan in accounts page");
+                                                    alert("Not enough slots please update subscription plan in accounts page");
                                                     e.preventDefault();
                                                 }
 
@@ -68,6 +68,7 @@ block content
                                                 sub.type = 'hidden';
                                             } else {
                                                 sub.value = "Subscribe";
+                                                sub.type = 'submit';
                                             }
 
                                         }
@@ -114,18 +115,18 @@ block content
                     .row
                         .container
                             - var episode = 1
-                                while episode <= episodeCount
-                                    if (episode % 3 === 1)
-                                        .row
-                                            - for (var i= episode; i<(3+episode); i++)
-                                                - if (i>episodeCount) break;
-                                                    - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                                    .col-sm-4
-                                                        .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
-                                                            img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                                            .card-body
-                                                                p= episodeData[selectedSeason][episode].title
-                                                    - episode++
+                            while episode <= episodeCount
+                                if (episode % 3 === 1)
+                                    .row
+                                        - for (var i= episode; i<(3+episode); i++)
+                                        - if (i>episodeCount) break;
+                                            - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
+                                            .col-sm-4
+                                                .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
+                                                    img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                    .card-body
+                                                        p= episodeData[selectedSeason][episode].title
+                                            - episode++
         script(src="/javascripts/production.js")
 block reviews
     .container

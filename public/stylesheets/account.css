@@ -28,14 +28,14 @@ input {
 }
 ul.plans li {
     position: relative;
-    bottom: 25px;
-    left: -323px;
+    bottom: 40px;
+    left: -60px;
     font-size: 15px;
 }
 
 ul.plans li a {
     position: relative;
-    left: 130px;
+    left: 38px;
 }
 ul.bill {
     font-size: 15px;
@@ -76,4 +76,8 @@ ul.member li a {
 .autoRenew {
     background-color: black;
     color: black;
+}
+.radio {
+    position: relative;
+    left: 130px;
 }

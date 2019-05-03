@@ -142,6 +142,7 @@ router.post('/', function(req, res) {
     }
     else if (typeof req.body.str1 !== 'undefined')
     {
+        console.log("str1 " + req.body.str1);
         db.writeUsersConnection.query(`SELECT user FROM userBillingAddresses WHERE user = "${req.session.user}";`, function (err,rows,fields) {
            if (rows.length > 0) {
                db.writeUsersConnection.query(`UPDATE userBillingAddresses SET  streetLine1 = "${req.body.str1}", streetLine2 ="${req.body.str2}", state = "${req.body.state}", zipCode = "${req.body.zip}", country = "${req.body.country}" Where user = "${req.session.user}";`,
@@ -152,9 +153,10 @@ router.post('/', function(req, res) {
            }
            else {
                console.log("user not in billingAddresses");
-               db.writeUsersConnection.query(`INSERT INTO userBillingAddresses (user,streetLine1,streetLine2,state,zipCode,country) Values ("${req.session.user}", "${req.body.str1}","${req.body.str2}","${req.body.state}",${req.body.zip}","${req.body.country}");`, function () {
-                    res.redirect('/account');
-                });
+               db.writeUsersConnection.query(`INSERT INTO userBillingAddresses (user,streetLine1,streetLine2,state,zipCode,country) values ("${req.session.user}","${req.body.str1}","${req.body.str2}", "${req.body.state}","${req.body.zip}","${req.body.country}");`,function (err,rows,fields) {
+                   console.log(req.session.user + " inserted into Billing Address");
+                   res.redirect('/account');
+               });
            }
         });
     }
