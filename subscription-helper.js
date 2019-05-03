@@ -25,7 +25,11 @@ var syncSessionWithDb = function (req, callback) {
                 req.session.slots.push({"productionID": slot.production, "expiryDate": dates.dateFromSqlDatetime(slot.expiry)})
             });
 
-            callback();
+            db.readOnlyConnection.query(`SELECT displayName FROM users WHERE username = "${req.session.user}";`, {}, function(err, rows, fields) {
+                if(err) throw err;
+                req.session.userDisplayName = rows[0].displayName;
+                callback();
+            });
         });
     });
 };
