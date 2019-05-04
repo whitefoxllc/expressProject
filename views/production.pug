@@ -27,7 +27,7 @@ block content
                             .container
                                 //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
                                 //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
-                            include rating.pug
+                            //include rating.pug
                             form(method='POST' action='/production' class='form-registration')
                                 .form-group
                                     input(value=`${currentSlots}` id="slots" hidden readonly type='number')
