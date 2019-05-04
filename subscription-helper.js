@@ -13,7 +13,7 @@ var syncSessionWithDb = function (req, callback) {
     db.readOnlyConnection.query(`SELECT * FROM subscriptions WHERE subscriber = "${req.session.user}";`, {}, function(err, rows, fields) {
         if(err) throw err;
         if (rows.length > 0) {
-            req.session.subscriptionActiveUntil = dates.dateFromSqlDatetime(rows[0].subscriptionExpiry);
+            req.session.subscriptionActiveUntil = dates.stripGmtOffset(rows[0].subscriptionExpiry);
             req.session.slotsAllowed = rows[0].slotCount;
         }
 
@@ -22,7 +22,7 @@ var syncSessionWithDb = function (req, callback) {
 
             req.session.activeSlots = rows.length;
             rows.forEach(function (slot) {
-                req.session.slots.push({"productionID": slot.production, "expiryDate": dates.dateFromSqlDatetime(slot.expiry)})
+                req.session.slots.push({"productionID": slot.production, "expiryDate": dates.stripGmtOffset(slot.expiry)})
             });
 
             db.readOnlyConnection.query(`SELECT displayName FROM users WHERE username = "${req.session.user}";`, {}, function(err, rows, fields) {

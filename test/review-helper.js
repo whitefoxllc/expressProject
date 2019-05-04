@@ -5,27 +5,34 @@ db = require("../db-helper");
 revs = require("../review-helper");
 
 before(function (done) {
-    db.coverageRootConnection.query(`insert into users(username, emailaddress, dateOfBirth) 
-                                    values('revTest1', 'revTest@rev.test', '2000-01-01 00:00:00')`, function (err, rows, fields) {
+    db.coverageRootConnection.query(`delete from users where username like 'revTest%'`, function (err, rows, fields) {
         if (err) throw err;
-        db.coverageRootConnection.query(`insert into users(username, emailaddress, dateOfBirth) 
-                                        values('revTest2', 'revTest@rev.test', '2000-01-01 00:00:00')`, function (err, rows, fields) {
+        db.coverageRootConnection.query(`delete from productions where id='revTest';`, function (err, rows, fields) {
             if (err) throw err;
-            db.coverageRootConnection.query(`insert into productions 
-                                            values ('revTest', 'hbo', 'revTest', '1', '', 'review-helper test file', '0', null)`, function (err, rows, fields) {
+            db.coverageRootConnection.query(`insert into users(username, emailaddress, dateOfBirth) 
+                                    values('revTest1', 'revTest@rev.test', '2000-01-01 00:00:00')`, function (err, rows, fields) {
                 if (err) throw err;
-                db.coverageRootConnection.query(`insert into reviews
-                                                 values ('revTest1', 'revTest', '2000-01-01 00:00:00', 10, 'revTest text')`, function (err, rows, fields) {
+                db.coverageRootConnection.query(`insert into users(username, emailaddress, dateOfBirth) 
+                                        values('revTest2', 'revTest@rev.test', '2000-01-01 00:00:00')`, function (err, rows, fields) {
                     if (err) throw err;
-                    db.coverageRootConnection.query(`insert into reviews
-                                                     values ('revTest2', 'revTest', '2000-01-01 00:00:00', 0, 'revTest text')`, function (err, rows, fields) {
+                    db.coverageRootConnection.query(`insert into productions 
+                                            values ('revTest', 'hbo', 'revTest', '1', '', 'review-helper test file', '0', null)`, function (err, rows, fields) {
                         if (err) throw err;
-                        done();
+                        db.coverageRootConnection.query(`insert into reviews
+                                                 values ('revTest1', 'revTest', '2000-01-01 00:00:00', 10, 'revTest text')`, function (err, rows, fields) {
+                            if (err) throw err;
+                            db.coverageRootConnection.query(`insert into reviews
+                                                     values ('revTest2', 'revTest', '2000-01-01 00:00:00', 0, 'revTest text')`, function (err, rows, fields) {
+                                if (err) throw err;
+                                done();
+                            });
+                        });
                     });
                 });
             });
         });
     });
+
 });
 
 after(function (done) {

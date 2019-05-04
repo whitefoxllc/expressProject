@@ -12,7 +12,7 @@ block content
             div(class="modal-dialog" role="document")
                 div(class="modal-content")
                     div(class="modal-header text-center")
-                        h4(class="model-title w-100 font-weight-bold") Enter New Username
+                        h4(class="model-title w-100 font-weight-bold") Enter New Display Name
                         button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                             span(aria-hidden="true") &times;
                     div(class="modal-body mx-3")
@@ -20,11 +20,11 @@ block content
                             div(class="md-form mb-5")
                                  .form-group
                                      i(class="fas fa-user prefix grey-text")
-                                     input(type="text" id="orangeForm-name" class="form-control validate" value ="" required name="displayName" placeholder="New Username")
+                                     input(type="text" id="orangeForm-name" class="form-control validate" value ="" required name="displayName" placeholder="New Display Name")
                                      label(data-error="wrong" data-success="right" for="orangeForm-name")
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
-                                    button(class="btn btn-deep-orange" type="submit") Change Username
+                                    button(class="btn btn-deep-orange" type="submit") Change Display Name
         div(class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             div(class="modal-dialog" role="document")
                 div(class="modal-content")
@@ -226,18 +226,41 @@ block content
             div(class="modal-dialog" role="document")
                 div(class="modal-content")
                     div(class="modal-header text-center")
-                        h4(class="model-title w-100 font-weight-bold") Enter New Plan
+                        h4(class="model-title w-100 font-weight-bold") Select New Subscription Plan
                         button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                             span(aria-hidden="true") &times;
                     div(class="modal-body mx-3")
                         form(method='POST' action='/account/' class='form-registration')
                             div(class="md-form mb-5")
                                 .form-group
-                                    input(type="text" id="orangeForm-plan" class="form-control validate" value ="" required name="plan")
-                                    label(data-error="wrong" data-success="right" for="orangeForm-plan") New Plan
+                                    div.radio
+                                        input(type="radio" name='plan' id='basic' value='10' required)
+                                        label(for='basic') Basic (10 slots/$10 per month)
+                                    div.radio
+                                        input(type="radio" name='plan' id='advanced' value='15' required)
+                                        label(for='advanced') Advanced (15 slots/$15 per month)
+                                    div.radio
+                                        input(type="radio" name='plan' id='premium' value='25' required)
+                                        label(for='premium') Premium (25 slots/$20 per month)
                             div(class="modal-footer d-flex justify-content-center")
                                 .form-group
-                                    button(class="btn btn-deep-orange" type="submit") Change Plan
+                                    button(class="btn btn-deep-orange" type="submit" id="subbtn") Change Subscription Plan
+                                    script.
+                                        $('#subbtn').on('click' , function (e) {
+                                            var cc = document.getElementById("cc");
+                                            var bill = document.getElementById('bill');
+                                            if(cc.value == 'undefined' || bill.value == 'undefined')
+                                            {
+                                                alert('You must enter payment credentials and billing address before changing subscription plan.')
+                                                e.preventDefault();
+                                            }
+                                            else
+                                            {
+                                                return true;
+                                            }
+                                        });
+
+
         h1 Account
         hr
         div.membership
@@ -261,6 +284,7 @@ block content
             ul.bill
                 li Payment Info #{ccNumber}
                     a(href=""  data-toggle="modal" data-target="#modalPay") update payment info
+                    input(value=`${ccNumber}` id="cc" hidden readonly)
                     script.
                         var cc = document.getElementById("ccNumber");
 
@@ -274,6 +298,7 @@ block content
                 li Country: #{country}
                 li
                     a(href=""  data-toggle="modal" data-target="#modalBilling") update billing address
+                    input(value=`${str1}` id='bill' hidden readonly)
             br
             br
             br
@@ -281,6 +306,8 @@ block content
             hr
             h3 Subscription Settings
             ul.plans
+                li Current Slots #{currentSlots}   Maximum Slots #{maxSlots}
+                    a(href="" data-toggle="modal" data-target="#modalPlan") change subscription plan
                 li
                     form(method='POST' action='/account/' class='form-registration' onchange="this.form.submit()")
                         .form-group
