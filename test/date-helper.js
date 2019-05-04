@@ -26,7 +26,7 @@ describe("date-helper", function () {
             let convertedDate = dates.dateFromSqlDatetime(dummySqlDatetime);
 
             assert.strictEqual(convertedDate.getUTCFullYear(), 6969);
-            assert.strictEqual(convertedDate.getUTCMonth(), 4 - 1);
+            assert.strictEqual(convertedDate.getUTCMonth(), 4);
             assert.strictEqual(convertedDate.getUTCDate(), 20);
             assert.strictEqual(convertedDate.getUTCHours(), 16);
             assert.strictEqual(convertedDate.getUTCMinutes(), 20);

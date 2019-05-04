@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 
                         res.render('home', {
                             title: 'Whitefox Streaming Video',
-                            message: `Welcome, ${req.session.user}!`,
+                            message: `Welcome, ${req.session.userDisplayName}!`,
                             user: req.session.user,
                             displayProductions: rows,
                             production_list: find,
