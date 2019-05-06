@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var db = require("../db-helper.js");
 var resHelper = require("../registration-helper");
-
+var validation = require("../validation-helper");
 
 /* GET registration page. */
 router.get('/', function(req, res, next) {
@@ -12,17 +11,31 @@ router.get('/', function(req, res, next) {
 
 /* POST registration attempt. */
 router.post('/', function(req, res, next) {
-    resHelper.userExistsCheck(req.body.username, function (exists) {
-        if (!exists) {
+    let errorMessage = null;
+    let username = req.body.username;
+
+    resHelper.userExistsCheck(username, function (exists) {
+        if (!exists && validation.isValidUsername(username)) {
             resHelper.createUser(req.body, function () {
-                req.session.user = req.body.username;
+                req.session.user = username;
                 res.redirect("/")
             });
         }
         else {
-            res.render('register', { title: 'Whitefox Streaming Video', message: "Sorry, that user already exists." });
+            if (exists) {
+                errorMessage = "Sorry, that user already exists. Please select a different username.";
+            }
+            else {
+                errorMessage = "Please enter a valid username (alphanumeric, '-' and '_' only)";
+            }
+            res.render('register', { title: 'Whitefox Streaming Video', message: errorMessage });
         }
-    })
+    });
+
+
+
+
+
 });
 
 module.exports = router;
