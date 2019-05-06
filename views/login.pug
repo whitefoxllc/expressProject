@@ -1,19 +1,14 @@
 extends index
 
 block topbar
-
+    .row
+        .col-12#greeting.fixed-top
+            h3.text-center Welcome to WhiteFox streaming service
 block scripts
     script(src="javascripts/login.js")
 
-block sidebar
-
-
 
 block content
-    .container-fluid.greeting.text-center.fixed-top#greeting
-        .row
-            .col-12
-                h3 Welcome to WhiteFox streaming service
     .container-fluid.backgroundbox
         .container.rounded.loginbox
             .row

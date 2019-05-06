@@ -48,7 +48,6 @@ h1{
     background-image: url("https://i.imgur.com/bISvErC.jpg");
     background-size: 45%;
     background-repeat: repeat;
-    padding: 5%;
 }
 
 
@@ -118,9 +117,25 @@ h1{
     padding-right: 5%;
 }
 
-.btnCrime{
+.btnCrime {
     background-color: gainsboro;
     color: black;
     padding-left: 5%;
     padding-right: 5%;
+}
+
+#productionpass{
+    visibility: hidden;
+}
+
+.containeverything{
+    margin-top: 5%;
+}
+#comment{
+    color: white;
+    background-color: #06171d;
+}
+#ratingnumber{
+    color: white;
+    background-color: #06171d;
 }

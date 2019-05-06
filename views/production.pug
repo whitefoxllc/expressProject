@@ -9,165 +9,171 @@ block scripts
 block append stylesheet
     link(rel='stylesheet', href='/stylesheets/productions.css')
     link(rel='stylesheet', href='/stylesheets/player.css')
+block topbar
+    include navbar
 
 block content
     body(onload="subStatus()")
-        - var userCanAccess = episodeData;
-        input#persistentVariables(type='hidden',episodeSelected=selectedEpisode)
-        if (!selectedEpisode)
-            .container-fluid.backgroundproduction
-                .container-fluid#productionbox
+        .container-fluid.containeverything
+            - var userCanAccess = episodeData;
+            input#persistentVariables(type='hidden',episodeSelected=selectedEpisode)
+            if (!selectedEpisode)
+                .container-fluid.backgroundproduction
+                    .container-fluid#productionbox
+                        .row
+                            .col-sm-2
+                            .col-sm-4#showimage
+                                img.img-fluid.rounded.mx-auto.logoimage(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                            .col-sm-4#showinfo
+                                h1.text-white= productionData.title
+                                p= productionData.showSummary
+                                .container
+                                    //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
+                                    //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
+                                //include rating.pug
+                                form(method='POST' action='/production' class='form-registration')
+                                    .form-group
+                                        input(value=`${currentSlots}` id="slots" hidden readonly type='number')
+                                        input(value=`${productionData.id}` id="title" readonly hidden name='prod')
+                                        input(value=`${maxSlots}` id="maxSlots" readonly hidden type='number')
+                                        select(id="inSub" hidden readonly)
+                                            - for (var j = 0; j < slots.length; j++)
+                                                option(value=`${slots[j].productionID}`) #{slots[j].productionID}
+                                        input( value="" id="sub" name="sub"  class="btn btn-primary" type="hidden")
+
+                                        script.
+                                            $('#sub').on("click", function (e) {
+                                                var slots = document.getElementById('slots').value;
+                                                var maxSlots=document.getElementById('maxSlots').value;
+                                                var s = parseInt(slots,10);
+                                                var m = parseInt(maxSlots,10);
+                                                var sub = document.getElementById('sub');
+                                                if (sub.value == "Subscribe") {
+                                                    if(s < m){
+                                                        sub.value = "Subscribed";
+                                                    }
+                                                    else {
+                                                        alert("Not enough slots please update subscription plan in accounts page");
+                                                        e.preventDefault();
+                                                    }
+
+                                                }
+
+
+                                            });
+
+                                            function subStatus() {
+                                                var prod = document.getElementById('title').value;
+                                                var sub = document.getElementById('sub');
+
+                                                if (inSub(prod) == true) {
+                                                    sub.value = "";
+                                                    sub.type = 'hidden';
+                                                } else {
+                                                    sub.value = "Subscribe";
+                                                    sub.type = 'submit';
+                                                }
+
+                                            }
+                                            function inSub(prod) {
+                                                var ls = document.getElementById('inSub');
+
+                                                var i;
+                                                var flag = false;
+                                                for (i = 0; i < ls.options.length; i++) {
+                                                    if (prod == ls.options[i].value) {
+                                                        flag = true;
+                                                    }
+                                                }
+                                                return flag;
+                                            }
+
+                            .col-sm-2
+            if (userCanAccess && selectedEpisode)
+                .container(style="padding-top=10px;")
                     .row
                         .col-sm-2
-                        .col-sm-4#showimage
-                            img.img-fluid.rounded.mx-auto.logoimage(src=`/images/showthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                        .col-sm-4#showinfo
-                            h1.text-white= productionData.title
-                            p= productionData.showSummary
-                            .container
-                                //disabled until multi-genre behaviour is determined - perhaps define a "primary" genre for each production?  Let me know.
-                                //a(class='button' href=`/home?genre=${productionData.genre}` )(class="btn"+productionData.genre).btn #{productionData.genre}
-                            //include rating.pug
-                            form(method='POST' action='/production' class='form-registration')
-                                .form-group
-                                    input(value=`${currentSlots}` id="slots" hidden readonly type='number')
-                                    input(value=`${productionData.id}` id="title" readonly hidden name='prod')
-                                    input(value=`${maxSlots}` id="maxSlots" readonly hidden type='number')
-                                    select(id="inSub" hidden readonly)
-                                        - for (var j = 0; j < slots.length; j++)
-                                            option(value=`${slots[j].productionID}`) #{slots[j].productionID}
-                                    input( value="" id="sub" name="sub"  class="btn btn-primary" type="hidden")
-
-                                    script.
-                                        $('#sub').on("click", function (e) {
-                                            var slots = document.getElementById('slots').value;
-                                            var maxSlots=document.getElementById('maxSlots').value;
-                                            var s = parseInt(slots,10);
-                                            var m = parseInt(maxSlots,10);
-                                            var sub = document.getElementById('sub');
-                                            if (sub.value == "Subscribe") {
-                                                if(s < m){
-                                                    sub.value = "Subscribed";
-                                                }
-                                                else {
-                                                    alert("Not enough slots please update subscription plan in accounts page");
-                                                    e.preventDefault();
-                                                }
-
-                                            }
-
-
-                                        });
-
-                                        function subStatus() {
-                                            var prod = document.getElementById('title').value;
-                                            var sub = document.getElementById('sub');
-
-                                            if (inSub(prod) == true) {
-                                                sub.value = "";
-                                                sub.type = 'hidden';
-                                            } else {
-                                                sub.value = "Subscribe";
-                                                sub.type = 'submit';
-                                            }
-
-                                        }
-                                        function inSub(prod) {
-                                            var ls = document.getElementById('inSub');
-
-                                            var i;
-                                            var flag = false;
-                                            for (i = 0; i < ls.options.length; i++) {
-                                                if (prod == ls.options[i].value) {
-                                                    flag = true;
-                                                }
-                                            }
-                                            return flag;
-                                        }
-
-                        .col-sm-2
-        if (userCanAccess && selectedEpisode)
-            .container(style="padding-top=10px;")
-                .row
-                    .col-sm-2
-                    .col-sm-8
-                        video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
-                            source(src = '/' + `${episodeData[selectedSeason][selectedEpisode].url}` type = 'video/mp4')
-
-                    .col-sm-2
-
-        if (userCanAccess)
-        .container.showgrid
-            .container.cardcontainer#seasonsandeps
-                if (userCanAccess)
-                    .row
-                        .col-sm-4
-                            .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
-                                button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
-                                    Dropdown Season #{selectedSeason}
-                                .dropdown-menu.bg-dark.dropdown-dark
-                                    - var season = 1;
-                                    while season <= productionData.seasonCount
-                                        a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
-                                        - season++
-                                        p
                         .col-sm-8
-                    .row
-                        .container
-                            - var episode = 1
-                            while episode <= episodeCount
-                                if (episode % 3 === 1)
-                                    .row
-                                        - for (var i= episode; i<(3+episode); i++)
-                                            - if (i>episodeCount) break;
-                                                - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
-                                                .col-sm-4
-                                                    .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
-                                                        img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
-                                                        .card-body
-                                                            p= episodeData[selectedSeason][episode].title
-                                                - episode++
+                            video(id='my-video' class='video-js' controls preload='none' width='1920' height='1080' poster=`/images/epthumbnail/${productionData.id}.jpg` data-setup='{"fluid":true}')
+                                source(src = '/' + `${episodeData[selectedSeason][selectedEpisode].url}` type = 'video/mp4')
 
-        .container
-            h1.text-center.text-white Reviews
-            //submission box
-            form(method='POST' action='/production' class='form-registration')
-                .form-group#productionpass
-                    label.text-white(for='prodset')
-                    select#prodset.form-control.form-control-lg(name='prodset')
-                        option #{productionData.id}
-                .form-group
-                    label.text-white(for='comment') Review:
-                    textarea#comment.form-control(type='comment', rows = '6', name='comment')
-                .form-group
-                    label.text-white(for='ratingnumber') Rating (1-10):
-                    select#ratingnumber.form-control.form-control-lg(name='ratingnumber')
-                            option 1
-                            option 2
-                            option 3
-                            option 4
-                            option 5
-                            option 6
-                            option 7
-                            option 8
-                            option 9
-                            option 10
-                button.btn.btn-primary(type='submit') Submit
-            each review in reviews
-                .container.reviews.rounded
-                    .row
-                        .col-sm-4
-                            h3 #{review.displayName}
-                        .col-sm-6
                         .col-sm-2
-                            h6.text-dark #{review.date}
-                    .row
-                        .col-sm-4
-                            h4.text-white rating: #{review.rating} out of 10
-                    .row
-                        .col-sm-1
-                        .col-sm-10
-                            p #{review.review}
-                        .col-sm-1
 
-        script(src="/javascripts/production.js")
+            if (userCanAccess)
+            .container.showgrid
+                .container.cardcontainer#seasonsandeps
+                    if (userCanAccess)
+                        .row
+                            .col-sm-4
+                                .dropdown.select.selectpicker.season-select(data-dropup-auto='false')
+                                    button.btn.btn-primary.btn-dark.dropdown-toggle#buttonstyle(type='button', data-toggle='dropdown')
+                                        Dropdown Season #{selectedSeason}
+                                    .dropdown-menu.bg-dark.dropdown-dark
+                                        - var season = 1;
+                                        while season <= productionData.seasonCount
+                                            a.text-center#link(href= `./?production=${productionData.id}&seasonSelection=${season}`) Season #{season}
+                                            - season++
+                                            p
+                            .col-sm-8
+                        .row
+                            .container
+                                - var episode = 1
+                                while episode <= episodeCount
+                                    if (episode % 3 === 1)
+                                        .row
+                                            - for (var i= episode; i<(3+episode); i++)
+                                                - if (i>episodeCount) break;
+                                                    - var episodeLink = `./?production=${productionData.id}&seasonSelection=${selectedSeason}&episodeSelection=${episode}`
+                                                    .col-sm-4
+                                                        .card.epbox(pageUrl=episodeLink url=episodeData[selectedSeason][episode].url)
+                                                            img.card-img-top#logos(src=`/images/epthumbnail/${productionData.id}.jpg` alt=`${productionData.title}`, width='300')
+                                                            .card-body
+                                                                p= episodeData[selectedSeason][episode].title
+                                                    - episode++
+
+            .container
+                h1.text-center.text-white Reviews
+                //submission box
+                if (userCanAccess)
+                    form(method='POST' action='/production' class='form-registration')
+                        .form-group#productionpass
+                            label.text-white(for='prodset')
+                            select#prodset.form-control.form-control-lg(name='prodset')
+                                option #{productionData.id}
+                        .form-group
+                            label.text-white(for='comment') Review:
+                            textarea#comment.form-control(type='comment', rows = '6', name='comment')
+                        .form-group
+                            label.text-white(for='ratingnumber') Rating (1-10):
+                            select#ratingnumber.form-control.form-control-lg(name='ratingnumber')
+                                    option 1
+                                    option 2
+                                    option 3
+                                    option 4
+                                    option 5
+                                    option 6
+                                    option 7
+                                    option 8
+                                    option 9
+                                    option 10
+                        button.btn.btn-primary(type='submit') Submit
+                else
+                    p Sorry you must be subscribed to review this production
+                each review in reviews
+                    .container.reviews.rounded
+                        .row
+                            .col-sm-4
+                                h3 #{review.displayName}
+                            .col-sm-6
+                            .col-sm-2
+                                h6.text-dark #{review.date}
+                        .row
+                            .col-sm-4
+                                h4.text-white rating: #{review.rating} out of 10
+                        .row
+                            .col-sm-1
+                            .col-sm-10
+                                p #{review.review}
+                            .col-sm-1
+
+            script(src="/javascripts/production.js")
