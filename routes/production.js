@@ -44,9 +44,40 @@ router.get('/', function(req, res, next) {
     else {
         res.redirect("/");
     }
+
+    //comment post
+    router.post('/', function(req, res, next){
+        if (typeof req.body.prod !== 'undefined'){
+            //ricardos stuff
+                subs.requestAccessTo(req,req.body.prod, function (success) {
+                    if(success) {
+                        res.redirect('back');
+                    }
+                });
+
+        }else {
+
+            revs.reviewExistCheck(req.session.user, req.body.prodset, function (exists) {
+                if (exists) {
+                    //update review
+                    revs.updateReview(req.session.user, req.body.prodset, req.body.ratingnumber, req.body.comment, function () {
+                        console.log('comment updated');
+                    });
+                    res.redirect('back');
+                } else {
+                    //write reviews
+                    revs.writeReview(req.session.user, req.body.prodset, req.body.ratingnumber, req.body.comment, function () {
+                        console.log('comment added');
+                        res.redirect('back');
+                    });
+                }
+            });
+        }
+
+    });
 });
 
-router.post('/', function(req,res){
+/*router.post('/', function(req,res){
     subs.requestAccessTo(req,req.body.prod, function (success) {
         if(success) {
             res.redirect('back');
@@ -54,6 +85,8 @@ router.post('/', function(req,res){
     });
 
 });
+*/
+
 
 
 module.exports = router;
