@@ -4,7 +4,7 @@ block topbar
     include navbar
 block content
 
-    .container.greeting.text-center#greeting.border
+    .container.greeting.text-center#greeting
         .row
             .col-3
                 a#link(href='/home/?filterToSubscriptions=true')
@@ -12,11 +12,12 @@ block content
             .col-6
                 .row
                     h3 #{title}
-                .row
-                    p This is the about. This should be saved and taken to and from the database.
+                //
+                    .row
+                        p This is the about. This should be saved and taken to and from the database.
             .col-3
         .row#greetingdark
-            .col.text-center.border-top
+            .col.text-center
                 h2  Recent Activity
         .row#greetingblack
             .col
@@ -24,7 +25,8 @@ block content
 
     .container
         .row
-            .col-8
+            .col-3
+            .col-6
                 //  need to figure out a way to save a user's top 10 through DB
                 h3.text-white.text-center Recent Reviews
                 each review in reviews
@@ -33,28 +35,29 @@ block content
                         p #{review.review}
                         h6.text-white rating: #{review.rating}
                         h6.text-white #{review.date}
+            //not enough time
+                .col-4#greetingdark
 
-            .col-4#greetingdark
+                    h3.text-center Top 10
 
-                h3.text-center Top 10
-
-                ol
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
-                    li Production
+                    ol
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+                        li Production
+            .col-3
         .row#greetingblack
             .col
                 h1
     .container
         .row
-            .col.text-center.border-bottom.greeting#greetingdark
+            .col.text-center.greeting#greetingdark
                 h2 Watchlist
         .row
             each production in displayProductions

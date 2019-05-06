@@ -17,8 +17,9 @@ nav {
     height: 30px;
 }
 
-nav.navbar.navbar-default {
+nav.navbar.navbarwf {
     background-color: #202c39;
+    margin-bottom: 0em;
 }
 
 

@@ -10,19 +10,19 @@ block scripts
     
 
 block content
-    .container-fluid.greeting.text-center#greeting
+    .container-fluid.greeting.text-center#greetinghome
         .row
-            .col-12.border-bottom
+            .col-12
                     h1 #{message}
                     
     .container.contentsandstuff
             .row
                 each production in displayProductions
                     .col-sm-3
-                        .card.prodBox
+                        .card.prodBox( height='300' width='300')
                             - var titleLink = `/production/?production=${production.id}`
-                            a#link(href= titleLink)
-                                img.img-fluid.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
+                            a.sizeforhome#link(href= titleLink, height='300' width='300')
+                                img.card-img.rounded.mx-auto.logoimage#logos(src=`/images/showthumbnail/${production.id}.jpg` alt=`${production.title}`, width='300')
                             //p
                             //.col.text-center
                                 a#link(href= titleLink)= production.title
