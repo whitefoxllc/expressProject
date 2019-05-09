@@ -130,50 +130,50 @@ block content
                                                             .card-body
                                                                 p= episodeData[selectedSeason][episode].title
                                                     - episode++
-
-            .container
-                h1.text-center.text-white Reviews
-                //submission box
-                if (userCanAccess)
-                    form(method='POST' action='/production' class='form-registration')
-                        .form-group#productionpass
-                            label.text-white(for='prodset')
-                            select#prodset.form-control.form-control-lg(name='prodset')
-                                option #{productionData.id}
-                        .form-group
-                            label.text-white(for='comment') Review:
-                            textarea#comment.form-control(type='comment', rows = '6', name='comment')
-                        .form-group
-                            label.text-white(for='ratingnumber') Rating (1-10):
-                            select#ratingnumber.form-control.form-control-lg(name='ratingnumber')
-                                    option 1
-                                    option 2
-                                    option 3
-                                    option 4
-                                    option 5
-                                    option 6
-                                    option 7
-                                    option 8
-                                    option 9
-                                    option 10
-                        button.btn.btn-primary(type='submit') Submit
-                else
-                    p Sorry you must be subscribed to review this production
-                each review in reviews
-                    .container.reviews.rounded
-                        .row
-                            .col-sm-4
-                                h3 #{review.displayName}
-                            .col-sm-6
-                            .col-sm-2
-                                h6.text-dark #{review.date}
-                        .row
-                            .col-sm-4
-                                h4.text-white rating: #{review.rating} out of 10
-                        .row
-                            .col-sm-1
-                            .col-sm-10
-                                p #{review.review}
-                            .col-sm-1
+            if (!(userCanAccess && selectedEpisode))
+                .container
+                    h1.text-center.text-white Reviews
+                    //submission box
+                    if (userCanAccess)
+                        form(method='POST' action='/production' class='form-registration')
+                            .form-group#productionpass
+                                label.text-white(for='prodset')
+                                select#prodset.form-control.form-control-lg(name='prodset')
+                                    option #{productionData.id}
+                            .form-group
+                                label.text-white(for='comment') Review:
+                                textarea#comment.form-control(type='comment', rows = '6', name='comment')
+                            .form-group
+                                label.text-white(for='ratingnumber') Rating (1-10):
+                                select#ratingnumber.form-control.form-control-lg(name='ratingnumber')
+                                        option 1
+                                        option 2
+                                        option 3
+                                        option 4
+                                        option 5
+                                        option 6
+                                        option 7
+                                        option 8
+                                        option 9
+                                        option 10
+                            button.btn.btn-primary(type='submit') Submit
+                    else
+                        p Sorry you must be subscribed to review this production
+                    each review in reviews
+                        .container.reviews.rounded
+                            .row
+                                .col-sm-4
+                                    h3 #{review.displayName}
+                                .col-sm-6
+                                .col-sm-2
+                                    h6.text-dark #{review.date}
+                            .row
+                                .col-sm-4
+                                    h4.text-white rating: #{review.rating} out of 10
+                            .row
+                                .col-sm-1
+                                .col-sm-10
+                                    p #{review.review}
+                                .col-sm-1
 
             script(src="/javascripts/production.js")
